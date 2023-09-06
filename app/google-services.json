@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "619598786314",
+    "project_id": "ca-beo-66",
+    "storage_bucket": "ca-beo-66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619598786314:android:8ae8a18d913ec4637cd4f3",
+        "android_client_info": {
+          "package_name": "game.CrossingThe.GreatTrench"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "619598786314-cgllo39p2cf1gljl83mlag1d2dm8mhpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfH52WHJMDjHPpFIVinb8HQ2SmXe-7e0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "619598786314-cgllo39p2cf1gljl83mlag1d2dm8mhpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

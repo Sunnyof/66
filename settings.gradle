@@ -1,0 +1,32 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        maven{url 'https://maven.aliyun.com/repository/public'}
+        maven { url 'https://repo1.maven.org/maven2/' }
+        maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+        mavenLocal()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        jcenter()
+        maven{url 'https://maven.aliyun.com/repository/public'}
+        maven { url 'https://repo1.maven.org/maven2/' }
+        maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+        mavenLocal()
+    }
+}
+rootProject.name = "Cá Béo 66"
+include ':libcocos'
+include ':lib_service'
+project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
+include ':app'
+include ':ZBLibrary'
+//include ':nativelib'
+//include ':plugin_library'

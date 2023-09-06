@@ -1,0 +1,220 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'stringfog'
+    id 'android-junk-code'
+    id 'xml-class-guard'
+//    id 'com.gavin.plugin'
+}
+
+
+//import cn.hx.plugin.junkcode.plugin.LifecycleClassVisitor
+import com.github.megatronking.stringfog.plugin.kg.HardCodeKeyGenerator
+import com.github.megatronking.stringfog.plugin.StringFogMode
+import com.github.megatronking.stringfog.xor.*;
+
+stringfog {
+    // 必要：加解密库的实现类路径，需和上面配置的加解密算法库一致。
+    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
+    // 可选：加密开关，默认开启。
+    enable true
+    // 可选：指定需加密的代码包路径，可配置多个，未指定将默认全部加密。
+    fogPackages = ['com.game','zuo.biao.library','com.cocos']
+    // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
+    // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
+    kg new HardCodeKeyGenerator("game.CrossingThe.GreatTrench")
+    // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
+    // 也可以使用text或者bytes
+    mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
+}
+
+//androidJunkCode {
+//    variantConfig {
+//        release {//变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+//            packageBase = "com.game"  //生成java类根包名
+//            packageCount = 10 //生成包数量
+//            activityCountPerPackage = 3 //每个包下生成Activity类数量
+//            excludeActivityJavaFile = false //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
+//            otherCountPerPackage = 20  //每个包下生成其它类的数量
+//            methodCountPerClass = 10  //每个类下生成方法数量
+//            resPrefix = "tet_"  //生成的layout、drawable、string等资源名前缀
+//            drawableCount = 10  //生成drawable资源数量
+//            stringCount = 15  //生成string数量
+//        }
+//    }
+//}
+
+/**
+ * 第一步执行这个操作，先生成字典，混淆用
+ * https://blog.csdn.net/nnmmbb/article/details/129492332
+ */
+/*** 生成字典Task*/
+task geneDictTask {
+    doFirst {
+        def dictPath = rootDir.getAbsolutePath() + '/app/dict.txt'
+        def random = new Random()
+        def lowercase = "abcdefghijklmnopqrstuvwxyz"
+        def wordList = new HashSet()
+        for (int i = 0; i < 1000; i++) {
+            def word = new StringBuilder()
+            def wordLength = random.nextInt(5) + 4
+            for (int j = 0; j < wordLength; j++) {
+                word.append(lowercase.charAt(random.nextInt(lowercase.length())))
+            }
+            wordList.add(word.toString())
+        }
+        def f = new File(dictPath)
+        f.getParentFile().mkdirs()
+        f.withWriter("UTF-8") { it.write(wordList.join(System.lineSeparator())) }
+    }
+}
+
+//import com.android.build.gradle.internal.VariantManager
+//import org.objectweb.asm.ClassReader
+//import org.objectweb.asm.ClassWriter
+//import org.objectweb.asm.tree.ClassNode;
+//
+//task insertCode(type: JavaCompile) {
+//    source = sourceSets.main.java
+//    classpath = sourceSets.main.compileClasspath
+//
+//    doLast {
+//        def file = file("$buildDir/classes/java/main/你的包路径/你的类.class")
+//        def inputStream = file.newDataInputStream()
+//        def classNode = new ClassNode()
+//        new ClassReader(inputStream).accept(classNode, 0)
+
+//        classNode.accept(new LifecycleClassVisitor(classNode))
+//        def outputStream = new FileOutputStream(file)
+//        def writer = new ClassWriter(0)
+//        classNode.accept(writer)
+//        outputStream.write(writer.toByteArray())
+//        outputStream.close()
+//    }
+//}
+
+//apply plugin: "com.bytedance.android.aabResGuard"
+
+
+//aabResGuard {
+//    mappingFile = file("mapping.txt").toPath() // Mapping file used for incremental obfuscation
+//    whiteList = [ // White list rules
+//                  "*.R.raw.*",
+//                  "*.R.drawable.icon"
+//    ]
+//    obfuscatedBundleFileName = "duplicated-app.aab" // Obfuscated file name, must end with '.aab'
+//    mergeDuplicatedRes = true // Whether to allow the merge of duplicate resources
+//    enableFilterFiles = true // Whether to allow filter files
+//    filterList = [ // file filter rules
+//                   "*/arm64-v8a/*",
+//                   "META-INF/*"
+//    ]
+//
+//    enableFilterStrings = false // switch of filter strings
+//    unusedStringPath = file("unused.txt").toPath() // strings will be filtered in this file
+//    languageWhiteList = ["en", "zh"] // keep en,en-xx,zh,zh-xx etc. remove others.
+//}
+
+android {
+    namespace 'game.crossingthe.greattrench'
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "game.CrossingThe.GreatTrench"
+        minSdk 24
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                targets "cocos"
+                arguments "-DRES_DIR=${RES_PATH}", "-DCOCOS_X_PATH=${COCOS_ENGINE_PATH}", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DANDROID_LD=gold"
+            }
+            ndk { abiFilters PROP_APP_ABI.split(':') }
+        }
+
+    }
+
+
+    buildTypes {
+        release {
+            ndk {
+                debugSymbolLevel  'SYMBOL_TABLE'
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "../CMakeLists.txt"
+            buildStagingDirectory "${RES_PATH}/proj/build"
+        }
+    }
+
+    sourceSets.main {
+        java.srcDirs "../src", "src"
+        res.srcDirs "../res", 'res'
+        jniLibs.srcDirs "../libs", 'libs'
+        assets.srcDir "${RES_PATH}/assets"
+        jniLibs {
+        }
+    }
+    dataBinding{
+        enabled true
+    }
+}
+
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    //facebook
+    implementation 'com.facebook.android:facebook-android-sdk:16.0.1'
+    implementation 'com.android.support:multidex:2.0.0'
+    //googleAd
+    implementation 'com.android.installreferrer:installreferrer:2.2'
+    implementation 'com.google.android.gms:play-services-ads:22.1.0'
+    //AF
+    implementation 'com.appsflyer:af-android-sdk:6.9.0'
+    //FireBase
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // OKHttp RxJava
+    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    // eventbus
+    implementation 'org.greenrobot:eventbus:3.3.1'
+    //CocosGame
+    implementation project(':lib_service')
+    implementation project(':libcocos')
+    implementation project(path: ':ZBLibrary')
+//    implementation project(path: ':nativelib')
+    implementation 'com.github.megatronking.stringfog:xor:5.0.0'
+    //dialog
+    implementation 'com.github.li-xiaojun:XPopup:2.9.19'
+    implementation ('com.github.li-xiaojun:XPopup:2.9.19'){
+        exclude group: "com.davemorrissey.labs", module: "subsampling-scale-image-view-androidx"
+    }
+
+}
