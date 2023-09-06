@@ -5,6 +5,7 @@ import android.webkit.JavascriptInterface;
 
 import com.cocos.lib.CocosHelper;
 import com.cocos.lib.CocosJavascriptJavaBridge;
+import com.game.util.LogHelp;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -20,7 +21,7 @@ public class JSInterface {
 
 
     private void testCocosHelper(String str, boolean isFlag) {
-        Log.i("TAG", "flag:" + isFlag);
+        Log.i("JSInterface", "flag:" + isFlag);
         CocosHelper.runOnGameThread(() -> {
             try {
                 String evalStr = String.format(
@@ -35,19 +36,19 @@ public class JSInterface {
 
     @JavascriptInterface
     public void logEvent(String eventName, String params) {
-        Log.i("TAG", "Log event: eventName: $eventName, params: $params");
-//        upload(eventName, params)
+        Log.i("JSInterface", "Log event: eventName: "+eventName+" params: $params");
+        LogHelp.instance().dotEvent(eventName, params);
     }
 
     @JavascriptInterface
     public void getSafeArea() {
-        Log.i("TAG", "getSafeArea");
+        Log.i("JSInterface", "getSafeArea");
 //        executeSetSafeArea()
     }
 
     @JavascriptInterface
     public void getOrientationChange() {
-        Log.i("TAG", "getOrientationChange");
+        Log.i("JSInterface", "getOrientationChange");
 //        executeOrientationGet()
     }
 

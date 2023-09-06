@@ -97,6 +97,37 @@ public class LogHelp {
     }
 
 
+    /**
+     * 打点事件
+     */
+    public void dotEvent(String name,String logMessage) {
+        try {
+            JSONObject jsonObject = new JSONObject(logMessage);
+            String event = jsonObject.optString("event");
+            JSONObject params = jsonObject.optJSONObject("params");
+            Bundle bundle = new Bundle();
+            HashMap map = new HashMap<String, Object>();
+            if (params != null) {
+                Iterator<String> it = params.keys();
+                while (it.hasNext()) {
+                    String param = it.next();
+                    bundle.putString(param, params.optString(param));
+                    map.put(param, params.opt(param));
+                }
+            }
+            Log.i("dotEvent" + name, encode(name)+"--"+(mActivity == null));
+            FirebaseAnalytics.getInstance(BaseApplication.getInstance()).logEvent(encode(name), bundle);
+            AppsFlyerLib.getInstance().logEvent(mActivity, name, map);
+            //FaceBook
+            AppEventsLogger logger = AppEventsLogger.newLogger(mActivity);
+            logger.logEvent(name, bundle);
+            logger.flush();
+        } catch (Exception e) {
+
+        }
+    }
+
+
     public void logUpdateStart() {
         Bundle bundle = new Bundle();
         HashMap hashMap = new HashMap<String, Object>();
@@ -145,6 +176,7 @@ public class LogHelp {
      * 展示谷歌广告
      */
     public void showGoogleAd() {
+        Log.i("LogHelp","showGoogleAd");
         GameGoogleAd.getInstance().showAd();
     }
 

@@ -22,7 +22,7 @@ public class SDKLog {
         Log.e("TAG", "showGoodleAd");
         GameGoogleAd.getInstance().showAd();
     }
-
+//
     public static void adShow() {
         Log.e("TAG", "showGoodleAd");
         GameGoogleAd.getInstance().showAd();
@@ -122,12 +122,13 @@ public class SDKLog {
 //    }
 //\`\`\`
 
-    public static void showAdmob(String tr) {
+    public static void showAd(String tr) {
         Log.i(TAG, "showAdmob:" + tr);
         GameGoogleAd.getInstance().showAd();
     }
 
-    public static void showAdmob() {
+    public static void showAd() {
+        Log.i(TAG, "showAdmob:2");
         GameGoogleAd.getInstance().showAd();
     }
 

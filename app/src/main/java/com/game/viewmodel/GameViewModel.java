@@ -391,13 +391,13 @@ public class GameViewModel extends ViewModel implements JsListener {
 
     private void java2Cocos(String message) {
 //        ThreadUtil.executeThread();
-        CocosHelper.runOnGameThread(() -> {
-            try {
-                String evalStr = String.format("handlerPlatformMessage(\"%s\")", URLEncoder.encode(message, "UTF-8"));
-                CocosJavascriptJavaBridge.evalString(evalStr);
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
-            }
-        });
+//        CocosHelper.runOnGameThread(() -> {
+//            try {
+//                String evalStr = String.format("handlerPlatformMessage(\"%s\")", URLEncoder.encode(message, "UTF-8"));
+//                CocosJavascriptJavaBridge.evalString(evalStr);
+//            } catch (UnsupportedEncodingException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
     }
 }
