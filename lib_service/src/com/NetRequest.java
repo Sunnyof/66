@@ -18,4 +18,6 @@ public interface NetRequest {
     public void unZip();
 
     public void onDone();
+
+    public void toDo();
 }

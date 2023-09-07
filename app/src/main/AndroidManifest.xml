@@ -82,6 +82,14 @@
             android:screenOrientation="behind"
             android:launchMode="singleTop"
             android:name="com.game.main.AboutActivity"></activity>
+
+        <activity
+            android:name="com.game.main.WebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
         <service
             android:name="com.game.service.LocalFirebaseMessagingService"
             android:exported="false">

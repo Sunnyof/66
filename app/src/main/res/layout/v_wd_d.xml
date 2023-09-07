@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="model"
             type="com.game.viewmodel.GameViewModel" />
@@ -19,7 +18,8 @@
         <RelativeLayout
             android:id="@+id/r1_ht"
             android:layout_width="match_parent"
-            android:layout_height="45dp">
+            android:layout_height="45dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/t4_ht"
@@ -30,15 +30,15 @@
                 android:text="@{model.name}" />
 
             <ImageButton
-                android:onClick="hide"
                 android:id="@+id/b3_ct"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="20dp"
                 android:background="@null"
-                android:src="@drawable/xcode"
+                android:onClick="hide"
+                android:src="@drawable/back"
                 tools:ignore="TouchTargetSizeCheck" />
         </RelativeLayout>
 
@@ -47,7 +47,16 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_below="@+id/r2_ht"
+            android:fitsSystemWindows="true"
             android:scrollbars="none" />
+
+        <WebView
+            android:id="@+id/ga_wt2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/r2_ht"
+            android:scrollbars="none"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_help"

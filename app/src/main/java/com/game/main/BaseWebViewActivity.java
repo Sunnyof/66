@@ -114,7 +114,7 @@ public class BaseWebViewActivity extends AppCompatActivity {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setSupportZoom(false);    //支持缩放
         settings.setSupportMultipleWindows(true);
-        settings.setAppCacheEnabled(true); //设置APP可以缓存
+//        settings.setAppCacheEnabled(true); //设置APP可以缓存
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);//返回上个界面不刷新  允许本地缓存
         settings.setAllowFileAccess(true);// 设置可以访问文件

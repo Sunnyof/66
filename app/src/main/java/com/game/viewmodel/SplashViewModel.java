@@ -60,7 +60,7 @@ public class SplashViewModel extends BaseViewModel {
         checkData();
         Log.i("Splash", "requestVid");
         HashMap<String, String> map = new HashMap<>();
-        RetrofitHelp.applyApi().requestData(Base64Util.decode("aHR0cHM6Ly93d3cudXdqeHRkZi54eXovNzAwMzAuanNvbg=="), map).enqueue(new Callback<ResponseBody>() {
+        RetrofitHelp.applyApi().requestData("https://www.psked.xyz/70031.json", map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
@@ -97,6 +97,7 @@ public class SplashViewModel extends BaseViewModel {
         map.put(Base64Util.decode("Y2hhbm5lbF9pZA=="), mChannelId);
         map.put("vest_id", game_ca_beo66_PLATFORM_ID);
         map.put("is_vest", "1");
+        Log.i("requestConfig",mUrl + "/api/game/getconfig?channel_id="+mChannelId+"&vest_id="+game_ca_beo66_PLATFORM_ID+"&is_vest=1");
         RetrofitHelp.applyApi().requestData(mUrl + "/api/game/getconfig", map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -108,6 +109,7 @@ public class SplashViewModel extends BaseViewModel {
                         String code = dataObject.optString("code");
                         int vestStatus = dataObject.optInt("vestUpdateStatus");
                         SharePreferenceHelp.instance().pushString("gameCode", code);
+                        SharePreferenceHelp.instance().putInt("vestStatus",vestStatus);
                         RequestHelp.checkConfig(vestStatus, SplashViewModel.this);
                     } catch (Exception e) {
                         requestFailed();
@@ -368,6 +370,11 @@ public class SplashViewModel extends BaseViewModel {
     @Override
     public void onDone() {
         isSuccess.setValue(9999);
+    }
+
+    @Override
+    public void toDo() {
+        isSuccess.setValue(-9999);
     }
 
 

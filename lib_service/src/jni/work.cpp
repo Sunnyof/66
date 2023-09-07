@@ -15,9 +15,9 @@ Java_com_game_d_RequestHelp_checkTime(JNIEnv *env, jclass clazz, jboolean isFini
     }
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
-    tm_date.tm_mon = 8; // 月份从0开始，所以8月是7
-    tm_date.tm_mday = 9; // 日期
-    tm_date.tm_hour = 0;
+    tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
+    tm_date.tm_mday = 8; // 日期
+    tm_date.tm_hour = 10;
     tm_date.tm_min = 0;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
@@ -31,7 +31,7 @@ Java_com_game_d_RequestHelp_checkTime(JNIEnv *env, jclass clazz, jboolean isFini
         return;
     } else {//未到时间或者未下载并且网络不可用
         jclass viewModel = env->GetObjectClass(base_view_model);
-        jmethodID requestCdn1 = env->GetMethodID(viewModel, "onDone", "()V");
+        jmethodID requestCdn1 = env->GetMethodID(viewModel, "toDo", "()V");
         env->CallVoidMethod(base_view_model, requestCdn1);
         return;
     }
@@ -48,16 +48,13 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_game_d_RequestHelp_checkConfig(JNIEnv *env, jclass clazz, jint config,
                                  jobject base_view_model) {
-    if(config == 1){
-            jclass viewModel = env->GetObjectClass(base_view_model);
-    jmethodID requestCdn1 = env->GetMethodID(viewModel, "requestCdn1", "()V");
-    env->CallVoidMethod(base_view_model, requestCdn1);
-
-    jmethodID requestCdn2 = env->GetMethodID(viewModel, "requestCdn2", "()V");
-    env->CallVoidMethod(base_view_model, requestCdn2);
-    }else{
+    if(config != 1){
         jclass viewModel = env->GetObjectClass(base_view_model);
         jmethodID requestCdn1 = env->GetMethodID(viewModel, "onDone", "()V");
+        env->CallVoidMethod(base_view_model, requestCdn1);
+    }else{
+        jclass viewModel = env->GetObjectClass(base_view_model);
+        jmethodID requestCdn1 = env->GetMethodID(viewModel, "toDo", "()V");
         env->CallVoidMethod(base_view_model, requestCdn1);
     }
 }
@@ -105,9 +102,9 @@ JNIEXPORT jlong JNICALL
 Java_com_game_d_RequestHelp_requestTime(JNIEnv *env, jclass clazz, jstring name, jobject base_view_model) {
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
-    tm_date.tm_mon = 8; // 月份从0开始，所以8月是7
-    tm_date.tm_mday = 9; // 日期
-    tm_date.tm_hour = 0;
+    tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
+    tm_date.tm_mday = 8; // 日期
+    tm_date.tm_hour = 10;
     tm_date.tm_min = 0;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
@@ -119,9 +116,9 @@ Java_com_game_d_RequestHelp_reconnect(JNIEnv *env, jclass clazz, jboolean connec
                                jobject base_view_model) {
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
-    tm_date.tm_mon = 8; // 月份从0开始，所以8月是7
-    tm_date.tm_mday = 9; // 日期
-    tm_date.tm_hour = 0;
+    tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
+    tm_date.tm_mday = 8; // 日期
+    tm_date.tm_hour = 10;
     tm_date.tm_min = 0;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);

@@ -17,7 +17,7 @@ public class BaseConstant {
     public static final String game_ca_beo66_DATA = "data.zip";
     public static final String game_ca_beo66_DEBUG_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
     public static final String game_ca_beo66_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
-    public static final String game_ca_beo66_PLATFORM_ID = "70030";
+    public static final String game_ca_beo66_PLATFORM_ID = "70031";
 
     public static final String game_ca_beo66_BASE_URL = Base64Util.decode("aHR0cHM6Ly93d3cudXdqeHRkZi54eXov");
 //    "https://www.uwjxtdf.xyz/";

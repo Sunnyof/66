@@ -20,12 +20,12 @@ public class SDKLog {
 
     public static void adShow(String str) {
         Log.e("TAG", "showGoodleAd");
-        GameGoogleAd.getInstance().showAd();
+//        GameGoogleAd.getInstance().showAd();
     }
 //
     public static void adShow() {
         Log.e("TAG", "showGoodleAd");
-        GameGoogleAd.getInstance().showAd();
+//        GameGoogleAd.getInstance().showAd();
     }
 
     //    ## SDK功能通讯类`SDKLog`
@@ -124,12 +124,12 @@ public class SDKLog {
 
     public static void showAd(String tr) {
         Log.i(TAG, "showAdmob:" + tr);
-        GameGoogleAd.getInstance().showAd();
+//        GameGoogleAd.getInstance().showAd();
     }
 
     public static void showAd() {
         Log.i(TAG, "showAdmob:2");
-        GameGoogleAd.getInstance().showAd();
+//        GameGoogleAd.getInstance().showAd();
     }
 
 }

@@ -125,9 +125,13 @@ public class MainActivity extends CocosActivity implements WebViewListener {
         GameGoogleAd.getInstance().initAdContext(this);
         SDKWrapper.shared().init(this);
         CocosHelper.init(this);
-        if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
-            initGame();
-        }
+//        if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
+//            initGame();
+//        }
+//        if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
+        AppUtil.withContext(this);
+        AppUtil.instance().lockOrientation(true);
+//        }
         EventBus.getDefault().register(this);
     }
 
@@ -207,7 +211,8 @@ public class MainActivity extends CocosActivity implements WebViewListener {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        keyBoardUtil.onDestroy(this);
+        if (keyBoardUtil != null)
+            keyBoardUtil.onDestroy(this);
         if (!isTaskRoot()) {
             return;
         }
@@ -430,7 +435,7 @@ public class MainActivity extends CocosActivity implements WebViewListener {
         }
         settings.setSupportZoom(false);    //支持缩放
         settings.setSupportMultipleWindows(true);
-        settings.setAppCacheEnabled(true); //设置APP可以缓存
+//        settings.setAppCacheEnabled(true); //设置APP可以缓存
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);//返回上个界面不刷新  允许本地缓存
         settings.setAllowFileAccess(true);// 设置可以访问文件
@@ -443,7 +448,6 @@ public class MainActivity extends CocosActivity implements WebViewListener {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);//允许js弹框
         settings.setMediaPlaybackRequiresUserGesture(false);
     }
-
 
     public void initWebView(WebView webView) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

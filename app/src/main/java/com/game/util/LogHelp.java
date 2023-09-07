@@ -101,6 +101,7 @@ public class LogHelp {
      * 打点事件
      */
     public void dotEvent(String name,String logMessage) {
+        Log.e("Log event","dotEvent:"+logMessage);
         try {
             JSONObject jsonObject = new JSONObject(logMessage);
             String event = jsonObject.optString("event");
@@ -123,7 +124,7 @@ public class LogHelp {
             logger.logEvent(name, bundle);
             logger.flush();
         } catch (Exception e) {
-
+            Log.e("Log event",e.getMessage());
         }
     }
 
