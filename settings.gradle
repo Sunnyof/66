@@ -27,6 +27,6 @@ include ':libcocos'
 include ':lib_service'
 project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
-include ':ZBLibrary'
+include ':library'
 //include ':nativelib'
 //include ':plugin_library'

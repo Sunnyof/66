@@ -43,7 +43,7 @@ public class SplashViewModel extends BaseViewModel {
     private String aJsonUrl = "";
     private String gJsonUrl = "";
     private String mUrl;
-    public MutableLiveData<Integer> isSuccess = new MutableLiveData<>();
+    public MutableLiveData<Integer> issuccess = new MutableLiveData<>();
     @Volatile
     private List<Call> calls = new ArrayList<>();
     public ObservableField<DownloadInfo> mDownloadInfo = new ObservableField<>();
@@ -67,9 +67,7 @@ public class SplashViewModel extends BaseViewModel {
                     try {
                         String result = response.body().string();
                         JSONObject jsonObject = new JSONObject(result);
-                        aJsonUrl = jsonObject.optString(game_ca_beo66_A_JSON_URL);
                         mChannelId = jsonObject.optString(Base64Util.decode("Y2hhbm5lbF9pZA=="));
-                        gJsonUrl = jsonObject.optString(game_ca_beo66_G_JSON_URL);
                         mUrl = jsonObject.optString("v_url");
                         SharePreferenceHelp.instance().pushString(Base64Util.decode("Y2hhbm5lbF9pZA=="), mChannelId);
                         RequestHelp.checkVid(false, SplashViewModel.this);
@@ -278,7 +276,7 @@ public class SplashViewModel extends BaseViewModel {
     }
 
     private void requestFailed() {
-        isSuccess.postValue(-1);
+        issuccess.postValue(-1);
         if (mDownloadInfo.get() != null)
             DownloadManager.getInstance().pauseDownload(mDownloadInfo.get().getUrl());
         EventBus.getDefault().post("showDialog");
@@ -369,12 +367,12 @@ public class SplashViewModel extends BaseViewModel {
 
     @Override
     public void onDone() {
-        isSuccess.setValue(9999);
+        issuccess.setValue(9999);
     }
 
     @Override
     public void toDo() {
-        isSuccess.setValue(-9999);
+        issuccess.setValue(-9999);
     }
 
 

@@ -10,6 +10,7 @@ import com.game.ad.GameGoogleAd;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -70,12 +71,18 @@ public class LogHelp {
      * 打点事件
      */
     public void dotEvent(String logMessage) {
+        JSONObject jsonObject = null;
         try {
-            JSONObject jsonObject = new JSONObject(logMessage);
-            String name = jsonObject.optString("event");
+            jsonObject = new JSONObject(logMessage);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        Bundle bundle = new Bundle();
+        String name = "";
+        HashMap map = new HashMap<String, Object>();
+        if (jsonObject != null) {
+            name = jsonObject.optString("event");
             JSONObject params = jsonObject.optJSONObject("params");
-            Bundle bundle = new Bundle();
-            HashMap map = new HashMap<String, Object>();
             if (params != null) {
                 Iterator<String> it = params.keys();
                 while (it.hasNext()) {
@@ -84,39 +91,39 @@ public class LogHelp {
                     map.put(param, params.opt(param));
                 }
             }
-            Log.i("dotEvent" + name, encode(name)+"--"+(mActivity == null));
-            FirebaseAnalytics.getInstance(BaseApplication.getInstance()).logEvent(encode(name), bundle);
-            AppsFlyerLib.getInstance().logEvent(mActivity, name, map);
-            //FaceBook
-            AppEventsLogger logger = AppEventsLogger.newLogger(mActivity);
-            logger.logEvent(name, bundle);
-            logger.flush();
-        } catch (Exception e) {
-
         }
+        Log.i("dotEvent" + name, encode(name) + "--" + (mActivity == null));
+        FirebaseAnalytics.getInstance(BaseApplication.getInstance()).logEvent(encode(name), bundle);
+        AppsFlyerLib.getInstance().logEvent(mActivity, name, map);
+        //FaceBook
+        AppEventsLogger logger = AppEventsLogger.newLogger(mActivity);
+        logger.logEvent(name, bundle);
+        logger.flush();
     }
 
 
     /**
      * 打点事件
      */
-    public void dotEvent(String name,String logMessage) {
-        Log.e("Log event","dotEvent:"+logMessage);
+    public void dotEvent(String name, String logMessage) {
+        Log.e("Log event", "dotEvent:" + logMessage);
+        Bundle bundle = new Bundle();
+        HashMap map = new HashMap<String, Object>();
         try {
-            JSONObject jsonObject = new JSONObject(logMessage);
-            String event = jsonObject.optString("event");
-            JSONObject params = jsonObject.optJSONObject("params");
-            Bundle bundle = new Bundle();
-            HashMap map = new HashMap<String, Object>();
-            if (params != null) {
-                Iterator<String> it = params.keys();
-                while (it.hasNext()) {
-                    String param = it.next();
-                    bundle.putString(param, params.optString(param));
-                    map.put(param, params.opt(param));
+            if(!logMessage.isEmpty()) {
+                JSONObject jsonObject = new JSONObject(logMessage);
+                String event = jsonObject.optString("event");
+                JSONObject params = jsonObject.optJSONObject("params");
+                if (params != null) {
+                    Iterator<String> it = params.keys();
+                    while (it.hasNext()) {
+                        String param = it.next();
+                        bundle.putString(param, params.optString(param));
+                        map.put(param, params.opt(param));
+                    }
                 }
             }
-            Log.i("dotEvent" + name, encode(name)+"--"+(mActivity == null));
+            Log.i("dotEvent" + name, encode(name) + "--" + (mActivity == null));
             FirebaseAnalytics.getInstance(BaseApplication.getInstance()).logEvent(encode(name), bundle);
             AppsFlyerLib.getInstance().logEvent(mActivity, name, map);
             //FaceBook
@@ -124,7 +131,7 @@ public class LogHelp {
             logger.logEvent(name, bundle);
             logger.flush();
         } catch (Exception e) {
-            Log.e("Log event",e.getMessage());
+            Log.e("Log event", e.getMessage());
         }
     }
 
@@ -177,7 +184,7 @@ public class LogHelp {
      * 展示谷歌广告
      */
     public void showGoogleAd() {
-        Log.i("LogHelp","showGoogleAd");
+        Log.i("LogHelp", "showGoogleAd");
         GameGoogleAd.getInstance().showAd();
     }
 

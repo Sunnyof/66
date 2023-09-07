@@ -121,7 +121,7 @@ android {
 
     defaultConfig {
         applicationId "game.CrossingThe.GreatTrench"
-        minSdk 24
+        minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -208,8 +208,8 @@ dependencies {
     //CocosGame
     implementation project(':lib_service')
     implementation project(':libcocos')
-    implementation project(path: ':ZBLibrary')
-//    implementation project(path: ':nativelib')
+    implementation project(path: ':library')
+    //    implementation project(path: ':nativelib')
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
     //dialog
     implementation 'com.github.li-xiaojun:XPopup:2.9.19'

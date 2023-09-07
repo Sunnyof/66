@@ -3,7 +3,6 @@ package com.cocos.game;
 
 import android.util.Log;
 
-import com.game.ad.GameGoogleAd;
 import com.game.util.LogHelp;
 import com.game.viewmodel.JsListener;
 

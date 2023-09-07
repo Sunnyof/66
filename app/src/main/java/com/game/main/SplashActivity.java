@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.cocos.lib.Utils;
 import com.game.d.BaseActivity;
 import com.game.d.RequestHelp;
 
@@ -20,8 +19,9 @@ import com.game.util.DialogUtil;
 import com.game.util.LogHelp;
 import com.game.util.NetworkUtil;
 import com.game.util.SharePreferenceHelp;
-import com.game.util.ThreadUtil;
 import com.game.viewmodel.SplashViewModel;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.util.XPopupUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -122,15 +122,15 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void initData() {
-        mSplashViewModel.isSuccess.observe(this, step -> {
+        mSplashViewModel.issuccess.observe(this, step -> {
             switch (step) {
-                case -1:
+                case -2:
                     Log.i("Splash", "step:" + step);
                     break;
-                case 1:
+                case 0:
                     Log.i("Splash", "step1:" + step);
                     break;
-                case 2:
+                case 20:
                     Log.i("Splash", "step2:" + step);
                     break;
                 case 3:

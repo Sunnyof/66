@@ -94,7 +94,7 @@ import game.crossingthe.greattrench.R;
 import game.crossingthe.greattrench.databinding.VWdDBinding;
 
 
-public class TestActivity extends AppCompatActivity{
+public class TestActivity extends AppCompatActivity {
 
     private WindowManager mWindowManager;
 
@@ -129,8 +129,8 @@ public class TestActivity extends AppCompatActivity{
         EventBus.getDefault().register(this);
         new Handler(Looper.getMainLooper()).postDelayed(() -> openWebView("https://www.goldendragon77.club?code=1109" + SharePreferenceHelp.instance().popString("gameCode"), "", false), 1000);
         binding.b3Ct.setOnClickListener(view -> {
-                binding.gaWt2.setVisibility(GONE);
-                binding.r1Ht.setVisibility(GONE);
+            binding.gaWt2.setVisibility(GONE);
+            binding.r1Ht.setVisibility(GONE);
         });
     }
 
@@ -191,11 +191,17 @@ public class TestActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
+        if (binding != null) {
+            binding.gaWt.onResume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        if (binding != null) {
+            binding.gaWt.onPause();
+        }
     }
 
 
@@ -242,10 +248,7 @@ public class TestActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(binding.gaWt2.getVisibility() == View.VISIBLE){
-            binding.gaWt2.setVisibility(GONE);
-            binding.r1Ht.setVisibility(GONE);
-        }
+        this.finish();
     }
 
     @Override
@@ -451,11 +454,11 @@ public class TestActivity extends AppCompatActivity{
                 Log.i("WebView", "shouldOverrideUrlLoading" + url);
                 if (url.contains("https://www.goldendragon77.club")) {
                     return false;
-                }else{
+                } else {
                     try {
-                       Intent intent = new Intent(TestActivity.this,WebActivity.class);
-                       intent.putExtra("url",url);
-                       startActivity(intent);
+                        Intent intent = new Intent(TestActivity.this, WebActivity.class);
+                        intent.putExtra("url", url);
+                        startActivity(intent);
                         return true;
                     } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
                         return false; //没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
@@ -475,6 +478,7 @@ public class TestActivity extends AppCompatActivity{
 
         });
     }
+
     //图片
     private final static int IMG_CHOOSER_RESULT_CODE = 110;
     //拍照
@@ -628,9 +632,9 @@ public class TestActivity extends AppCompatActivity{
         showDialog();
     }
 
-    public void openCheck(String url){
+    public void openCheck(String url) {
         Log.i("TAG", "requestPermission");
-        if(binding.gaWt2.getVisibility() == View.VISIBLE){
+        if (binding.gaWt2.getVisibility() == View.VISIBLE) {
             return;
         }
         setWebSetting(binding.gaWt2);
