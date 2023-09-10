@@ -12,7 +12,6 @@ import com.game.util.SharePreferenceHelp;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,15 +26,15 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-        initFirebase();
-        initAppsFlyer();
         initFacebook();
         initThirdSdk();
+        initFirebase();
+        initAppsFlyer();
         SharePreferenceHelp.instance().init(this);
     }
 
     private void initThirdSdk(){
-        GameGoogleAd.getInstance().initAdContext(null);
+        GameGoogleAd.instance().withApplication(null);
     }
 
     private void initFacebook(){

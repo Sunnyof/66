@@ -185,7 +185,7 @@ public class LogHelp {
      */
     public void showGoogleAd() {
         Log.i("LogHelp", "showGoogleAd");
-        GameGoogleAd.getInstance().showAd();
+        GameGoogleAd.instance().showAd("");
     }
 
     /**

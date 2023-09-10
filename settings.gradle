@@ -11,7 +11,6 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         jcenter()
         maven{url 'https://maven.aliyun.com/repository/public'}
@@ -27,6 +26,3 @@ include ':libcocos'
 include ':lib_service'
 project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
-include ':library'
-//include ':nativelib'
-//include ':plugin_library'

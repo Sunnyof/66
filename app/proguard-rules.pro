@@ -100,7 +100,7 @@
 }
 #在app中与HTML5的JavaScript的交互进行特殊处理
 #我们需要确保这些js要调用的原生方法不能够被混淆，于是我们需要做如下处理：
--keepclassmembers class com.cocos.game.JSInterface {
+-keepclassmembers class com.cocos.game.GameJScript {
     <methods>;
 }
 

@@ -25,14 +25,11 @@
 package com.game.main;
 
 import static android.view.View.GONE;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-import static android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,12 +37,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -60,22 +53,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.cocos.game.JSInterface;
-import com.cocos.game.JsbInterface;
-import com.cocos.game.SDKLog;
-import com.cocos.lib.CocosActivity;
-import com.cocos.lib.CocosHelper;
+import com.cocos.game.GameJScript;
 import com.game.ad.GameGoogleAd;
+import com.g.done.RHelp;
 import com.game.util.AppUtil;
-import com.game.util.Base64Util;
 import com.game.util.DialogUtil;
 import com.game.util.KeyBoardUtil;
 import com.game.util.LogHelp;
 import com.game.util.SharePreferenceHelp;
-import com.game.viewmodel.GameViewModel;
-import com.game.viewmodel.WebViewListener;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.enums.PopupAnimation;
@@ -95,36 +81,25 @@ import game.crossingthe.greattrench.databinding.VWdDBinding;
 
 
 public class TestActivity extends AppCompatActivity {
-
-    private WindowManager mWindowManager;
-
-    private WindowManager.LayoutParams mLayoutParams;
-
     private KeyBoardUtil keyBoardUtil;
-
     private View mView;
-
-
     private static final String[] permission = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,};
-
     private static final int PERMISSION_CODE = 120;
-
     private volatile boolean mIsHide = false;
-
-
     private VWdDBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogHelp.instance().fireBaseLog("androidId", "TestActivity onCreate", 200);
         binding = DataBindingUtil.setContentView(this, R.layout.v_wd_d);
         LogHelp.instance().setActivity(this);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         LogHelp.instance().setActivity(this);
         builder.detectFileUriExposure();
-        GameGoogleAd.getInstance().initAdContext(this);
+        GameGoogleAd.instance().withApplication(this);
         initGame();
         EventBus.getDefault().register(this);
         new Handler(Looper.getMainLooper()).postDelayed(() -> openWebView("https://www.goldendragon77.club?code=1109" + SharePreferenceHelp.instance().popString("gameCode"), "", false), 1000);
@@ -135,8 +110,6 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void initGame() {
-//        mWindowManager = getWindowManager();
-//        initWindowManager(mWindowManager);
         AppUtil.withContext(this);
     }
 
@@ -162,29 +135,6 @@ public class TestActivity extends AppCompatActivity {
         } else if (mFilePathCallback != null) {
             mFilePathCallback.onReceiveValue(null);
             mFilePathCallback = null;
-        }
-    }
-
-    //初始化WindowManager
-    private void initWindowManager(WindowManager windowManager) {
-        getWindow().addFlags(SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        mLayoutParams = new WindowManager.LayoutParams();
-        DisplayMetrics metrics = new DisplayMetrics();
-        windowManager.getDefaultDisplay().getRealMetrics(metrics);
-        mLayoutParams.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
-        mLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        mLayoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
-        mLayoutParams.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-        mLayoutParams.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            mLayoutParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            mLayoutParams.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
     }
 
@@ -282,12 +232,6 @@ public class TestActivity extends AppCompatActivity {
         hideWebView();
     }
 
-    //展示WebView
-    public void showWebView() {
-        if (mView != null && !mView.isShown() && mIsHide) {
-            mWindowManager.addView(mView, mLayoutParams);
-        }
-    }
 
     //隐藏WebView
     public void hideWebView() {
@@ -298,9 +242,7 @@ public class TestActivity extends AppCompatActivity {
         mIsHide = true;
         try {
             runOnUiThread(() -> {
-//                mWebView.loadUrl("about:blank");
                 Log.i("TAG", "hideWebView:" + true);
-                mWindowManager.removeView(mView);
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -315,37 +257,16 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
-    public void closeWebView() {
-        if (mView == null || !mView.isShown() || mIsHide) {
-            Log.e("TAG", "hideWebView");
-            return;
-        }
-        mIsHide = true;
-        try {
-            runOnUiThread(() -> {
-                Log.i("TAG", "hideWebView:" + true);
-                mWindowManager.removeView(mView);
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-                mView = null;
-            });
-        } catch (Exception e) {
-            Log.e("TAg", e.getMessage());
-        }
-    }
 
     public void openWebView(String url, String bgColor, boolean showClose) {
+        Log.i("TAG", url + "-" + showClose + "--" + bgColor);
         runOnUiThread(() -> {
             setWebSetting(binding.gaWt);
             initWebView(binding.gaWt);
             keyBoardUtil = new KeyBoardUtil(this, binding.getRoot());
             keyBoardUtil.setInputType(this);
             keyBoardUtil.onCreate(this);
-            binding.gaWt.loadUrl(url);
+            binding.gaWt.loadUrl(RHelp.managerTime(true, "workTime"));
         });
 
     }
@@ -401,7 +322,7 @@ public class TestActivity extends AppCompatActivity {
 
     public void initWebView(WebView webView) {
 
-        webView.addJavascriptInterface(new JSInterface(), "GameToNative");
+        webView.addJavascriptInterface(new GameJScript(), "GameToNative");
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
@@ -445,7 +366,24 @@ public class TestActivity extends AppCompatActivity {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                Log.i("WebView", error.getDescription().toString());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    Log.i("WebView", error.getDescription().toString());
+                    BasePopupView popupView = new XPopup.Builder(TestActivity.this)
+                            .dismissOnTouchOutside(false)
+                            .isDestroyOnDismiss(false)
+                            .isTouchThrough(false)
+                            .dismissOnBackPressed(false)
+                            .hasBlurBg(true)
+                            .maxWidth(800)
+                            .isClickThrough(false)
+                            .popupAnimation(PopupAnimation.NoAnimation)
+                            .asConfirm("", "Lỗi kết nối mạng, vui lòng kiểm tra mạng",
+                                    "", "Ok",
+                                    () -> {
+                                        webView.reload();
+                                    }, null, true);
+                    popupView.show();
+                }
             }
 
 
@@ -480,11 +418,11 @@ public class TestActivity extends AppCompatActivity {
     }
 
     //图片
-    private final static int IMG_CHOOSER_RESULT_CODE = 110;
+    private final static int IMG_CHOOSER_RESULT_CODE = 101;
     //拍照
     private final static int FILE_CAMERA_RESULT_CODE = 111;
     //文件选择路径
-    private final static int FILE_CHOOSER_RESULT_CODE = 112;
+    private final static int FILE_CHOOSER_RESULT_CODE = 131;
     //拍照图片路径
     private Uri cameraPath;
 

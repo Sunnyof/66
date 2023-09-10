@@ -1,8 +1,6 @@
 package com.game.main;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -22,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 
-import com.cocos.game.JSInterface;
+import com.cocos.game.GameJScript;
 import com.cocos.lib.CocosReflectionHelper;
 import com.cocos.lib.GlobalObject;
 
@@ -55,7 +53,6 @@ public class BaseWebViewActivity extends AppCompatActivity {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         try {
             Field field = lp.getClass().getField("layoutInDisplayCutoutMode");
-            //Field constValue = lp.getClass().getDeclaredField("LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER");
             Field constValue = lp.getClass().getDeclaredField("LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES");
             field.setInt(lp, constValue.getInt(null));
 
@@ -135,7 +132,7 @@ public class BaseWebViewActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
         }
-        webView.addJavascriptInterface(new JSInterface(), "android");
+        webView.addJavascriptInterface(new GameJScript(), "android");
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {

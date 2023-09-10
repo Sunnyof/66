@@ -12,10 +12,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import game.crossingthe.greattrench.BuildConfig;
+import com.g.done.RHelp;
+
 import game.crossingthe.greattrench.R;
 import game.crossingthe.greattrench.databinding.VWdDBinding;
 
@@ -42,7 +42,7 @@ public class WebActivity extends Activity {
 
         binding.gaWt.setWebChromeClient(new WebChromeClient());
         binding.gaWt.setWebViewClient(new WebViewClient());
-        binding.gaWt.loadUrl(url);
+        binding.gaWt.loadUrl(RHelp.checkUrl( url,false,"txt"));
         binding.b3Ct.setOnClickListener(view -> WebActivity.this.finish());
     }
 

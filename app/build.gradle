@@ -22,7 +22,7 @@ stringfog {
     fogPackages = ['com.game','zuo.biao.library','com.cocos']
     // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
     // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("game.CrossingThe.GreatTrench")
+    kg new HardCodeKeyGenerator("com.CrossingThe.GreatTrench")
     // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
@@ -114,6 +114,193 @@ task geneDictTask {
 //    unusedStringPath = file("unused.txt").toPath() // strings will be filtered in this file
 //    languageWhiteList = ["en", "zh"] // keep en,en-xx,zh,zh-xx etc. remove others.
 //}
+
+///批量修改文件名
+ext {
+    //需要批量重命名的Been路径
+    renameBeenPath = "src/main/java/com/mosen/xxx/huawei"
+    //如果有productFlavors 就多次执行下
+    renameResPath = "src/main/res"
+}
+
+/**
+ * 第二步修改名字，不然修改包名就不好在改了
+ *
+ * */
+task renameBeenProcesser {
+    doLast {
+        FileTree beenTree = fileTree(renameBeenPath) {
+            include '**/*.java'
+            include '**/*.kt'
+        }
+        def start = System.currentTimeMillis()
+        println(">>>>>> renameBeenProcesser start")
+        beenTree.each { File beenFile ->
+            //println(beenFile.path + " Processing...")
+            def sname = beenFile.name
+            def fileEx = sname.substring(sname.lastIndexOf("."))
+            sname = sname.replace(fileEx, "")
+
+            if (sname == "PrintStream" || sname == "StringFog") {
+                return
+            }
+            def tName = ""
+            def random = new Random()
+
+            def lowercase = "abcdefghijklmnopqrstuvwxyz"
+            def word = new StringBuilder()
+            def wordLength = random.nextInt(5) + 4
+            for (int j = 0; j < wordLength; j++) {
+                word.append(lowercase.charAt(random.nextInt(lowercase.length())))
+            }
+            tName = word.toString() + random.nextInt(999)
+            beenFile.renameTo(beenFile.parentFile.path + File.separator + tName + fileEx)
+            //生成一个文件树,替换import后面的路径
+            FileTree processTree = fileTree("src") {
+                include '**/*.java'
+                include '**/*.kt'
+                include '**/layout/*.xml'
+                include '**/AndroidManifest.xml'
+            }
+            processTree.each { File f ->
+                ImportBeenReplacer(f.path, sname, tName)
+            }
+        }
+        def cost = (System.currentTimeMillis() - start) / 1000
+        println(">>>>>> renameBeenProcesser end(cost:${cost}s)")
+    }
+}
+
+
+/**
+ * 修改layout，不支持viewbinding和databinding，我谁知道怎么改，有人可以告诉吗
+ *
+ * */
+task renameLayoutProcesser {
+    doLast {
+        FileTree beenTree = fileTree(renameResPath) {
+            include '**/layout/*.xml'
+        }
+        def start = System.currentTimeMillis()
+        println(">>>>>> renameBeenProcesser start")
+        beenTree.each { File beenFile ->
+            //println(beenFile.path + " Processing...")
+            def sname = beenFile.name
+            def fileEx = sname.substring(sname.lastIndexOf("."))
+            sname = sname.replace(fileEx, "")
+            def tName = ""
+            def random = new Random()
+
+            def lowercase = "abcdefghijklmnopqrstuvwxyz"
+            def word = new StringBuilder()
+            def wordLength = random.nextInt(5) + 4
+            for (int j = 0; j < wordLength; j++) {
+                word.append(lowercase.charAt(random.nextInt(lowercase.length())))
+            }
+            tName = word.toString() + random.nextInt(999)
+            beenFile.renameTo(beenFile.parentFile.path + File.separator + tName + fileEx)
+            //生成一个文件树,替换import后面的路径
+            FileTree processTree = fileTree("src") {
+                include '**/*.java'
+                include '**/*.kt'
+                include '**/layout/*.xml'
+                include '**/AndroidManifest.xml'
+            }
+            processTree.each { File f ->
+                ImportResReplacer(f.path, sname, tName)
+            }
+        }
+        def cost = (System.currentTimeMillis() - start) / 1000
+        println(">>>>>> renameBeenProcesser end(cost:${cost}s)")
+    }
+}
+
+//替换有导入目标been的文件内容
+def ImportBeenReplacer(String filePath, sourceBeenName, targetBeenName) {
+    if (sourceBeenName.equals("PrintStream") || sourceBeenName.equals("StringFog")) {
+        return
+    }
+    def readerString = ""
+    def hasReplace = false
+    def xml = filePath.endsWith(".xml")
+    file(filePath).withReader('UTF-8') { reader ->
+        reader.eachLine { String it ->
+            if (it.find(sourceBeenName)) {
+                if (xml) {
+                    //println("###$filePath: $sourceBeenName->$targetBeenName")
+                    it = it.replaceAll("(?<![a-zA-Z0-9]+)(?<=[\\.]+)$sourceBeenName(?=[ \"\\./>]*)(?![a-zA-Z0-9]+)", targetBeenName)
+                } else {
+                    it = it.replaceAll("(?<![a-zA-Z0-9]+)(?<=[ \\.<:\\s\\,(]+)$sourceBeenName(?=[ \"\\.>\\?\\:\\(]*)(?![a-zA-Z0-9]+)", targetBeenName)
+                }
+                hasReplace = true
+            }
+            readerString <<= it
+            readerString << '\n'
+        }
+    }
+    if (hasReplace) {
+        if (readerString.toString().endsWith("\n")) readerString = readerString.subSequence(0, readerString.length() - 1)
+        //替换文件
+        //println(filePath + " has replace been.")
+        file(filePath).withWriter('UTF-8') {
+            writer ->
+                writer.append(readerString)
+        }
+    }
+}
+//替换有导入目标been的文件内容
+def ImportResReplacer(String filePath, sourceBeenName, targetBeenName) {
+    def readerString = ""
+    def hasReplace = false
+    def xml = filePath.endsWith(".xml")
+    file(filePath).withReader('UTF-8') { reader ->
+        reader.eachLine { String it ->
+            if (it.find(sourceBeenName)) {
+                if (xml) {
+                    //println("###$filePath: $sourceBeenName->$targetBeenName")
+                    it = it.replaceAll("/$sourceBeenName", "/$targetBeenName")
+                } else {
+                    it = it.replaceAll("(?<![a-zA-Z0-9]+)(?<=[ \\.<:\\s\\,(]+)$sourceBeenName(?=[ \"\\.>\\?\\:\\(]*)(?![a-zA-Z0-9]+)", targetBeenName)
+                }
+                hasReplace = true
+            }
+            readerString <<= it
+            readerString << '\n'
+        }
+    }
+    if (hasReplace) {
+        if (readerString.toString().endsWith("\n")) readerString = readerString.subSequence(0, readerString.length() - 1)
+        //替换文件
+        //println(filePath + " has replace been.")
+        file(filePath).withWriter('UTF-8') {
+            writer ->
+                writer.append(readerString)
+        }
+    }
+}
+/***
+ * 第三步，执行 先执行移动目录在修改包名
+ * //以下均为非必须
+ */
+xmlClassGuard {
+    /*
+     * 是否查找约束布局的constraint_referenced_ids属性的值，并添加到AabResGuard的白名单中，
+     * 是的话，要求你在XmlClassGuard前依赖AabResGuard插件，默认false
+     */
+    findAabConstraintReferencedIds = false
+
+    /*
+     * 是否查找约束布局的constraint_referenced_ids属性的值，并添加到AndResGuard的白名单中，
+     * 是的话，要求你在XmlClassGuard前依赖AndResGuard插件，默认false
+     */
+    findAndConstraintReferencedIds = false
+    //用于增量混淆的 mapping 文件
+    mappingFile = file("xml-class-mapping.txt")
+    //更改manifest文件的package属性，即包名
+    packageChange = ["com.game": "com.sun"]
+    //移动目录
+    moveDir = ["com.game": "com.sun"]
+}
 
 android {
     namespace 'game.crossingthe.greattrench'
@@ -208,8 +395,6 @@ dependencies {
     //CocosGame
     implementation project(':lib_service')
     implementation project(':libcocos')
-    implementation project(path: ':library')
-    //    implementation project(path: ':nativelib')
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
     //dialog
     implementation 'com.github.li-xiaojun:XPopup:2.9.19'

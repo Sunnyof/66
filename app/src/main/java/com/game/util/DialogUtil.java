@@ -2,8 +2,8 @@ package com.game.util;
 
 import android.app.Activity;
 
-import com.game.d.BaseViewModel;
-import com.game.d.RequestHelp;
+import com.g.done.BVM;
+import com.g.done.RHelp;
 import com.game.BaseConstant;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
@@ -23,7 +23,7 @@ public class DialogUtil {
     private static String[] CHOICE_4 = {"Camera", "Photo", "File"};
     private static  BasePopupView popupView;
 
-    public static void showErrorDialog(Activity activity, BaseViewModel baseViewModel) {
+    public static void showErrorDialog(Activity activity, BVM baseViewModel) {
         if(null == popupView)
          popupView = new XPopup.Builder(activity)
                 .dismissOnTouchOutside(false)
@@ -36,7 +36,7 @@ public class DialogUtil {
                 .popupAnimation(PopupAnimation.NoAnimation)
                 .asConfirm("", netTip()[0],
                         "",netTip()[1],
-                        () -> RequestHelp.reconnect(true, baseViewModel), null, true);
+                        () -> RHelp.reconnect(true, baseViewModel), null, true);
         if(popupView.isDismiss()) {
             popupView.show();
         }

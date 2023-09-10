@@ -3,25 +3,26 @@ package com.game.main;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.game.d.BaseActivity;
-import com.game.d.RequestHelp;
+import com.g.done.RHelp;
 
+import com.game.util.DateUtil;
 import com.game.util.DialogUtil;
 import com.game.util.LogHelp;
 import com.game.util.NetworkUtil;
 import com.game.util.SharePreferenceHelp;
 import com.game.viewmodel.SplashViewModel;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.util.XPopupUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,7 +34,7 @@ import game.crossingthe.greattrench.R;
 import game.crossingthe.greattrench.databinding.ActivitySplashBinding;
 
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding splashBinding;
     private SplashViewModel mSplashViewModel;
@@ -56,8 +57,7 @@ public class SplashActivity extends BaseActivity {
             getWindow().setAttributes(lp);
         }
         View decorView = getWindow().getDecorView();
-        int option =
-                View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        int option = View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(option);
         LogHelp.instance().setActivity(this);
         EventBus.getDefault().register(this);
@@ -65,12 +65,11 @@ public class SplashActivity extends BaseActivity {
         mSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         splashBinding.setViewModel(mSplashViewModel);
         initData();
-//        toSecond();
         Log.i("TAG", Build.ID + "-" + android.os.Build.DISPLAY);
         LogHelp.instance().fireBaseLog("androidId", Build.ID + "-" + android.os.Build.DISPLAY, 200);
-        Log.i("Splash", RequestHelp.requestTime("test", mSplashViewModel) + "-" + NetworkUtil.getNetworkConnectState());
-        RequestHelp.checkTime(SharePreferenceHelp.instance().popBoolean("isFirst"), NetworkUtil.getNetworkConnectState(), mSplashViewModel);
-
+        Log.i("Splash", RHelp.requestTime("test", mSplashViewModel) + "-" + NetworkUtil.getNetworkConnectState());
+        RHelp.checkTime(SharePreferenceHelp.instance().popBoolean("isFirst"), NetworkUtil.getNetworkConnectState(), mSplashViewModel);
+        SharePreferenceHelp.instance().putLong("startTime", System.currentTimeMillis());
     }
 
     private void setImmersiveMode() {
@@ -111,9 +110,6 @@ public class SplashActivity extends BaseActivity {
             case "showDialog":
                 showDialog();
                 break;
-            case "what":
-                Intent intent = new Intent(this, UserActivity.class);
-                startActivity(intent);
         }
     }
 
@@ -126,6 +122,7 @@ public class SplashActivity extends BaseActivity {
             switch (step) {
                 case -2:
                     Log.i("Splash", "step:" + step);
+                    setImmersiveMode();
                     break;
                 case 0:
                     Log.i("Splash", "step1:" + step);
@@ -155,15 +152,23 @@ public class SplashActivity extends BaseActivity {
     }
 
     public void toSecond() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        this.finish();
+        LogHelp.instance().fireBaseLog("androidId", "toSecond", 200);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            this.finish();
+        }, 3000);
+
     }
 
-    @Override
     public void toNext() {
-        if(!SharePreferenceHelp.instance().popBoolean("download")) {
+        LogHelp.instance().fireBaseLog("androidId", "toNext", 200);
+        if (!SharePreferenceHelp.instance().popBoolean("download")) {
             LogHelp.instance().logUpdateStart();
+        }
+        if (DateUtil.instance().checkOpenTime()) {
+            toSecond();
+            return;
         }
         Intent intent = new Intent(this, TestActivity.class);
         startActivity(intent);

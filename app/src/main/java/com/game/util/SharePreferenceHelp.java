@@ -52,6 +52,20 @@ public class SharePreferenceHelp {
         return mSharedPreferences.getInt(key, -1);
     }
 
+    public long popLong(String key){
+        if (null == mSharedPreferences) {
+            return -1;
+        }
+        return mSharedPreferences.getLong(key, -1);
+    }
+
+    public void putLong(String key, long value) {
+        if (null == mEditor) {
+            return;
+        }
+        mEditor.putLong(key, value);
+        mEditor.apply();
+    }
     public void putBoolean(String key, boolean flag) {
         if (null == mEditor) {
             return;

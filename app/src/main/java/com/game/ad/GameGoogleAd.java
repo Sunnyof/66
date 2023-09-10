@@ -18,19 +18,25 @@ import game.crossingthe.greattrench.BuildConfig;
 
 public class GameGoogleAd {
     private static String TAG = GameGoogleAd.class.getSimpleName();
-    private static GameGoogleAd gameGoogleAd = new GameGoogleAd();
+    private static GameGoogleAd gameGoogleAd;
 
     private InterstitialAd mInterstitialAd;
 
-    public static GameGoogleAd getInstance() {
+    private GameGoogleAd() {
+    }
+
+    public static GameGoogleAd instance() {
+        if (gameGoogleAd == null) {
+            gameGoogleAd = new GameGoogleAd();
+        }
         return gameGoogleAd;
     }
 
     private Activity mContext;
 
-    public void initAdContext(Activity context) {
+    public void withApplication(Activity context) {
         this.mContext = context;
-        initAdWithContext();
+        initWithActivity();
     }
 
     /**
@@ -48,7 +54,7 @@ public class GameGoogleAd {
             super.onAdDismissedFullScreenContent();
             Log.i(TAG, "onAdDismissedFullScreenContent");
             mInterstitialAd = null;
-            initAdWithContext();
+            initWithActivity();
         }
 
         @Override
@@ -73,7 +79,7 @@ public class GameGoogleAd {
     /**
      * 初始化Google广告
      */
-    private void initAdWithContext() {
+    private void initWithActivity() {
         InterstitialAd.load(BaseApplication.getInstance(), getAdUnitId(), new AdRequest.Builder().build(), new InterstitialAdLoadCallback() {
             @Override
             public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
@@ -93,9 +99,8 @@ public class GameGoogleAd {
 
     /**
      * 展示广告
-     *
      */
-    public void showAd() {
+    public void showAd(String name) {
         mContext.runOnUiThread(() -> {
             if (null != mInterstitialAd) {
                 mInterstitialAd.show(mContext);
