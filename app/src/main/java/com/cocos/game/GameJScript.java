@@ -3,14 +3,14 @@ package com.cocos.game;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.game.util.LogHelp;
+import com.sun.util.zkfyevsg888;
 
 public class GameJScript {
 
     @JavascriptInterface
     public void logEvent(String eventName, String params) {
         Log.i("JSInterface", "Log event: eventName: " + eventName + " params: $params");
-        LogHelp.instance().dotEvent(eventName, params);
+        zkfyevsg888.instance().dotEvent(eventName, params);
     }
 
     @JavascriptInterface

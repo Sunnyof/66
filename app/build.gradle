@@ -118,7 +118,7 @@ task geneDictTask {
 ///批量修改文件名
 ext {
     //需要批量重命名的Been路径
-    renameBeenPath = "src/main/java/com/mosen/xxx/huawei"
+    renameBeenPath = "src/main/java/com/sun/"
     //如果有productFlavors 就多次执行下
     renameResPath = "src/main/res"
 }

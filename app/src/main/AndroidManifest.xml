@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.game.BaseApplication"
+        android:name="com.sun.tmrbmq646"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -36,7 +36,7 @@
             android:value="ca-app-pub-7525452941771948~1807276463" />
 
         <activity
-            android:name="com.game.main.SplashActivity"
+            android:name="com.sun.main.owuc462"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/SplashTheme">
@@ -46,31 +46,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.game.main.MainActivity"
+            android:name="com.sun.main.dpsfmvc962"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:name="com.game.main.TestActivity"
+            android:name="com.sun.main.epxvk841"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/SplashTheme"
             android:screenOrientation="sensorLandscape"></activity>
         <activity
-            android:name="com.game.main.UserActivity"
+            android:name="com.sun.main.nmcjhk546"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
-            android:name="com.game.main.WebActivity"
+            android:name="com.sun.main.hixth770"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <service
-            android:name="com.game.service.LocalFirebaseMessagingService"
+            android:name="com.sun.service.supfyuxo96"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
