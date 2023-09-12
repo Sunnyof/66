@@ -6,9 +6,9 @@ import android.util.Log;
 
 import com.appsflyer.AppsFlyerConversionListener;
 import com.appsflyer.AppsFlyerLib;
-import com.sun.ad.fuaknd334;
-import com.sun.util.zkfyevsg888;
-import com.sun.util.wovg23;
+import com.sun.m.fuaknd334;
+import com.sun.u.zkfyevsg888;
+import com.sun.u.wovg23;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.FirebaseApp;

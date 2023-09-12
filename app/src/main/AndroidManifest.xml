@@ -20,9 +20,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/main_icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_launcher"
+        android:roundIcon="@drawable/main_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
@@ -36,49 +36,56 @@
             android:value="ca-app-pub-7525452941771948~1807276463" />
 
         <activity
-            android:name="com.sun.main.owuc462"
+            android:name="com.sun.m.owuc462"
             android:exported="true"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@style/SplashTheme">
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/landTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.sun.main.dpsfmvc962"
+            android:name="com.sun.m.dpsfmvc962"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorPortrait"></activity>
         <activity
-            android:name="com.sun.main.epxvk841"
+            android:name="com.sun.m.epxvk841"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="sensorLandscape"></activity>
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/landTheme"></activity>
         <activity
-            android:name="com.sun.main.nmcjhk546"
+            android:name="com.sun.m.nmcjhk546"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
-            android:name="com.sun.main.hixth770"
+            android:name="com.sun.m.hixth770"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <service
-            android:name="com.sun.service.supfyuxo96"
+            android:name="com.sun.s.supfyuxo96"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name="com.sun.s.AddService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.sun.add" />
+            </intent-filter>
+        </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="38" />
+            android:value="33" />
 
         <activity
             android:name="com.cocos.lib.CocosEditBoxActivity"
@@ -89,12 +96,16 @@
         <!-- Facebook -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/fb_id" />
+            android:value="@string/f2b_id" />
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
-            android:value="@string/fb_token_id" />
+            android:value="@string/f2b_token_id" />
 
-        <activity android:name="com.facebook.FacebookActivity" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="behind"></activity>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="game.CrossingThe.GreatTrench.file-provider"

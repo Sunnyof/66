@@ -3,7 +3,7 @@ package com.cocos.game;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.sun.util.zkfyevsg888;
+import com.sun.u.zkfyevsg888;
 
 public class GameJScript {
 

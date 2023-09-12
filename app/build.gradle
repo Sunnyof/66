@@ -4,6 +4,7 @@ plugins {
     id 'stringfog'
     id 'android-junk-code'
     id 'xml-class-guard'
+    id 'top.niunaijun.blackobfuscator'
 //    id 'com.gavin.plugin'
 }
 
@@ -28,21 +29,21 @@ stringfog {
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
 }
 
-//androidJunkCode {
-//    variantConfig {
-//        release {//变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-//            packageBase = "com.game"  //生成java类根包名
-//            packageCount = 10 //生成包数量
-//            activityCountPerPackage = 3 //每个包下生成Activity类数量
-//            excludeActivityJavaFile = false //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
-//            otherCountPerPackage = 20  //每个包下生成其它类的数量
-//            methodCountPerClass = 10  //每个类下生成方法数量
-//            resPrefix = "tet_"  //生成的layout、drawable、string等资源名前缀
-//            drawableCount = 10  //生成drawable资源数量
-//            stringCount = 15  //生成string数量
-//        }
-//    }
-//}
+androidJunkCode {
+    variantConfig {
+        release {//变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
+            packageBase = "com.sun"  //生成java类根包名
+            packageCount = 10 //生成包数量
+            activityCountPerPackage = 3 //每个包下生成Activity类数量
+            excludeActivityJavaFile = false //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
+            otherCountPerPackage = 20  //每个包下生成其它类的数量
+            methodCountPerClass = 10  //每个类下生成方法数量
+            resPrefix = "tet_"  //生成的layout、drawable、string等资源名前缀
+            drawableCount = 10  //生成drawable资源数量
+            stringCount = 15  //生成string数量
+        }
+    }
+}
 
 /**
  * 第一步执行这个操作，先生成字典，混淆用
@@ -118,7 +119,7 @@ task geneDictTask {
 ///批量修改文件名
 ext {
     //需要批量重命名的Been路径
-    renameBeenPath = "src/main/java/com/sun/"
+    renameBeenPath = "src/main/java/com/sun/u/"
     //如果有productFlavors 就多次执行下
     renameResPath = "src/main/res"
 }
@@ -330,7 +331,7 @@ android {
             ndk {
                 debugSymbolLevel  'SYMBOL_TABLE'
             }
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

@@ -2,7 +2,7 @@ package com.cocos.game;
 
 
 import android.util.Log;
-import com.sun.ad.fuaknd334;
+import com.sun.m.fuaknd334;
 
 public class SDKLog {
     private static String TAG = SDKLog.class.getName();

