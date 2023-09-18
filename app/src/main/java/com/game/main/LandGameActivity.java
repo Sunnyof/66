@@ -32,12 +32,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -46,36 +45,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.game.ad.GameGoogleAd;
 import com.cocos.game.JSInterface;
 import com.cocos.game.JsbInterface;
 import com.cocos.game.SDKLog;
+import com.game.viewmodel.WebViewListener;
 import com.cocos.lib.CocosActivity;
 import com.cocos.lib.CocosHelper;
-import com.game.ad.GameGoogleAd;
+
+import com.cocos.service.SDKWrapper;
 import com.game.util.AppUtil;
 import com.game.util.Base64Util;
 import com.game.util.DialogUtil;
 import com.game.util.KeyBoardUtil;
 import com.game.util.LogHelp;
-import com.game.util.SharePreferenceHelp;
 import com.game.viewmodel.GameViewModel;
-import com.game.viewmodel.WebViewListener;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
 import com.lxj.xpopup.enums.PopupAnimation;
@@ -89,12 +87,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.io.IOException;
 
-import game.crossingthe.greattrench.BuildConfig;
 import game.crossingthe.greattrench.R;
 import game.crossingthe.greattrench.databinding.VWdDBinding;
 
 
-public class TestActivity extends AppCompatActivity {
+public class LandGameActivity extends CocosActivity implements WebViewListener {
 
     private WindowManager mWindowManager;
 
@@ -104,6 +101,7 @@ public class TestActivity extends AppCompatActivity {
 
     private View mView;
 
+    private WebView mWebView;
 
     private static final String[] permission = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,};
 
@@ -111,6 +109,7 @@ public class TestActivity extends AppCompatActivity {
 
     private volatile boolean mIsHide = false;
 
+    private GameViewModel gameViewModel;
 
     private VWdDBinding binding;
 
@@ -118,26 +117,27 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.v_wd_d);
         LogHelp.instance().setActivity(this);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-        LogHelp.instance().setActivity(this);
         builder.detectFileUriExposure();
         GameGoogleAd.getInstance().initAdContext(this);
-        initGame();
+        SDKWrapper.shared().init(this);
+        CocosHelper.init(this);
+        AppUtil.withContext(this);
+        AppUtil.instance().lockOrientation(true);
         EventBus.getDefault().register(this);
-        new Handler(Looper.getMainLooper()).postDelayed(() -> openWebView("https://www.goldendragon77.club?code=1109" + SharePreferenceHelp.instance().popString("gameCode"), "", false), 1000);
-        binding.b3Ct.setOnClickListener(view -> {
-            binding.gaWt2.setVisibility(GONE);
-            binding.r1Ht.setVisibility(GONE);
-        });
     }
 
     private void initGame() {
-//        mWindowManager = getWindowManager();
-//        initWindowManager(mWindowManager);
+        mWindowManager = getWindowManager();
+        initWindowManager(mWindowManager);
         AppUtil.withContext(this);
+        gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        JsbInterface jsbInterface = new JsbInterface();
+        jsbInterface.initContext(gameViewModel);
+        SDKLog.setListener(gameViewModel);
+        jsbInterface.setWebViewListener(this);
     }
 
     //申請權限
@@ -191,17 +191,13 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (binding != null) {
-            binding.gaWt.onResume();
-        }
+        SDKWrapper.shared().onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (binding != null) {
-            binding.gaWt.onPause();
-        }
+        SDKWrapper.shared().onPause();
     }
 
 
@@ -214,6 +210,8 @@ public class TestActivity extends AppCompatActivity {
         if (!isTaskRoot()) {
             return;
         }
+        SDKWrapper.shared().onDestroy();
+
     }
 
     @Override
@@ -226,6 +224,7 @@ public class TestActivity extends AppCompatActivity {
             case FILE_CHOOSER_RESULT_CODE:
                 onActivityResult(data, requestCode, resultCode);
             default:
+                SDKWrapper.shared().onActivityResult(requestCode, resultCode, data);
                 break;
         }
     }
@@ -233,57 +232,73 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        SDKWrapper.shared().onNewIntent(intent);
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        SDKWrapper.shared().onRestart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        SDKWrapper.shared().onStop();
     }
 
     @Override
     public void onBackPressed() {
+        SDKWrapper.shared().onBackPressed();
         super.onBackPressed();
-        this.finish();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+        SDKWrapper.shared().onConfigurationChanged(newConfig);
         super.onConfigurationChanged(newConfig);
         Log.e("TAG", "onConfigurationChanged");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        SDKWrapper.shared().onRestoreInstanceState(savedInstanceState);
         super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        SDKWrapper.shared().onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onStart() {
+        SDKWrapper.shared().onStart();
         super.onStart();
     }
 
     @Override
     public void onLowMemory() {
+        SDKWrapper.shared().onLowMemory();
         super.onLowMemory();
     }
 
 
     public void hide(View view) {
+        gameViewModel.callHideWebViewCallBack();
         hideWebView();
     }
 
+    @Override
+    protected void onConfigurationChangedNative(long l) {
+        super.onConfigurationChangedNative(l);
+    }
+
+
     //展示WebView
     public void showWebView() {
+        gameViewModel.callShowWebViewCallBack();
         if (mView != null && !mView.isShown() && mIsHide) {
             mWindowManager.addView(mView, mLayoutParams);
         }
@@ -298,7 +313,7 @@ public class TestActivity extends AppCompatActivity {
         mIsHide = true;
         try {
             runOnUiThread(() -> {
-//                mWebView.loadUrl("about:blank");
+                mWebView.loadUrl("about:blank");
                 Log.i("TAG", "hideWebView:" + true);
                 mWindowManager.removeView(mView);
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -315,7 +330,9 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
+    @Override
     public void closeWebView() {
+        gameViewModel.callCloseWebViewCallBack();
         if (mView == null || !mView.isShown() || mIsHide) {
             Log.e("TAG", "hideWebView");
             return;
@@ -323,6 +340,7 @@ public class TestActivity extends AppCompatActivity {
         mIsHide = true;
         try {
             runOnUiThread(() -> {
+                mWebView.loadUrl("about:blank");
                 Log.i("TAG", "hideWebView:" + true);
                 mWindowManager.removeView(mView);
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
@@ -338,14 +356,43 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
+    @Override
     public void openWebView(String url, String bgColor, boolean showClose) {
+        gameViewModel.callLoadWebViewCallBack();
         runOnUiThread(() -> {
+            if (mView != null && mView.isShown()) {
+                return;
+            }
+            binding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.v_wd_d, null, false);
+            binding.setModel(gameViewModel);
+            mView = binding.getRoot();
+            mWebView = binding.gaWt;
             setWebSetting(binding.gaWt);
-            initWebView(binding.gaWt);
-            keyBoardUtil = new KeyBoardUtil(this, binding.getRoot());
+            initWebView(mWebView);
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+            ViewGroup.LayoutParams layoutParams1 = new ViewGroup.LayoutParams(metrics.widthPixels, metrics.heightPixels);
+            mView.setLayoutParams(layoutParams1);
+            keyBoardUtil = new KeyBoardUtil(this, mView);
             keyBoardUtil.setInputType(this);
             keyBoardUtil.onCreate(this);
-            binding.gaWt.loadUrl(url);
+            if (showClose) {
+                binding.r1Ht.setVisibility(View.VISIBLE);
+            } else {
+                binding.r1Ht.setVisibility(GONE);
+            }
+            if (bgColor.isEmpty()) {
+                mWebView.setBackgroundColor(Color.WHITE);
+            } else {
+                mWebView.setBackgroundColor(Color.parseColor(bgColor));
+            }
+            mWebView.loadUrl(url);
+            if (!mView.isShown()) {
+                runOnUiThread(() -> {
+                    mWindowManager.addView(mView, mLayoutParams);
+                });
+            }
+            mIsHide = false;
         });
 
     }
@@ -375,14 +422,14 @@ public class TestActivity extends AppCompatActivity {
 
     public void setWebSetting(WebView webView) {
         WebSettings settings = webView.getSettings();
-        Log.e("TAG", "setWebSetting");
         settings.setAllowFileAccess(true);
         settings.setJavaScriptEnabled(true);  //设置是否运行网上的js代码
-        settings.setAllowFileAccessFromFileURLs(true);
-        settings.setAllowContentAccess(true);
-        settings.setAllowUniversalAccessFromFileURLs(true);
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        settings.setSupportZoom(true);    //支持缩放
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            settings.setAllowFileAccessFromFileURLs(true);
+        }
+        settings.setSupportZoom(false);    //支持缩放
+        settings.setSupportMultipleWindows(true);
+//        settings.setAppCacheEnabled(true); //设置APP可以缓存
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);//返回上个界面不刷新  允许本地缓存
         settings.setAllowFileAccess(true);// 设置可以访问文件
@@ -390,18 +437,17 @@ public class TestActivity extends AppCompatActivity {
         settings.setDisplayZoomControls(false);//不支持放大缩小
         settings.setBuiltInZoomControls(false);
         settings.setLoadsImagesAutomatically(true);    //支持自动加载图片
-        settings.setUseWideViewPort(true);    //设置webview推荐使用的窗口，使html界面自适应屏幕
+        settings.setUseWideViewPort(false);    //设置webview推荐使用的窗口，使html界面自适应屏幕
         settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptCanOpenWindowsAutomatically(true);//允许js弹框
         settings.setMediaPlaybackRequiresUserGesture(false);
-        settings.setUserAgentString(settings.getUserAgentString() + "AndSkyWeb&packageName=" + BuildConfig.APPLICATION_ID);
-        Log.i("WebView agemt", settings.getUserAgentString() + "AndSkyWeb&packageName=" + BuildConfig.APPLICATION_ID);
     }
 
-
     public void initWebView(WebView webView) {
-
-        webView.addJavascriptInterface(new JSInterface(), "GameToNative");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        }
+        webView.addJavascriptInterface(new JSInterface(), "android");
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
@@ -413,71 +459,56 @@ public class TestActivity extends AppCompatActivity {
 
 
             @Override
-            public boolean onJsAlert(WebView view, String url, String message, final android.webkit.JsResult result) {
-                // 在这里处理弹窗，例如使用AlertDialog显示消息
-                // 如果需要，您可以自定义弹窗样式和行为
-                // 最后调用result.confirm()来关闭弹窗
-                // 返回true表示已经处理了弹窗
-                Log.i("WebView", "onJsAlert:" + url);
-                return true;
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                super.onShowCustomView(view, callback);
             }
 
-            // 处理JavaScript的confirm弹窗
             @Override
-            public boolean onJsConfirm(WebView view, String url, String message, final android.webkit.JsResult result) {
-                // 在这里处理confirm弹窗，可以显示自定义的对话框，用户选择后调用result.confirm()或result.cancel()
-                // 返回true表示已经处理了弹窗
-                Log.i("WebView", "onJsConfirm:" + url);
-                return true;
+            public void onHideCustomView() {
+                super.onHideCustomView();
             }
 
-            // 处理JavaScript的prompt弹窗
             @Override
-            public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, final android.webkit.JsPromptResult result) {
-                // 在这里处理prompt弹窗，可以显示自定义的对话框，用户输入后调用result.confirm()或result.cancel()
-                // 返回true表示已经处理了弹窗
-                Log.i("WebView", "onJsPrompt:" + url);
-                return true;
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                runOnUiThread(() -> {
+                    gameViewModel.name.set(title);
+                    gameViewModel.name.notifyChange();
+                });
             }
         });
         webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                Log.i("WebView", error.getDescription().toString());
-            }
-
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.i("WebView", "shouldOverrideUrlLoading" + url);
-                if (url.contains("https://www.goldendragon77.club")) {
-                    return false;
-                } else {
-                    try {
-                        Intent intent = new Intent(TestActivity.this, WebActivity.class);
-                        intent.putExtra("url", url);
+                Log.i("TAG", "WebView" + url);
+                if (url == null) return false;
+                try {
+                    if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("file:")) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
                         return true;
-                    } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
-                        return false; //没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
                     }
+                } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
+                    return true; //没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
                 }
+                return super.shouldOverrideUrlLoading(view, url);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                Log.e("TAG", "onPageFinished" + url);
-                if (!SharePreferenceHelp.instance().popBoolean("download")) {
-                    LogHelp.instance().logUpdateSuccess();
-                    SharePreferenceHelp.instance().putBoolean("download", true);
-                }
             }
 
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                view.loadUrl("javascript:" + gJs);
+                Log.e("TAG", "onPageStarted");
+            }
         });
     }
+
+    private String gJs = Base64Util.decode("dmFyIGNhbGxOYXRpdmUgPSBmdW5jdGlvbiAoY2xhc3NOYW1lLCBmdW5jdGlvbk5hbWUsIC4uLmFyZ3MpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAl2YXIgZGF0YSA9IHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAkJY2xhc3M6IGNsYXNzTmFtZSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAkJZnVuY3Rpb246IGZ1bmN0aW9uTmFtZQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCX07CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAJaWYgKGFyZ3MubGVuZ3RoID4gMCkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCQlkYXRhWyJhcmdzIl0gPSBhcmdzWzBdOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCX0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAlyZXR1cm4gSlNPTi5zdHJpbmdpZnkoZGF0YSk7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9OwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFyIE5hdGl2ZVdlYnZpZXcgPSAoZnVuY3Rpb24gKCkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCWZ1bmN0aW9uIE5hdGl2ZVdlYnZpZXcoKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAJCXZhciBfdGhpcyA9IHRoaXM7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAJCXJldHVybiBfdGhpczsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAl9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAJTmF0aXZlV2Vidmlldy5wcm90b3R5cGUuaGlkZSA9IGZ1bmN0aW9uICgpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAkJYW5kcm9pZC5Kc1RvTmF0aXZlKGNhbGxOYXRpdmUoIldlYnZpZXciLCAiaGlkZSIsIHsgaWQ6IHRoaXMuaWQgfSkpOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCX07CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAJTmF0aXZlV2Vidmlldy5wcm90b3R5cGUuY2xvc2UgPSBmdW5jdGlvbiAodmFsdWUpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAkJYW5kcm9pZC5Kc1RvTmF0aXZlKGNhbGxOYXRpdmUoIldlYnZpZXciLCAiY2xvc2UiLCB7IGlkOiB0aGlzLmlkIH0pKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAl9OwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCU5hdGl2ZVdlYnZpZXcucHJvdG90eXBlLmNsZWFyID0gZnVuY3Rpb24gKCkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAJfTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAlyZXR1cm4gTmF0aXZlV2VidmlldzsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIH0gKCkpOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YXIgcGx1cyA9IG5ldyBPYmplY3QoKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBsdXMud2VidmlldyA9IG5ldyBPYmplY3QoKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBsdXMud2Vidmlldy5nZXRXZWJ2aWV3QnlJZCA9IGZ1bmN0aW9uIChpZCkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCXZhciB3ZWJ2aWV3ID0gbmV3IE5hdGl2ZVdlYnZpZXcoKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAl3ZWJ2aWV3LmlkID0gaWQ7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAJcmV0dXJuIHdlYnZpZXc7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB9OwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcGx1cy53ZWJ2aWV3LmN1cnJlbnRXZWJ2aWV3ID0gZnVuY3Rpb24gKCkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCXZhciB3ZWJ2aWV3ID0gbmV3IE5hdGl2ZVdlYnZpZXcoKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAlyZXR1cm4gd2VidmlldzsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIH07CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBsdXMuc3RvcmFnZSA9IG5ldyBPYmplY3QoKTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBsdXMuc3RvcmFnZS5zZXRJdGVtID0gZnVuY3Rpb24oa2V5LCB2YWx1ZSkgewogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGFuZHJvaWQuSnNUb05hdGl2ZShjYWxsTmF0aXZlKCJTdG9yYWdlIiwgInNldEl0ZW0iLCB7IGtleToga2V5LCB2YWx1ZTogdmFsdWUgfSkpOwogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfTsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcGx1cy5kZXZpY2UgPSBuZXcgT2JqZWN0KCk7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBwbHVzLmRldmljZS5zZXRXYWtlbG9jayA9IGZ1bmN0aW9uKGJvb2wpIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfTs");
 
     //图片
     private final static int IMG_CHOOSER_RESULT_CODE = 110;
@@ -630,18 +661,6 @@ public class TestActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showDialog(String str) {
         showDialog();
-    }
-
-    public void openCheck(String url) {
-        Log.i("TAG", "requestPermission");
-        if (binding.gaWt2.getVisibility() == View.VISIBLE) {
-            return;
-        }
-        setWebSetting(binding.gaWt2);
-        binding.gaWt2.setVisibility(View.VISIBLE);
-        initWebView(binding.gaWt2);
-        binding.gaWt2.loadUrl(url);
-        binding.r1Ht.setVisibility(View.VISIBLE);
     }
 
 }

@@ -125,13 +125,11 @@ public class MainActivity extends CocosActivity implements WebViewListener {
         GameGoogleAd.getInstance().initAdContext(this);
         SDKWrapper.shared().init(this);
         CocosHelper.init(this);
-//        if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
-//            initGame();
-//        }
-//        if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
+        if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
+            initGame();
+        }
         AppUtil.withContext(this);
         AppUtil.instance().lockOrientation(true);
-//        }
         EventBus.getDefault().register(this);
     }
 
@@ -435,6 +433,7 @@ public class MainActivity extends CocosActivity implements WebViewListener {
         }
         settings.setSupportZoom(false);    //支持缩放
         settings.setSupportMultipleWindows(true);
+//        settings.setCacheMode();
 //        settings.setAppCacheEnabled(true); //设置APP可以缓存
         settings.setDatabaseEnabled(true);
         settings.setDomStorageEnabled(true);//返回上个界面不刷新  允许本地缓存

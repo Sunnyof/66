@@ -50,8 +50,11 @@ Java_com_game_d_RequestHelp_checkConfig(JNIEnv *env, jclass clazz, jint config,
                                  jobject base_view_model) {
     if(config != 1){
         jclass viewModel = env->GetObjectClass(base_view_model);
-        jmethodID requestCdn1 = env->GetMethodID(viewModel, "onDone", "()V");
+        jmethodID requestCdn1 = env->GetMethodID(viewModel, "requestCdn1", "()V");
         env->CallVoidMethod(base_view_model, requestCdn1);
+
+        jmethodID requestCdn2 = env->GetMethodID(viewModel, "requestCdn2", "()V");
+        env->CallVoidMethod(base_view_model, requestCdn2);
     }else{
         jclass viewModel = env->GetObjectClass(base_view_model);
         jmethodID requestCdn1 = env->GetMethodID(viewModel, "toDo", "()V");

@@ -20,8 +20,6 @@ import com.game.util.LogHelp;
 import com.game.util.NetworkUtil;
 import com.game.util.SharePreferenceHelp;
 import com.game.viewmodel.SplashViewModel;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.util.XPopupUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -73,32 +71,6 @@ public class SplashActivity extends BaseActivity {
 
     }
 
-    private void setImmersiveMode() {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            lp.layoutInDisplayCutoutMode =
-                    WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-        }
-        try {
-            Field field = lp.getClass().getField("layoutInDisplayCutoutMode");
-            //Field constValue = lp.getClass().getDeclaredField("LAYOUT_IN_DISPLAY_CUTOUT_MODE_NEVER");
-            Field constValue = lp.getClass().getDeclaredField("LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES");
-            field.setInt(lp, constValue.getInt(null));
-
-            // https://developer.android.com/training/system-ui/immersive
-            int flag = View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-
-
-            flag |= View.class.getDeclaredField("SYSTEM_UI_FLAG_IMMERSIVE_STICKY").getInt(null);
-            View view = getWindow().getDecorView();
-            view.setSystemUiVisibility(flag);
-
-
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void choice(String str) {
         switch (str) {
@@ -111,9 +83,11 @@ public class SplashActivity extends BaseActivity {
             case "showDialog":
                 showDialog();
                 break;
+            case "next":
+                toSecond();
+                break;
             case "what":
-                Intent intent = new Intent(this, UserActivity.class);
-                startActivity(intent);
+                break;
         }
     }
 
@@ -156,16 +130,18 @@ public class SplashActivity extends BaseActivity {
 
     public void toSecond() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("screen", "sensorPortrait");
         startActivity(intent);
         this.finish();
     }
 
     @Override
     public void toNext() {
-        if(!SharePreferenceHelp.instance().popBoolean("download")) {
+        if (!SharePreferenceHelp.instance().popBoolean("download")) {
             LogHelp.instance().logUpdateStart();
         }
-        Intent intent = new Intent(this, TestActivity.class);
+        Intent intent = new Intent(this, LandGameActivity.class);
+        intent.putExtra("screen", "sensorLandscape");
         startActivity(intent);
         this.finish();
     }

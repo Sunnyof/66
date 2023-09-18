@@ -19,7 +19,7 @@ public class XDns implements Dns {
                 FutureTask<List<InetAddress>> task = new FutureTask<>(
                         () -> Arrays.asList(InetAddress.getAllByName(hostname)));
                 new Thread(task).start();
-                return task.get(5000, TimeUnit.MILLISECONDS);
+                return task.get(4000, TimeUnit.MILLISECONDS);
             } catch (Exception var4) {
                 UnknownHostException unknownHostException =
                         new UnknownHostException("Broken system behaviour for dns lookup of " + hostname);

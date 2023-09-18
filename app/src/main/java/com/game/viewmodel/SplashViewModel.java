@@ -367,12 +367,14 @@ public class SplashViewModel extends BaseViewModel {
 
     @Override
     public void onDone() {
-        issuccess.setValue(9999);
+        EventBus.getDefault().post("onDone");
+//        issuccess.setValue(9999);
     }
 
     @Override
     public void toDo() {
-        issuccess.setValue(-9999);
+        EventBus.getDefault().post("next");
+//        issuccess.setValue(-9999);
     }
 
 

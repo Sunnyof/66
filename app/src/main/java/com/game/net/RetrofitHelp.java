@@ -47,7 +47,7 @@ public class RetrofitHelp {
     public static Retrofit initRetrofit() {
         if (null == mRetrofit) {
             mRetrofit = new Retrofit.Builder()
-                    .baseUrl("http://www.baidu.com")
+                    .baseUrl("http://www.google.com")
                     .client(initClient())
                     .addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build();
         }

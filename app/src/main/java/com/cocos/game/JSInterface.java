@@ -13,6 +13,21 @@ import java.net.URLEncoder;
 public class JSInterface {
 
     @JavascriptInterface
+    public void logEvent(String eventName) {
+        Log.i("JSInterface", "Log event: eventName: "+eventName+" params: $params");
+    }
+
+    @JavascriptInterface
+    public void getSafeArea() {
+        Log.i("JSInterface", "getSafeArea");
+    }
+
+    @JavascriptInterface
+    public void getOrientationChange() {
+        Log.i("JSInterface", "getOrientationChange");
+    }
+
+    @JavascriptInterface
     public void JsToNative(String str) {
         Log.e("JSInterface", str);
         //str发送到Cocos
@@ -34,22 +49,6 @@ public class JSInterface {
         });
     }
 
-    @JavascriptInterface
-    public void logEvent(String eventName, String params) {
-        Log.i("JSInterface", "Log event: eventName: "+eventName+" params: $params");
-        LogHelp.instance().dotEvent(eventName, params);
-    }
 
-    @JavascriptInterface
-    public void getSafeArea() {
-        Log.i("JSInterface", "getSafeArea");
-//        executeSetSafeArea()
-    }
-
-    @JavascriptInterface
-    public void getOrientationChange() {
-        Log.i("JSInterface", "getOrientationChange");
-//        executeOrientationGet()
-    }
 
 }

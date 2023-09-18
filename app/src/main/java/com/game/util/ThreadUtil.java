@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ThreadUtil {
 
-    private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1,3,3000, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
+    private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1,2,3000, TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
 
     public static void executeThread(Runnable runnable){
         threadPoolExecutor.execute(runnable);
