@@ -2,7 +2,7 @@ package com.sun.u;
 
 import android.util.Log;
 
-import game.crossingthe.greattrench.BuildConfig;
+import com.crossingthe.greattrench.BuildConfig;
 
 
 public class qtefi494 {

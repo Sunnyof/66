@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "701523194110",
-    "project_id": "crossing-the-great-trenc-475ee",
-    "storage_bucket": "crossing-the-great-trenc-475ee.appspot.com"
+    "project_number": "18454622167",
+    "project_id": "crossing-the-great-trenc-6e061",
+    "storage_bucket": "crossing-the-great-trenc-6e061.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:701523194110:android:a9264dd01cc78becbaf5af",
+        "mobilesdk_app_id": "1:18454622167:android:754737436123b60b1aa592",
         "android_client_info": {
-          "package_name": "game.CrossingThe.GreatTrench"
+          "package_name": "com.CrossingThe.GreatTrench"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "701523194110-ce4kq1jd89a7co82b5e3m8in8ja7fp0i.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAZfZ9RWZjiXrOnNpHI3S0xDsGijM-sUZQ"
+          "current_key": "AIzaSyDHgMfstBo3SooYNK-fdWIzvPip0W2paoc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "701523194110-ce4kq1jd89a7co82b5e3m8in8ja7fp0i.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

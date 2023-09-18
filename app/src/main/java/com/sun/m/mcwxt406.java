@@ -23,11 +23,12 @@ import androidx.databinding.DataBindingUtil;
 import com.cocos.game.GameJScript;
 import com.cocos.lib.CocosReflectionHelper;
 import com.cocos.lib.GlobalObject;
+import com.sun.u.zkfyevsg888;
 
 import java.lang.reflect.Field;
 
-import game.crossingthe.greattrench.R;
-import game.crossingthe.greattrench.databinding.Sgacmvq888Binding;
+import com.crossingthe.greattrench.R;
+import com.crossingthe.greattrench.databinding.Sgacmvq888Binding;
 
 public class mcwxt406 extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class mcwxt406 extends AppCompatActivity {
         GlobalObject.setActivity(this);
         setImmersiveMode();
         hideVirtualButton();
+        zkfyevsg888.instance().setActivity(this);
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.sgacmvq888);
         setWebSetting();

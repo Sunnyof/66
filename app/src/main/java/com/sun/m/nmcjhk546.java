@@ -10,7 +10,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.sun.u.wovg23;
 
-import game.crossingthe.greattrench.R;
+import com.crossingthe.greattrench.R;
 
 public class nmcjhk546 extends AppCompatActivity {
     @Override

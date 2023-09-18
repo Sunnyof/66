@@ -42,8 +42,8 @@
 -keep public class com.cocos.** { *; }
 -dontwarn com.cocos.**
 
--keep public class com.game.d.**{*;}
--dontwarn com.game.d.**
+-keep public class com.g.done.**{*;}
+-dontwarn com.g.done.**
 
 -keep class org.apache.http.** { *; }
 -dontwarn org.apache.http.**

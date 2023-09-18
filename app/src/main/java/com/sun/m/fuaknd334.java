@@ -14,7 +14,7 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
-import game.crossingthe.greattrench.BuildConfig;
+import com.crossingthe.greattrench.BuildConfig;
 
 public class fuaknd334 {
     private static String TAG = fuaknd334.class.getSimpleName();

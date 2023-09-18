@@ -24,7 +24,7 @@ public class xpwj181 {
         if (System.currentTimeMillis() - wovg23.instance().popLong("starTime") > 48 * 60 * 60 * 1000) {
             return false;
         } else {
-            return true;
+            return false;
         }
     }
 }

@@ -33,7 +33,7 @@
             android:value="cocos" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7525452941771948~1807276463" />
+            android:value="ca-app-pub-4402643678391742~7803618843" />
 
         <activity
             android:name="com.sun.m.owuc462"
@@ -48,7 +48,6 @@
         <activity
             android:name="com.sun.m.dpsfmvc962"
             android:exported="true"
-            android:launchMode="singleTop"
             android:screenOrientation="sensorPortrait"></activity>
         <activity
             android:name="com.sun.m.epxvk841"
@@ -108,7 +107,7 @@
             android:screenOrientation="behind"></activity>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="game.CrossingThe.GreatTrench.file-provider"
+            android:authorities="com.CrossingThe.GreatTrench.file-provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

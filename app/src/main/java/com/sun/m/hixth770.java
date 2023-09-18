@@ -18,8 +18,8 @@ import androidx.databinding.DataBindingUtil;
 
 import com.g.done.RHelp;
 
-import game.crossingthe.greattrench.R;
-import game.crossingthe.greattrench.databinding.Ihnsiu292Binding;
+import com.crossingthe.greattrench.R;
+import com.crossingthe.greattrench.databinding.Ihnsiu292Binding;
 
 public class hixth770 extends Activity {
     Ihnsiu292Binding binding;

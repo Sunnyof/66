@@ -3,6 +3,7 @@ package com.sun.u;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.appsflyer.AppsFlyerLib;
 import com.sun.tmrbmq646;
@@ -111,8 +112,12 @@ public class zkfyevsg888 {
         Bundle bundle = new Bundle();
         HashMap map = new HashMap<String, Object>();
         try {
-            if (!logMessage.isEmpty()) {
+            if (logMessage!=null && !logMessage.isEmpty()) {
+
                 JSONObject params = new JSONObject(logMessage);
+                if(logMessage.contains("params")){
+                    params = params.optJSONObject("params");
+                }
                 if (params != null) {
                     Iterator<String> it = params.keys();
                     while (it.hasNext()) {
@@ -122,7 +127,6 @@ public class zkfyevsg888 {
                     }
                 }
             }
-            Log.i("dotEvent" + name, encode(name) + "--" + (mActivity == null));
             FirebaseAnalytics.getInstance(tmrbmq646.getInstance()).logEvent(encode(name), bundle);
             AppsFlyerLib.getInstance().logEvent(mActivity, name, map);
             //FaceBook
@@ -136,7 +140,6 @@ public class zkfyevsg888 {
             AppEventsLogger logger = AppEventsLogger.newLogger(mActivity);
             logger.logEvent(name, bundle);
             logger.flush();
-            Log.e("Log event", e.getMessage());
         }
     }
 

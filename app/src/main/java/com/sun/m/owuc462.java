@@ -30,8 +30,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
 
-import game.crossingthe.greattrench.R;
-import game.crossingthe.greattrench.databinding.Qanxyscr676Binding;
+import com.crossingthe.greattrench.R;
+import com.crossingthe.greattrench.databinding.Qanxyscr676Binding;
 
 
 public class owuc462 extends AppCompatActivity {
@@ -41,16 +41,8 @@ public class owuc462 extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-//        setTheme(com.cocos.lib.R.style.Theme_AppCompat_Light_NoActionBar);
-//        Window _window = getWindow();
-//        WindowManager.LayoutParams params = _window.getAttributes();
-//        params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE;
-//        _window.setAttributes(params);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-//        setImmersiveMode();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             WindowManager.LayoutParams lp = getWindow().getAttributes();
             lp.layoutInDisplayCutoutMode =

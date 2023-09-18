@@ -74,9 +74,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.io.IOException;
 
-import game.crossingthe.greattrench.BuildConfig;
-import game.crossingthe.greattrench.R;
-import game.crossingthe.greattrench.databinding.Ihnsiu292Binding;
+import com.crossingthe.greattrench.BuildConfig;
+import com.crossingthe.greattrench.R;
+import com.crossingthe.greattrench.databinding.Ihnsiu292Binding;
 
 
 public class epxvk841 extends AppCompatActivity {
@@ -517,7 +517,7 @@ public class epxvk841 extends AppCompatActivity {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             cameraPath = Uri.fromFile(dataFile);
         } else {
-            cameraPath = FileProvider.getUriForFile(this, "game.CrossingThe.GreatTrench.file-provider", dataFile);
+            cameraPath = FileProvider.getUriForFile(this, "com.CrossingThe.GreatTrench.file-provider", dataFile);
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPath);
         try {
