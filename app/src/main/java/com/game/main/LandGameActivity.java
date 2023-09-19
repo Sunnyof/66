@@ -32,8 +32,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,28 +39,20 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.game.ad.GameGoogleAd;
 import com.game.util.SharePreferenceHelp;
 import com.cocos.lib.CocosActivity;
 import com.cocos.lib.CocosHelper;
 import com.cocos.service.SDKWrapper;
-import com.game.util.AppUtil;
 import com.game.util.Base64Util;
 import com.game.util.DialogUtil;
 import com.game.util.KeyBoardUtil;
@@ -80,7 +70,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.File;
 import java.io.IOException;
 
-import game.crossingthe.greattrench.R;
+import crossingthe.greattrench.game.R;
 
 
 public class LandGameActivity extends CocosActivity {
@@ -114,8 +104,6 @@ public class LandGameActivity extends CocosActivity {
         if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
 
         }
-        AppUtil.withContext(this);
-//        AppUtil.instance().lockOrientation(true);
         EventBus.getDefault().register(this);
     }
 
@@ -400,7 +388,7 @@ public class LandGameActivity extends CocosActivity {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             cameraPath = Uri.fromFile(dataFile);
         } else {
-            cameraPath = FileProvider.getUriForFile(this, "game.CrossingThe.GreatTrench.file-provider", dataFile);
+            cameraPath = FileProvider.getUriForFile(this, "com.CrossingThe.GreatTrench.file-provider", dataFile);
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPath);
         try {

@@ -1,4 +1,4 @@
-package com.game.service;
+package com.game.main;
 
 import androidx.annotation.NonNull;
 

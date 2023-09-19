@@ -6,13 +6,15 @@ import android.util.Log;
 
 import com.appsflyer.AppsFlyerLib;
 import com.game.BaseApplication;
-import com.game.ad.GameGoogleAd;
+import com.game.main.GameGoogleAd;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -29,7 +31,7 @@ public class LogHelp {
         mActivity = activity;
     }
 
-    private static String key = "ontixhGjApIXFqLdEHbmkQvPwWMyROYNzVBeKTcrDluUJagfsZCS";
+    private static String key = "PRCXGAjWEZUnJauhtOcpBviwdqNYlVrxHKQsIgDSTbFMoyzmkfeL";
 
 
 //    fun encode(text: String, key: String): String {
@@ -48,6 +50,7 @@ public class LogHelp {
 //        }
 //        return stringBuilder.toString();
 //    }
+
 
     private String encode(String text) {
         StringBuilder stringBuilder = new StringBuilder();

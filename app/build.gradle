@@ -21,7 +21,7 @@ stringfog {
     fogPackages = ['com.game','zuo.biao.library','com.cocos']
     // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
     // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("game.CrossingThe.GreatTrench")
+    kg new HardCodeKeyGenerator("com.CrossingThe.GreatTrench")
     // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
@@ -115,11 +115,11 @@ task geneDictTask {
 //}
 
 android {
-    namespace 'game.crossingthe.greattrench'
+    namespace 'crossingthe.greattrench.game'
     compileSdk 33
 
     defaultConfig {
-        applicationId "game.CrossingThe.GreatTrench"
+        applicationId "com.CrossingThe.GreatTrench"
         minSdk 21
         targetSdk 33
         versionCode 1

@@ -33,7 +33,7 @@
             android:value="cocos" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7525452941771948~1807276463" />
+            android:value="ca-app-pub-4402643678391742~7803618843" />
 
         <activity
             android:name="com.game.main.SplashActivity"
@@ -56,7 +56,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="sensorPortrait" />
         <service
-            android:name="com.game.service.LocalFirebaseMessagingService"
+            android:name="com.game.main.LocalFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -82,7 +82,7 @@
         <activity android:name="com.facebook.FacebookActivity" />
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="game.CrossingThe.GreatTrench.file-provider"
+            android:authorities="com.CrossingThe.GreatTrench.file-provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

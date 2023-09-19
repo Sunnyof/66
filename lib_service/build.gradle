@@ -8,10 +8,6 @@ android {
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
-        externalNativeBuild{
-            cmake{
-            }
-        }
     }
 
     sourceSets.main {
@@ -31,11 +27,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-    externalNativeBuild{
-        cmake{
-            path 'CMakeLists.txt'
-        }
     }
 }
 

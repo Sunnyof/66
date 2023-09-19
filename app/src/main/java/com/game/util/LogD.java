@@ -1,8 +1,8 @@
 package com.game.util;
 
 import android.util.Log;
+import crossingthe.greattrench.game.BuildConfig;
 
-import game.crossingthe.greattrench.BuildConfig;
 
 
 public class LogD {

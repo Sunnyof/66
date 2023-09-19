@@ -42,21 +42,18 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.ValueCallback;
-import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.game.ad.GameGoogleAd;
 import com.cocos.lib.CocosActivity;
 import com.cocos.lib.CocosHelper;
 
 import com.cocos.service.SDKWrapper;
 import com.game.util.Base64Util;
 import com.game.util.DialogUtil;
-import com.game.util.KeyBoardUtil;
 import com.game.util.LogHelp;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.BasePopupView;
@@ -70,28 +67,16 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.IOException;
-
-import game.crossingthe.greattrench.R;
-
+import crossingthe.greattrench.game.R;
 
 public class MainActivity extends CocosActivity {
 
-    private WindowManager mWindowManager;
-
     private WindowManager.LayoutParams mLayoutParams;
 
-    private KeyBoardUtil keyBoardUtil;
-
-    private View mView;
-
-    private WebView mWebView;
 
     private static final String[] permission = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE,};
 
     private static final int PERMISSION_CODE = 120;
-
-    private volatile boolean mIsHide = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,8 +156,6 @@ public class MainActivity extends CocosActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if (keyBoardUtil != null)
-            keyBoardUtil.onDestroy(this);
         if (!isTaskRoot()) {
             return;
         }
@@ -382,7 +365,7 @@ public class MainActivity extends CocosActivity {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             cameraPath = Uri.fromFile(dataFile);
         } else {
-            cameraPath = FileProvider.getUriForFile(this, "game.CrossingThe.GreatTrench.file-provider", dataFile);
+            cameraPath = FileProvider.getUriForFile(this, "com.CrossingThe.GreatTrench.file-provider", dataFile);
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPath);
         try {

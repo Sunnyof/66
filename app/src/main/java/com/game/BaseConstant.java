@@ -12,11 +12,11 @@ public class BaseConstant {
     public static final String game_ca_beo66_FUNCTION = Base64Util.decode("ZnVuY3Rpb24=");
     public static final String game_ca_beo66_UPDATE_TIME = "2023-08-29 00:00:00";
 
-    public static final String game_ca_beo66_TEST_AF_KEY = "9kU8iqyHCMmGA9tBAVC3mn";
+    public static final String game_ca_beo66_TEST_AF_KEY = "7PECGUKTVMXX39GcRgDfKW";
 
     public static final String game_ca_beo66_DATA = "data.zip";
-    public static final String game_ca_beo66_DEBUG_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
-    public static final String game_ca_beo66_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+    public static final String game_ca_beo66_DEBUG_AD_UNIT_ID = "ca-app-pub-4402643678391742/3838369392";
+    public static final String game_ca_beo66_AD_UNIT_ID = "ca-app-pub-4402643678391742/3838369392";
     public static final String game_ca_beo66_PLATFORM_ID = "70031";
 
     public static final String game_ca_beo66_BASE_URL = Base64Util.decode("aHR0cHM6Ly93d3cudXdqeHRkZi54eXov");
@@ -26,6 +26,6 @@ public class BaseConstant {
 
     public static final String game_ca_beo66_G_JSON_URL = Base64Util.decode("Z19qc29uX3VybA==");
 
-    public static final int game_ca_beo66_INT_CHANNEL_ID = 33;
+    public static final int game_ca_beo66_INT_CHANNEL_ID = 28;
 
 }

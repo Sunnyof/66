@@ -1,4 +1,4 @@
-package com.game.ad;
+package com.game.main;
 
 import android.app.Activity;
 import android.util.Log;
@@ -14,7 +14,8 @@ import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 
-import game.crossingthe.greattrench.BuildConfig;
+import crossingthe.greattrench.game.BuildConfig;
+
 
 public class GameGoogleAd {
     private static String TAG = GameGoogleAd.class.getSimpleName();
