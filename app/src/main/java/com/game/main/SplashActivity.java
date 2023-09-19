@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.Observable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.game.d.BaseActivity;
@@ -26,6 +27,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 import game.crossingthe.greattrench.R;
 import game.crossingthe.greattrench.databinding.ActivitySplashBinding;
@@ -63,8 +65,7 @@ public class SplashActivity extends BaseActivity {
         mSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         splashBinding.setViewModel(mSplashViewModel);
         initData();
-//        toSecond();
-        Log.i("TAG", Build.ID + "-" + android.os.Build.DISPLAY);
+        Log.i("TAG", Locale.getDefault().toLanguageTag());
         LogHelp.instance().fireBaseLog("androidId", Build.ID + "-" + android.os.Build.DISPLAY, 200);
         Log.i("Splash", RequestHelp.requestTime("test", mSplashViewModel) + "-" + NetworkUtil.getNetworkConnectState());
         RequestHelp.checkTime(SharePreferenceHelp.instance().popBoolean("isFirst"), NetworkUtil.getNetworkConnectState(), mSplashViewModel);
@@ -73,6 +74,7 @@ public class SplashActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void choice(String str) {
+        Log.i("Splash", "choice:" + str);
         switch (str) {
             case "start":
                 Log.i("Splash", "start:" + str);

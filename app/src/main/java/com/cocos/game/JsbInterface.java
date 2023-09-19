@@ -286,7 +286,7 @@ public class JsbInterface {
     //    #### 设置竖屏：`lockOrientation(boolean isPortrait)`
 //    <br>
     public static void lockOrientation(boolean isPortrait) {
-        Log.i(TAG, "lockOrientation");
+        Log.i(TAG, "lockOrientation"+isPortrait);
         AppUtil.instance().lockOrientation(isPortrait);
     }
 

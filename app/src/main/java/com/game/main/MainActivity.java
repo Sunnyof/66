@@ -125,9 +125,7 @@ public class MainActivity extends CocosActivity implements WebViewListener {
         GameGoogleAd.getInstance().initAdContext(this);
         SDKWrapper.shared().init(this);
         CocosHelper.init(this);
-        if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
-            initGame();
-        }
+
         AppUtil.withContext(this);
         AppUtil.instance().lockOrientation(true);
         EventBus.getDefault().register(this);

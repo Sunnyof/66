@@ -48,12 +48,12 @@
         <activity
             android:name="com.game.main.LandGameActivity"
             android:exported="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name="com.game.main.MainActivity"
             android:exported="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="sensorPortrait" />
         <service
             android:name="com.game.service.LocalFirebaseMessagingService"

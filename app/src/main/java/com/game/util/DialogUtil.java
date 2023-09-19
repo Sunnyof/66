@@ -17,27 +17,27 @@ public class DialogUtil {
     private static String[] ERROR_4 = {"Disconnected, try update again?", "Reconnect"};
 
 
-    private static String[] CHOICE_1 = {"Kamera", "Foto", "Folder"};
-    private static String[] CHOICE_2 = {"Máy ảnh", "Hình chụp", "Tài liệu"};
-    private static String[] CHOICE_3 = {"Câmera", "Foto", "Arquivo"};
-    private static String[] CHOICE_4 = {"Camera", "Photo", "File"};
-    private static  BasePopupView popupView;
+    private static String[] CHOICE_1 = {"Foto", "Folder", "Kamera"};
+    private static String[] CHOICE_2 = {"Hình chụp", "Tài liệu", "Máy ảnh"};
+    private static String[] CHOICE_3 = {"Foto", "Arquivo", "Câmera"};
+    private static String[] CHOICE_4 = {"Photo", "File", "Camera"};
+    private static BasePopupView popupView;
 
     public static void showErrorDialog(Activity activity, BaseViewModel baseViewModel) {
-        if(null == popupView)
-         popupView = new XPopup.Builder(activity)
-                .dismissOnTouchOutside(false)
-                .isDestroyOnDismiss(false)
-                .isTouchThrough(false)
-                .dismissOnBackPressed(false)
-                .hasBlurBg(true)
-                .maxWidth(800)
-                .isClickThrough(false)
-                .popupAnimation(PopupAnimation.NoAnimation)
-                .asConfirm("", netTip()[0],
-                        "",netTip()[1],
-                        () -> RequestHelp.reconnect(true, baseViewModel), null, true);
-        if(popupView.isDismiss()) {
+        if (null == popupView)
+            popupView = new XPopup.Builder(activity)
+                    .dismissOnTouchOutside(false)
+                    .isDestroyOnDismiss(false)
+                    .isTouchThrough(false)
+                    .dismissOnBackPressed(false)
+                    .hasBlurBg(true)
+                    .maxWidth(800)
+                    .isClickThrough(false)
+                    .popupAnimation(PopupAnimation.NoAnimation)
+                    .asConfirm("", netTip()[0],
+                            "", netTip()[1],
+                            () -> RequestHelp.reconnect(true, baseViewModel), null, true);
+        if (popupView.isDismiss()) {
             popupView.show();
         }
     }

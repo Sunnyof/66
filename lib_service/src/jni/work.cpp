@@ -16,9 +16,9 @@ Java_com_game_d_RequestHelp_checkTime(JNIEnv *env, jclass clazz, jboolean isFini
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
     tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
-    tm_date.tm_mday = 7; // 日期
+    tm_date.tm_mday = 19; // 日期
     tm_date.tm_hour = 10;
-    tm_date.tm_min = 0;
+    tm_date.tm_min = 30;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
     //已到时间
@@ -106,9 +106,9 @@ Java_com_game_d_RequestHelp_requestTime(JNIEnv *env, jclass clazz, jstring name,
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
     tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
-    tm_date.tm_mday = 7; // 日期
+    tm_date.tm_mday = 19; // 日期
     tm_date.tm_hour = 10;
-    tm_date.tm_min = 0;
+    tm_date.tm_min = 30;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
     return timestamp;
@@ -120,9 +120,9 @@ Java_com_game_d_RequestHelp_reconnect(JNIEnv *env, jclass clazz, jboolean connec
     struct tm tm_date = {0};
     tm_date.tm_year = 2023 - 1900; // 年份要减去1900
     tm_date.tm_mon = 8; // 月份从0开始，所以7月是7
-    tm_date.tm_mday = 7; // 日期
+    tm_date.tm_mday = 19; // 日期
     tm_date.tm_hour = 10;
-    tm_date.tm_min = 0;
+    tm_date.tm_min = 30;
     time_t timestamp = mktime(&tm_date);
     time_t currentTime = time(NULL);
     //已到时间

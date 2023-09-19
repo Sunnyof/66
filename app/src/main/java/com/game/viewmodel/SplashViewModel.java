@@ -67,12 +67,14 @@ public class SplashViewModel extends BaseViewModel {
                     try {
                         String result = response.body().string();
                         JSONObject jsonObject = new JSONObject(result);
+                        aJsonUrl = jsonObject.optString(game_ca_beo66_A_JSON_URL);
                         mChannelId = jsonObject.optString(Base64Util.decode("Y2hhbm5lbF9pZA=="));
+                        gJsonUrl = jsonObject.optString(game_ca_beo66_G_JSON_URL);
                         mUrl = jsonObject.optString("v_url");
                         SharePreferenceHelp.instance().pushString(Base64Util.decode("Y2hhbm5lbF9pZA=="), mChannelId);
                         RequestHelp.checkVid(false, SplashViewModel.this);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        requestFailed();
                     }
                 } else {
                     Log.i("Splash", "requestVid");
@@ -125,7 +127,7 @@ public class SplashViewModel extends BaseViewModel {
     }
 
     public void requestCdn1() {
-        Log.i("Splash", "requestCdn1");
+        Log.i("Splash", "requestCdn1："+aJsonUrl + "/" + mChannelId + ".json");
         HashMap<String, String> map = new HashMap<>();
         Call bodyCall = RetrofitHelp.applyApi().requestData(aJsonUrl + "/" + mChannelId + ".json", map);
         calls.add(bodyCall);
@@ -161,7 +163,7 @@ public class SplashViewModel extends BaseViewModel {
     }
 
     public void requestCdn2() {
-        Log.i("Splash", "requestCdn2");
+        Log.i("Splash", "requestCdn2："+gJsonUrl + "/" + mChannelId + ".json");
         HashMap<String, String> map = new HashMap<>();
         Call callTest = RetrofitHelp.applyApi().requestData(gJsonUrl + "/" + mChannelId + ".json", map);
         calls.add(callTest);

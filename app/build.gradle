@@ -169,6 +169,15 @@ android {
     dataBinding{
         enabled true
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = defaultConfig.applicationId + "_" +
+                    defaultConfig.versionName + "_" + defaultConfig.versionCode + "-" +
+                    new Date().format("yyyyMMddHHmm") + "_"  +
+                    ".apk"
+        }
+    }
 }
 
 

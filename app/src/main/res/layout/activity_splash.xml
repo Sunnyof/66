@@ -12,22 +12,34 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/gg_bg">
+        android:background="@mipmap/fish_bg">
+        <com.anlia.progressbar.WaveProgressView
+            android:layout_width="1dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="10dp"/>
 
         <TextView
+            android:id="@+id/percent"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="loading..."
+            android:text="@{viewModel.mDownloadInfo.percentStr}"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintTop_toBottomOf="@+id/loading" />
 
-        <com.lxj.xpopup.widget.LoadingView
+        <ProgressBar
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:id="@+id/loading"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:progress="@{viewModel.mDownloadInfo.percent}"
+            android:max="100"
+            android:shadowColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
