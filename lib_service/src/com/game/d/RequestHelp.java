@@ -1,10 +1,6 @@
 package com.game.d;
 
 public class RequestHelp {
-    static {
-        System.loadLibrary("work");
-    }
-
     public static native long requestTime(String name, BaseViewModel baseViewModel);
 
     public static native void checkTime(boolean state, boolean isConnect, BaseViewModel baseViewModel);

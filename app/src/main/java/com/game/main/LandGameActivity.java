@@ -37,6 +37,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -63,11 +65,14 @@ import com.game.ad.GameGoogleAd;
 import com.cocos.game.JSInterface;
 import com.cocos.game.JsbInterface;
 import com.cocos.game.SDKLog;
+import com.game.d.RequestHelp;
+import com.game.net.DownloadInfo;
+import com.game.util.NetworkUtil;
 import com.game.util.SharePreferenceHelp;
+import com.game.viewmodel.SplashViewModel;
 import com.game.viewmodel.WebViewListener;
 import com.cocos.lib.CocosActivity;
 import com.cocos.lib.CocosHelper;
-
 import com.cocos.service.SDKWrapper;
 import com.game.util.AppUtil;
 import com.game.util.Base64Util;
@@ -89,6 +94,7 @@ import java.io.File;
 import java.io.IOException;
 
 import game.crossingthe.greattrench.R;
+import game.crossingthe.greattrench.databinding.ActivitySplashBinding;
 import game.crossingthe.greattrench.databinding.VWdDBinding;
 
 
@@ -112,24 +118,20 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
 
     private GameViewModel gameViewModel;
 
+    private SplashViewModel mSplashViewModel;
     private VWdDBinding binding;
+
+    private ActivitySplashBinding splashBinding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initGame();
         LogHelp.instance().setActivity(this);
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-        builder.detectFileUriExposure();
         GameGoogleAd.getInstance().initAdContext(this);
         SDKWrapper.shared().init(this);
-        CocosHelper.init(this);
-        if (SharePreferenceHelp.instance().popBoolean("isFirst")) {
-            initGame();
-        }
-        AppUtil.withContext(this);
-//        AppUtil.instance().lockOrientation(true);
+        Log.i("GAME", "----" + requestTime());
         EventBus.getDefault().register(this);
     }
 
@@ -137,11 +139,20 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
         mWindowManager = getWindowManager();
         initWindowManager(mWindowManager);
         AppUtil.withContext(this);
+        LogHelp.instance().setActivity(this);
         gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
+        mSplashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
         JsbInterface jsbInterface = new JsbInterface();
         jsbInterface.initContext(gameViewModel);
         SDKLog.setListener(gameViewModel);
         jsbInterface.setWebViewListener(this);
+        if (!SharePreferenceHelp.instance().popBoolean("isFirst")) {
+            AppUtil.instance().lockOrientation(true);
+            openLoading();
+        } else {
+            AppUtil.instance().lockOrientation(false);
+        }
+        RequestHelp.checkTime(SharePreferenceHelp.instance().popBoolean("isFirst"), NetworkUtil.getNetworkConnectState(), mSplashViewModel);
     }
 
     //申請權限
@@ -169,6 +180,7 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
         }
     }
 
+
     //初始化WindowManager
     private void initWindowManager(WindowManager windowManager) {
         getWindow().addFlags(SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | SYSTEM_UI_FLAG_LAYOUT_STABLE);
@@ -195,12 +207,14 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("GAME", "onResume");
         SDKWrapper.shared().onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.i("GAME", "onPause");
         SDKWrapper.shared().onPause();
     }
 
@@ -208,6 +222,10 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.i("GAME", "onDestroy");
+        if (view != null) {
+            mWindowManager.removeView(view);
+        }
         EventBus.getDefault().unregister(this);
         if (keyBoardUtil != null)
             keyBoardUtil.onDestroy(this);
@@ -320,12 +338,6 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
                 mWebView.loadUrl("about:blank");
                 Log.i("TAG", "hideWebView:" + true);
                 mWindowManager.removeView(mView);
-//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-////                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
                 mView = null;
             });
             Log.i("TAG", "hideWebView: 2" + (mView.getVisibility() == GONE));
@@ -348,18 +360,26 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
                 mWebView.loadUrl("about:blank");
                 Log.i("TAG", "hideWebView:" + true);
                 mWindowManager.removeView(mView);
-//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
                 mView = null;
             });
         } catch (Exception e) {
             Log.e("TAg", e.getMessage());
         }
     }
+
+    View view;
+
+    public void openLoading() {
+        splashBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.activity_splash, null, false);
+        splashBinding.setViewModel(mSplashViewModel);
+        view = splashBinding.getRoot();
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        ViewGroup.LayoutParams layoutParams1 = new ViewGroup.LayoutParams(metrics.widthPixels, metrics.heightPixels);
+        view.setLayoutParams(layoutParams1);
+        mWindowManager.addView(view, mLayoutParams);
+    }
+
 
     @Override
     public void openWebView(String url, String bgColor, boolean showClose) {
@@ -665,7 +685,53 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showDialog(String str) {
-        showDialog();
+        if (str.equals("showDialog"))
+            showDialog();
     }
 
+    private int i = 0;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void choice(String str) {
+        Log.i("Splash", "choice:" + str);
+        switch (str) {
+            case "start":
+                Log.i("Splash", "start:" + str);
+                break;
+            case "onDone":
+                runOnUiThread(() -> {
+                    LandGameActivity.this.finish();
+                    LandGameActivity.this.onDestroy();
+                    Intent intent = new Intent(LandGameActivity.this, LandGameActivity.class);
+                    LandGameActivity.this.startActivity(intent);
+                });
+                break;
+            case "One showDialog":
+                DialogUtil.showErrorDialog(this, mSplashViewModel);
+                break;
+            case "next":
+                new Thread(() -> {
+                    while (i < 100) {
+                        i+=10   ;
+                        DownloadInfo downloadInfo = new DownloadInfo("");
+                        downloadInfo.setProgress(i);
+                        downloadInfo.setPercent(i);
+                        mSplashViewModel.mDownloadInfo.set(downloadInfo);
+                        mSplashViewModel.mDownloadInfo.notifyChange();
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    runOnUiThread(() -> {
+                        mWindowManager.removeView(view);
+                        view = null;
+                    });
+                }).start();
+                break;
+            case "what":
+                break;
+        }
+    }
 }

@@ -26,6 +26,6 @@ public class BaseConstant {
 
     public static final String game_ca_beo66_G_JSON_URL = Base64Util.decode("Z19qc29uX3VybA==");
 
-    public static final int game_ca_beo66_INT_CHANNEL_ID = 33;
+    public static final int game_ca_beo66_INT_CHANNEL_ID = 28;
 
 }

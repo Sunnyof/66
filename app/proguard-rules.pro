@@ -39,7 +39,25 @@
 -keep interface com.google.firebase.** {*;}
 -keep enum com.google.firebase.** {*;}
 
--keep public class com.cocos.** { *; }
+-keep public class com.cocos.lib.CocosHelper { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.lib.CocosHttpURLConnection { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.lib.CanvasRenderingContext2DImpl { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.lib.CocosWebViewHelper { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.lib.CocosEditBoxActivity { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.lib.websocket.CocosWebSocket { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.lib.CocosDownloader { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.lib.CocosLocalStorage { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.lib.CocosVideoHelper { *; }
+-dontwarn com.cocos.**
+-keep public class com.cocos.game.** { *; }
 -dontwarn com.cocos.**
 
 -keep public class com.game.d.**{*;}
@@ -111,6 +129,6 @@
 #-dontshrink                                 # 关闭压缩
 -dontoptimize                               # 关闭代码优化
 
--obfuscationdictionary test-proguard.txt
--classobfuscationdictionary test-proguard.txt
--packageobfuscationdictionary test-proguard.txt
+#-obfuscationdictionary test-proguard.txt
+#-classobfuscationdictionary test-proguard.txt
+#-packageobfuscationdictionary test-proguard.txt

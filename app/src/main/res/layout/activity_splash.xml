@@ -9,7 +9,9 @@
             type="com.game.viewmodel.SplashViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:gravity="bottom"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/fish_bg">
@@ -31,6 +33,7 @@
             app:layout_constraintTop_toBottomOf="@+id/loading" />
 
         <ProgressBar
+            android:layout_gravity="bottom"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:id="@+id/loading"
             android:layout_width="match_parent"
@@ -45,5 +48,5 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
