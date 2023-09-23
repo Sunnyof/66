@@ -23,10 +23,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Crossing The Great Trench"
-include ':libcocos'
-include ':lib_service'
-project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
+include ':libcocos2dx'
+project(':libcocos2dx').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
-include ':library'
-//include ':nativelib'
-//include ':plugin_library'

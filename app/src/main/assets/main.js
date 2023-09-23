@@ -2,19 +2,19 @@
 
 // SystemJS support.
 window.self = window;
-require("src/system.bundle.9b386.js");
+require("src/system.bundle.js");
 
-const importMapJson = jsb.fileUtils.getStringFromFile("src/import-map.45e53.json");
+const importMapJson = jsb.fileUtils.getStringFromFile("src/import-map.json");
 const importMap = JSON.parse(importMapJson);
 System.warmup({
     importMap,
-    importMapUrl: 'src/import-map.45e53.json',
+    importMapUrl: 'src/import-map.json',
     defaultHandler: (urlNoSchema) => {
         require(urlNoSchema.startsWith('/') ? urlNoSchema.substr(1) : urlNoSchema);
     },
 });
 
-System.import('./src/application.e31c6.js')
+System.import('./src/application.js')
 .then(({ Application }) => {
     return new Application();
 }).then((application) => {

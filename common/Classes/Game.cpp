@@ -35,21 +35,21 @@
 Game::Game() = default;
 
 int Game::init() {
-    _windowInfo.title = GAME_NAME;
-    // configurate window size
-    // _windowInfo.height = 600;
-    // _windowInfo.width  = 800;
-
-#if CC_DEBUG
-    _debuggerInfo.enabled = true;
-#else
-    _debuggerInfo.enabled = false;
-#endif
-    _debuggerInfo.port         = 6086;
-    _debuggerInfo.address      = "0.0.0.0";
-    _debuggerInfo.pauseOnStart = false;
-
-    _xxteaKey = SCRIPT_XXTEAKEY;
+//    _windowInfo.title = GAME_NAME;
+//    // configurate window size
+//    // _windowInfo.height = 600;
+//    // _windowInfo.width  = 800;
+//
+//#if CC_DEBUG
+//    _debuggerInfo.enabled = true;
+//#else
+//    _debuggerInfo.enabled = false;
+//#endif
+////    _debuggerInfo.port         = 6086;
+////    _debuggerInfo.address      = "0.0.0.0";
+////    _debuggerInfo.pauseOnStart = false;
+////
+////    _xxteaKey = SCRIPT_XXTEAKEY;
 
     BaseGame::init();
     return 0;

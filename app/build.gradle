@@ -133,14 +133,14 @@ android {
             }
             ndk { abiFilters PROP_APP_ABI.split(':') }
         }
-
+        setProperty("archivesBaseName", "test_${applicationId}-v${versionName}")
     }
 
 
     buildTypes {
 
         debug{
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
@@ -220,8 +220,7 @@ dependencies {
     // eventbus
     implementation 'org.greenrobot:eventbus:3.3.1'
     //CocosGame
-    implementation project(':lib_service')
-    implementation project(':libcocos')
+    implementation project(':libcocos2dx')
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
     //dialog
     implementation 'com.github.li-xiaojun:XPopup:2.9.19'

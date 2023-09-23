@@ -36,9 +36,9 @@
             android:value="ca-app-pub-7525452941771948~1807276463" />
 
         <activity
-            android:name="com.game.main.LandGameActivity"
+            android:name="com.cocos.lib.CocosActivity"
             android:exported="true"
-            android:screenOrientation="sensorPortrait"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
