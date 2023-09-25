@@ -2,8 +2,6 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'stringfog'
-    id 'android-junk-code'
-    id 'xml-class-guard'
 }
 
 
@@ -18,10 +16,10 @@ stringfog {
     // 可选：加密开关，默认开启。
     enable true
     // 可选：指定需加密的代码包路径，可配置多个，未指定将默认全部加密。
-    fogPackages = ['com.game','zuo.biao.library','com.cocos']
+    fogPackages = ['com.crab','com.cocos']
     // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
     // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("game.CrossingThe.GreatTrench")
+    kg new HardCodeKeyGenerator("com.Undersea.Defense")
     // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
@@ -115,32 +113,32 @@ task geneDictTask {
 //}
 
 android {
-    namespace 'game.crossingthe.greattrench'
+    namespace 'undersea.defense.crab'
     compileSdk 33
 
     defaultConfig {
-        applicationId "game.CrossingThe.GreatTrench"
+        applicationId "com.Undersea.Defense"
         minSdk 21
         targetSdk 33
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                targets "cocos"
+                targets "cocosdx"
                 arguments "-DRES_DIR=${RES_PATH}", "-DCOCOS_X_PATH=${COCOS_ENGINE_PATH}", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DANDROID_LD=gold"
             }
             ndk { abiFilters PROP_APP_ABI.split(':') }
         }
-        setProperty("archivesBaseName", "test_${applicationId}-v${versionName}")
+        setProperty("archivesBaseName", "cocos_${applicationId}-v610178")
     }
 
 
     buildTypes {
 
         debug{
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
@@ -148,7 +146,7 @@ android {
             ndk {
                 debugSymbolLevel  'SYMBOL_TABLE'
             }
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -172,9 +170,9 @@ android {
         jniLibs {
         }
     }
-    dataBinding{
-        enabled true
-    }
+//    dataBinding{
+//        enabled true
+//    }
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
@@ -191,14 +189,10 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.4.0'
-    //facebook
-    implementation 'com.facebook.android:facebook-android-sdk:16.0.1'
-    implementation 'com.android.support:multidex:2.0.0'
     //googleAd
     implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.google.android.gms:play-services-ads:22.1.0'
     //AF
-    implementation 'com.appsflyer:af-android-sdk:6.9.0'
     //FireBase
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
     implementation 'com.google.firebase:firebase-messaging'
@@ -206,26 +200,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-    // OKHttp RxJava
-    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
-    //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     // eventbus
     implementation 'org.greenrobot:eventbus:3.3.1'
     //CocosGame
     implementation project(':libcocos2dx')
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
-    //dialog
-    implementation 'com.github.li-xiaojun:XPopup:2.9.19'
-    implementation ('com.github.li-xiaojun:XPopup:2.9.19'){
-        exclude group: "com.davemorrissey.labs", module: "subsampling-scale-image-view-androidx"
-    }
 
 }

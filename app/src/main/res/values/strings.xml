@@ -1,5 +1,3 @@
 <resources>
-    <string name="app_name" translatable="false">Crossing The Great Trench</string>
-    <string name="fb_id" translatable="false">265706379739827</string>
-    <string name="fb_token_id" translatable="false">fb223bab14245ac6b6879e7010e7510449</string>
+    <string name="app_name" translatable="false">Undersea Defense：Crab Shooter</string>
 </resources>

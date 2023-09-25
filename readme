@@ -1,9 +1,0 @@
-2023-09-19 15:31:57.042  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"Enter_Lobby","params":""}
-2023-09-19 15:32:22.645  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"Login","params":""}
-2023-09-19 15:32:23.601  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"Enter_Lobby","params":""}
-2023-09-19 15:32:44.989  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"Tpr_Amount_1","params":""}
-2023-09-19 15:32:50.385  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"Tpr_Amount_1","params":""}
-2023-09-19 15:32:52.882  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"Open_TPR","params":""}
-2023-09-19 15:32:54.189  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"TPR_PAY","params":""}
-2023-09-19 15:36:59.224  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"Payment_Success","params":""}
-2023-09-19 15:36:59.251  4883-5278  com.cocos.game.SDKLog   game.CrossingThe.GreatTrench         I  logEvent{"event":"Pay_Success","params":{"af_currency":"IDR","af_revenue":"20000.00"}}

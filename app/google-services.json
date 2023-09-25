@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "701523194110",
-    "project_id": "crossing-the-great-trenc-475ee",
-    "storage_bucket": "crossing-the-great-trenc-475ee.appspot.com"
+    "project_number": "78069962320",
+    "project_id": "undersea-defense-crab-shooter",
+    "storage_bucket": "undersea-defense-crab-shooter.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:701523194110:android:a9264dd01cc78becbaf5af",
+        "mobilesdk_app_id": "1:78069962320:android:4da03002dbf2d84deae355",
         "android_client_info": {
-          "package_name": "game.CrossingThe.GreatTrench"
+          "package_name": "com.Undersea.Defense"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "701523194110-ce4kq1jd89a7co82b5e3m8in8ja7fp0i.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAZfZ9RWZjiXrOnNpHI3S0xDsGijM-sUZQ"
+          "current_key": "AIzaSyCpUWCYTpo3NRVUsrSCK5PTfrZu1Kk15ig"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "701523194110-ce4kq1jd89a7co82b5e3m8in8ja7fp0i.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

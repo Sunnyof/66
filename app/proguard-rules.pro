@@ -57,11 +57,11 @@
 -dontwarn com.cocos.**
 -keep public class com.cocos.lib.CocosVideoHelper { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.game.** { *; }
+-keep public class com.cocos.lib.** { *; }
 -dontwarn com.cocos.**
 
--keep public class com.game.d.**{*;}
--dontwarn com.game.d.**
+-keep public class com.crab.d.**{*;}
+-dontwarn com.crab.d.**
 
 -keep class org.apache.http.** { *; }
 -dontwarn org.apache.http.**
@@ -116,17 +116,12 @@
 -keepclassmembers class * extends android.webkit.WebViewClient {
     public void *(android.webkit.WebView, java.lang.String);
 }
-#在app中与HTML5的JavaScript的交互进行特殊处理
-#我们需要确保这些js要调用的原生方法不能够被混淆，于是我们需要做如下处理：
--keepclassmembers class com.cocos.game.JSInterface {
-    <methods>;
-}
 
 
--optimizationpasses 4                       # 代码混淆的压缩比例，值介于0-7，默认5
+-optimizationpasses 5                       # 代码混淆的压缩比例，值介于0-7，默认5
 -verbose                                    # 混淆时记录日志
 -dontoptimize                               # 不优化输入的类文件
-#-dontshrink                                 # 关闭压缩
+-dontshrink                                 # 关闭压缩
 -dontoptimize                               # 关闭代码优化
 
 #-obfuscationdictionary test-proguard.txt

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 
 option(APP_NAME "Project Name" "NewProject")
 project(${APP_NAME} CXX)
-set(CC_LIB_NAME cocos)
+set(CC_LIB_NAME cocosdx)
 set(CC_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(CC_PROJ_SOURCES)
 set(CC_COMMON_SOURCES)
