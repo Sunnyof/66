@@ -48,7 +48,7 @@ public class FishContext extends Application {
     }
 
     private void initAppsFlyer() {
-        AppsFlyerLib.getInstance().init("CTFnECiUuRRfra6G7uMooR", new AppsFlyerConversionListener() {
+        AppsFlyerLib.getInstance().init("CTFnECiUuRRfra6G7uMo2T", new AppsFlyerConversionListener() {
             @Override
             public void onConversionDataSuccess(Map<String, Object> map) {
                 String status = (String) map.get("af_status");

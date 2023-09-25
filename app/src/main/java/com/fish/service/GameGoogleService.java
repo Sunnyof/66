@@ -108,8 +108,8 @@ public class GameGoogleService {
      */
     private String getAdUnitId() {
         if (BuildConfig.DEBUG) {
-            return "ca-app-pub-8582637187451785/5938816913";
+            return "ca-app-pub-3940256099942544/1033173712";
         }
-        return "ca-app-pub-8582637187451785/5938816913";
+        return "ca-app-pub-3940256099942544/1033173712";
     }
 }
