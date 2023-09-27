@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 
-option(APP_NAME "Project Name" "NewProject")
+option(APP_NAME "Project Name" "Frog")
 project(${APP_NAME} CXX)
-set(CC_LIB_NAME cocos)
+set(CC_LIB_NAME frog)
 set(CC_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(CC_PROJ_SOURCES)
 set(CC_COMMON_SOURCES)

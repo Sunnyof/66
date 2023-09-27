@@ -22,7 +22,7 @@ dependencyResolutionManagement {
         mavenLocal()
     }
 }
-rootProject.name = "Crossing The Great Trench"
-include ':libcocos2dx'
-project(':libcocos2dx').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
+rootProject.name = "Frog dodge"
+include ':libcocos2frog'
+project(':libcocos2frog').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'

@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "701523194110",
-    "project_id": "crossing-the-great-trenc-475ee",
-    "storage_bucket": "crossing-the-great-trenc-475ee.appspot.com"
+    "project_number": "811592323518",
+    "project_id": "frog-dodge",
+    "storage_bucket": "frog-dodge.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:701523194110:android:a9264dd01cc78becbaf5af",
+        "mobilesdk_app_id": "1:811592323518:android:ef37e53a7c79efe52429ef",
         "android_client_info": {
-          "package_name": "game.CrossingThe.GreatTrench"
+          "package_name": "com.Frog.dodge"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "701523194110-ce4kq1jd89a7co82b5e3m8in8ja7fp0i.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAZfZ9RWZjiXrOnNpHI3S0xDsGijM-sUZQ"
+          "current_key": "AIzaSyDRaXu9oMneKJsi9OBqSa8WXaf79zsWe1Y"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "701523194110-ce4kq1jd89a7co82b5e3m8in8ja7fp0i.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

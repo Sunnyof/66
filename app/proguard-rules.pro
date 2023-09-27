@@ -32,67 +32,32 @@
 	public protected *;
 }
 
--keep class com.appsflyer.** { *; }
--keep public class com.android.installreferrer.** { *; }
-
 -keep class com.google.firebase.** {*;}
 -keep interface com.google.firebase.** {*;}
 -keep enum com.google.firebase.** {*;}
 
--keep public class com.cocos.lib.CocosHelper { *; }
+-keep public class com.cocos.lib.FrogHelper { *; }
 -dontwarn com.cocos.**
 -keep public class com.cocos.lib.CocosHttpURLConnection { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.lib.CanvasRenderingContext2DImpl { *; }
+-keep public class com.cocos.lib.FrogContext2DImpl { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.lib.CocosWebViewHelper { *; }
+-keep public class com.cocos.lib.FrogWebViewHelper { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.lib.CocosEditBoxActivity { *; }
+-keep public class com.cocos.lib.FrogEditBoxActivity { *; }
 -dontwarn com.cocos.**
 -keep public class com.cocos.lib.websocket.CocosWebSocket { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.lib.CocosDownloader { *; }
+-keep public class com.cocos.lib.FrogDownloader { *; }
 -dontwarn com.cocos.**
 -keep public class com.cocos.lib.CocosLocalStorage { *; }
 -dontwarn com.cocos.**
 -keep public class com.cocos.lib.CocosVideoHelper { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.game.** { *; }
+
+-keep public class org.cocos.game.** { *; }
 -dontwarn com.cocos.**
 
--keep public class com.game.d.**{*;}
--dontwarn com.game.d.**
-
--keep class org.apache.http.** { *; }
--dontwarn org.apache.http.**
-
-# OkHttp3
-# https://github.com/square/okhttp
-# okhttp
--keep class com.squareup.okhttp.* { *; }
--keep interface com.squareup.okhttp.** { *; }
--dontwarn com.squareup.okhttp.**
-
-# okhttp 3
--keepattributes Signature
--keepattributes *Annotation*
--keep class okhttp3.** { *; }
--keep interface okhttp3.** { *; }
--dontwarn okhttp3.**
-
-# Okio
--dontwarn com.squareup.**
--dontwarn okio.**
--keep public class org.codehaus.* { *; }
--keep public class java.nio.* { *; }
-
--dontwarn com.lxj.xpopup.widget.**
--keep class com.lxj.xpopup.widget.**{*;}
-
-
- -keepclasseswithmembernames class * {
-                    native <methods>;
-}
 
 -keepattributes *Annotation*
 -keepclassmembers class ** {
@@ -105,30 +70,8 @@
     <init>(java.lang.Throwable);
 }
 
-#webView需要进行特殊处理
-#-keepclassmembers class sc.K {
-#   public *;
-#}
--keepclassmembers class * extends android.webkit.WebViewClient {
-    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
-    public boolean *(android.webkit.WebView, java.lang.String);
-}
--keepclassmembers class * extends android.webkit.WebViewClient {
-    public void *(android.webkit.WebView, java.lang.String);
-}
-#在app中与HTML5的JavaScript的交互进行特殊处理
-#我们需要确保这些js要调用的原生方法不能够被混淆，于是我们需要做如下处理：
--keepclassmembers class com.cocos.game.JSInterface {
-    <methods>;
-}
-
-
--optimizationpasses 4                       # 代码混淆的压缩比例，值介于0-7，默认5
+-optimizationpasses 6                       # 代码混淆的压缩比例，值介于0-7，默认5
 -verbose                                    # 混淆时记录日志
 -dontoptimize                               # 不优化输入的类文件
-#-dontshrink                                 # 关闭压缩
+-dontshrink                                 # 关闭压缩
 -dontoptimize                               # 关闭代码优化
-
-#-obfuscationdictionary test-proguard.txt
-#-classobfuscationdictionary test-proguard.txt
-#-packageobfuscationdictionary test-proguard.txt
