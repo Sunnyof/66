@@ -117,11 +117,12 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initGame();
+//        initGame();
+        Log.i("GAME", "----" );
         LogHelp.instance().setActivity(this);
         GameGoogleAd.getInstance().initAdContext(this);
-        Log.i("GAME", "----" + requestTime());
-        EventBus.getDefault().register(this);
+//        Log.i("GAME", "----" + requestTime());
+//        EventBus.getDefault().register(this);
 
     }
 
@@ -140,7 +141,7 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
         } else {
             AppUtil.instance().lockOrientation(false);
         }
-        RequestHelp.checkTime(SharePreferenceHelp.instance().popBoolean("isFirst"), NetworkUtil.getNetworkConnectState(), mSplashViewModel);
+//        RequestHelp.checkTime(SharePreferenceHelp.instance().popBoolean("isFirst"), NetworkUtil.getNetworkConnectState(), mSplashViewModel);
     }
 
     //申請權限

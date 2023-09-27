@@ -281,7 +281,7 @@ public class SplashViewModel extends BaseViewModel {
         issuccess.postValue(-1);
         if (mDownloadInfo.get() != null)
             DownloadManager.getInstance().pauseDownload(mDownloadInfo.get().getUrl());
-        EventBus.getDefault().post("One showDialog");
+        EventBus.getDefault().post("showDialog");
     }
 
     public String buildManifest() {
