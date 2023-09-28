@@ -4,31 +4,31 @@
 
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
 
     <application
-        android:name="org.game.frog.FrogApplication"
+        android:name="org.tank.gem.TankGem"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/tank_icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_launcher"
+        android:roundIcon="@drawable/tank_icon"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Frog"
+        android:theme="@style/TankTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:fullBackupContent"
         tools:targetApi="33">
         <meta-data
             android:name="android.app.lib_name"
-            android:value="frog" />
+            android:value="tank" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1671204221041122~9808320295" />
 
         <activity
-            android:name="org.game.frog.FrogGameActivity"
+            android:name="org.tank.gem.TankScene"
             android:exported="true"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
@@ -45,7 +45,7 @@
 <!--        </service>-->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="29" />
+            android:value="38" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="game.CrossingThe.GreatTrench.file-provider"

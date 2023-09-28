@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Frog" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+    <style name="TankTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
         <!-- Primary brand color. -->
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>

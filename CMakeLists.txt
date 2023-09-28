@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.8)
 
-option(APP_NAME "Project Name" "Frog")
+option(APP_NAME "Project Name" "tank")
 project(${APP_NAME} CXX)
-set(CC_LIB_NAME frog)
+set(CC_LIB_NAME tank)
 set(CC_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(CC_PROJ_SOURCES)
 set(CC_COMMON_SOURCES)
 set(CC_ALL_SOURCES)
 
-include(${CMAKE_CURRENT_LIST_DIR}/common/CMakeLists.txt)
+include(${CMAKE_CURRENT_LIST_DIR}/game/CMakeLists.txt)
 
 cc_android_before_target(${CC_LIB_NAME})
 add_library(${CC_LIB_NAME} SHARED ${CC_ALL_SOURCES})

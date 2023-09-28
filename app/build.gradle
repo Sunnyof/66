@@ -4,6 +4,7 @@ plugins {
     id 'stringfog'
     id 'android-junk-code'
     id 'xml-class-guard'
+    id 'top.niunaijun.blackobfuscator'
 }
 
 
@@ -18,10 +19,10 @@ stringfog {
     // 可选：加密开关，默认开启。
     enable true
     // 可选：指定需加密的代码包路径，可配置多个，未指定将默认全部加密。
-    fogPackages = ['com.game','zuo.biao.library','com.cocos']
+    fogPackages = ['org.tank','com.cocos']
     // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
     // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("game.CrossingThe.GreatTrench")
+    kg new HardCodeKeyGenerator("com.Daquy.Nohu")
     // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
@@ -30,13 +31,13 @@ stringfog {
 androidJunkCode {
     variantConfig {
         release {//变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-            packageBase = "org.cocos"  //生成java类根包名
+            packageBase = "org.tank.gem"  //生成java类根包名
             packageCount = 10 //生成包数量
             activityCountPerPackage = 3 //每个包下生成Activity类数量
             excludeActivityJavaFile = false //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
             otherCountPerPackage = 20  //每个包下生成其它类的数量
             methodCountPerClass = 10  //每个类下生成方法数量
-            resPrefix = "frog_"  //生成的layout、drawable、string等资源名前缀
+            resPrefix = "tank_"  //生成的layout、drawable、string等资源名前缀
             drawableCount = 10  //生成drawable资源数量
             stringCount = 15  //生成string数量
         }
@@ -56,7 +57,7 @@ task geneDictTask {
         def wordList = new HashSet()
         for (int i = 0; i < 1000; i++) {
             def word = new StringBuilder()
-            def wordLength = random.nextInt(5) + 4
+            def wordLength = random.nextInt(4) + 1
             for (int j = 0; j < wordLength; j++) {
                 word.append(lowercase.charAt(random.nextInt(lowercase.length())))
             }
@@ -115,32 +116,32 @@ task geneDictTask {
 //}
 
 android {
-    namespace 'org.frog.dodge'
+    namespace 'org.daquy.nohu'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.Frog.dodge"
+        applicationId "com.Daquy.Nohu"
         minSdk 21
         targetSdk 33
-        versionCode 2
-        versionName "1.0.3"
+        versionCode 3
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                targets "frog"
+                targets "tank"
                 arguments "-DRES_DIR=${RES_PATH}", "-DCOCOS_X_PATH=${COCOS_ENGINE_PATH}", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DANDROID_LD=gold"
             }
             ndk { abiFilters PROP_APP_ABI.split(':') }
         }
-        setProperty("archivesBaseName", "610080_${applicationId}-v${versionName}")
+        setProperty("archivesBaseName", "610118_${applicationId}-v${versionName}")
     }
 
 
     buildTypes {
 
         debug{
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
@@ -172,9 +173,9 @@ android {
         jniLibs {
         }
     }
-    dataBinding{
-        enabled true
-    }
+//    dataBinding{
+//        enabled true
+//    }
 
     android.applicationVariants.all { variant ->
         variant.outputs.all {
@@ -186,7 +187,16 @@ android {
     }
 }
 
-
+BlackObfuscator {
+    // 是否启用
+    enabled true
+    // 混淆深度
+    depth 2
+    // 需要混淆的包或者类(匹配前面一段)
+    obfClass = ["org.tank","com.cocos"]
+    // blackClass中的包或者类不会进行混淆(匹配前面一段)
+    blackClass = ["org.tank.gem.TankAd","com.cocos.lib.TankGemHelper","com.cocos.lib.CocosLocalStorage","com.cocos.lib.TankImpl"]
+}
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -194,6 +204,7 @@ dependencies {
     //googleAd
     implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.google.android.gms:play-services-ads:22.1.0'
+    implementation project(path: ':tank')
     //FireBase
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
     implementation 'com.google.firebase:firebase-messaging'
@@ -204,7 +215,7 @@ dependencies {
     // eventbus
     implementation 'org.greenrobot:eventbus:3.3.1'
     //CocosGame
-    implementation project(':libcocos2frog')
+    implementation project(':tgem2tank')
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
 
 }

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "811592323518",
-    "project_id": "frog-dodge",
-    "storage_bucket": "frog-dodge.appspot.com"
+    "project_number": "1077444147485",
+    "project_id": "da-quy-no-hu",
+    "storage_bucket": "da-quy-no-hu.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:811592323518:android:ef37e53a7c79efe52429ef",
+        "mobilesdk_app_id": "1:1077444147485:android:e5d74997a325d2a44f89f4",
         "android_client_info": {
-          "package_name": "com.Frog.dodge"
+          "package_name": "com.Daquy.Nohu"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDRaXu9oMneKJsi9OBqSa8WXaf79zsWe1Y"
+          "current_key": "AIzaSyCsAkfFP5JM-VKEpJwIc8C1qw5NJKVLP6k"
         }
       ],
       "services": {

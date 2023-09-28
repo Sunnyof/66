@@ -8,10 +8,4 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="colorPrimary">#02A8F3</color>
-    <color name="colorPrimaryDark">#2095F2</color>
-    <color name="colorPrimaryTranslucent">#2002A8F3</color>
-    <color name="colorAccent">#02A8F3</color>
-    <color name="colorAccentTranslucent">#2002A8F3</color>
-    <color name="textColorPrimary">#FFFFFF</color>
 </resources>

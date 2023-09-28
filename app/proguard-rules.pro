@@ -36,28 +36,27 @@
 -keep interface com.google.firebase.** {*;}
 -keep enum com.google.firebase.** {*;}
 
--keep public class com.cocos.lib.FrogHelper { *; }
+-keep public class com.cocos.lib.TankGemHelper { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.lib.CocosHttpURLConnection { *; }
+#-keep public class com.cocos.lib.CocosHttpURLConnection { *; }
+#-dontwarn com.cocos.**
+-keep public class com.cocos.lib.TankImpl { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.lib.FrogContext2DImpl { *; }
--dontwarn com.cocos.**
--keep public class com.cocos.lib.FrogWebViewHelper { *; }
--dontwarn com.cocos.**
--keep public class com.cocos.lib.FrogEditBoxActivity { *; }
--dontwarn com.cocos.**
--keep public class com.cocos.lib.websocket.CocosWebSocket { *; }
--dontwarn com.cocos.**
--keep public class com.cocos.lib.FrogDownloader { *; }
--dontwarn com.cocos.**
+#-keep public class com.cocos.lib.TankWebHelper { *; }
+#-dontwarn com.cocos.**
+#-keep public class com.cocos.lib.TankBoxActivity { *; }
+#-dontwarn com.cocos.**
+#-keep public class com.cocos.lib.websocket.CocosWebSocket { *; }
+#-dontwarn com.cocos.**
+-keep public class org.tank.gem.TankAd { *; }
+-dontwarn org.tank.gem.TankAd
 -keep public class com.cocos.lib.CocosLocalStorage { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.lib.CocosVideoHelper { *; }
--dontwarn com.cocos.**
+#-keep public class com.cocos.lib.CocosVideoHelper { *; }
+#-dontwarn com.cocos.**
 
 -keep public class org.cocos.game.** { *; }
 -dontwarn com.cocos.**
-
 
 -keepattributes *Annotation*
 -keepclassmembers class ** {
@@ -70,8 +69,12 @@
     <init>(java.lang.Throwable);
 }
 
--optimizationpasses 6                       # 代码混淆的压缩比例，值介于0-7，默认5
+-optimizationpasses 5                       # 代码混淆的压缩比例，值介于0-7，默认5
 -verbose                                    # 混淆时记录日志
 -dontoptimize                               # 不优化输入的类文件
--dontshrink                                 # 关闭压缩
+#-dontshrink                                 # 关闭压缩
 -dontoptimize                               # 关闭代码优化
+
+-obfuscationdictionary dict.txt
+-classobfuscationdictionary dict.txt
+-packageobfuscationdictionary dict.txt

@@ -22,7 +22,9 @@ dependencyResolutionManagement {
         mavenLocal()
     }
 }
-rootProject.name = "Frog dodge"
-include ':libcocos2frog'
-project(':libcocos2frog').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
+//Gem Explosion Tank
+rootProject.name = "Đá quý Nổ hũ"
+include ':tgem2tank'
+project(':tgem2tank').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
+include ':tank'
