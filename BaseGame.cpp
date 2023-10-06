@@ -69,10 +69,10 @@ int BaseGame::init() {
     }
     setXXTeaKey(_xxteaKey);
     string dir = "";
-    string orgPath = FileUtils::getInstance()->getWritablePath()+"org/";
-    if (FileUtils::getInstance()->isFileExist(orgPath+"main.js")){
-        dir = orgPath;
-    }
+//    string orgPath = FileUtils::getInstance()->getWritablePath()+"org/";
+//    if (FileUtils::getInstance()->isFileExist(orgPath+"main.js")){
+//        dir = orgPath;
+//    }
     __android_log_print(ANDROID_LOG_INFO, "cloudData", "orgPath cpp:%s", dir.c_str());
     runScript(dir+"jsb-adapter/web-adapter.js");
     runScript(dir+"main.js");

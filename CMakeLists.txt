@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 
-option(APP_NAME "Project Name" "tank")
+option(APP_NAME "Project Name" "Collision of fish")
 project(${APP_NAME} CXX)
-set(CC_LIB_NAME tank)
+set(CC_LIB_NAME cofish)
 set(CC_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(CC_PROJ_SOURCES)
 set(CC_COMMON_SOURCES)

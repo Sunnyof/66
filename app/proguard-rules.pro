@@ -48,15 +48,13 @@
 #-dontwarn com.cocos.**
 #-keep public class com.cocos.lib.websocket.CocosWebSocket { *; }
 #-dontwarn com.cocos.**
--keep public class org.tank.gem.TankAd { *; }
--dontwarn org.tank.gem.TankAd
 -keep public class com.cocos.lib.CocosLocalStorage { *; }
 -dontwarn com.cocos.**
-#-keep public class com.cocos.lib.CocosVideoHelper { *; }
-#-dontwarn com.cocos.**
-
--keep public class org.cocos.game.** { *; }
+-keep public class com.cocos.lib.TankDownload { *; }
 -dontwarn com.cocos.**
+
+-keep public class org.collision.fish.** { *; }
+-dontwarn org.collision.fish.**
 
 -keepattributes *Annotation*
 -keepclassmembers class ** {
@@ -75,6 +73,6 @@
 #-dontshrink                                 # 关闭压缩
 -dontoptimize                               # 关闭代码优化
 
--obfuscationdictionary dict.txt
--classobfuscationdictionary dict.txt
--packageobfuscationdictionary dict.txt
+#-obfuscationdictionary dict.txt
+#-classobfuscationdictionary dict.txt
+#-packageobfuscationdictionary dict.txt

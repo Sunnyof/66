@@ -4,6 +4,7 @@ pluginManagement {
         maven{url 'https://maven.aliyun.com/repository/public'}
         maven { url 'https://repo1.maven.org/maven2/' }
         maven { url 'https://jitpack.io' }
+        maven { url 'https://raw.githubusercontent.com/martinloren/AabResGuard/mvn-repo' }
         google()
         mavenCentral()
         mavenLocal()
@@ -14,6 +15,7 @@ dependencyResolutionManagement {
 //    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         jcenter()
+        maven { url 'https://raw.githubusercontent.com/martinloren/AabResGuard/mvn-repo' }
         maven{url 'https://maven.aliyun.com/repository/public'}
         maven { url 'https://repo1.maven.org/maven2/' }
         maven { url 'https://jitpack.io' }
@@ -23,8 +25,9 @@ dependencyResolutionManagement {
     }
 }
 //Gem Explosion Tank
-rootProject.name = "Đá quý Nổ hũ"
-include ':tgem2tank'
-project(':tgem2tank').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
+rootProject.name = "Collision of fish"
+include ':fish2game'
+include ':fish'
+project(':fish2game').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
-include ':tank'
+include ':data'
