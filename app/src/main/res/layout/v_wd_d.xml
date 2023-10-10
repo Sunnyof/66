@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-            name="model"
-            type="com.game.viewmodel.GameViewModel" />
 
     </data>
 
@@ -26,8 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:gravity="center"
-                android:text="@{model.name}" />
+                android:gravity="center" />
 
             <ImageButton
                 android:id="@+id/b3_ct"

@@ -4,6 +4,7 @@ pluginManagement {
         maven{url 'https://maven.aliyun.com/repository/public'}
         maven { url 'https://repo1.maven.org/maven2/' }
         maven { url 'https://jitpack.io' }
+        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
         google()
         mavenCentral()
         mavenLocal()
@@ -17,16 +18,15 @@ dependencyResolutionManagement {
         maven{url 'https://maven.aliyun.com/repository/public'}
         maven { url 'https://repo1.maven.org/maven2/' }
         maven { url 'https://jitpack.io' }
+        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
         google()
         mavenCentral()
         mavenLocal()
     }
 }
-rootProject.name = "Cá Béo 66"
-include ':libcocos'
+rootProject.name = "Phí biển sâu"
 include ':lib_service'
+include ':immersionbar'
+include ':libcocos'
 project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
-include ':library'
-//include ':nativelib'
-//include ':plugin_library'
