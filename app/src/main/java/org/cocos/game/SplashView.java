@@ -13,7 +13,6 @@ import com.cocos.lib.CocosActivity;
 import org.cocos.BaseScene;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.gyf.immersionbar.ImmersionBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,11 +27,6 @@ public class SplashView extends CocosActivity {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         logEvent("onCreate");
-        initBar();
-    }
-
-    private void initBar() {
-        ImmersionBar.with(this).init();
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)

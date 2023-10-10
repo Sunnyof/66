@@ -24,9 +24,8 @@ dependencyResolutionManagement {
         mavenLocal()
     }
 }
-rootProject.name = "Phí biển sâu"
+rootProject.name = "Săn tìm kho báu đại dương"
 include ':lib_service'
-include ':immersionbar'
 include ':libcocos'
 project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'

@@ -92,7 +92,7 @@ public class BaseScene extends Application {
      * 初始化Google广告
      */
     private void initAdWithContext() {
-        InterstitialAd.load(BaseScene.getInstance(), "ca-app-pub-7895073050394223/2612398110", new AdRequest.Builder().build(), new InterstitialAdLoadCallback() {
+        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712", new AdRequest.Builder().build(), new InterstitialAdLoadCallback() {
             @Override
             public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                 super.onAdFailedToLoad(loadAdError);

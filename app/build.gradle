@@ -23,7 +23,7 @@ stringfog {
     fogPackages = ['or.cocos','com.cocos','com.gyf']
     // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
     // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("com.Phibien.sau")
+    kg new HardCodeKeyGenerator("game.CrossingThe.GreatTrench")
     // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
@@ -121,7 +121,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.Phibien.sau"
+        applicationId "game.CrossingThe.GreatTrench"
         minSdk 21
         targetSdk 33
         versionCode 24
@@ -190,27 +190,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
     implementation 'com.google.firebase:firebase-messaging'
     implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
-    implementation project(path: ':immersionbar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-    // OKHttp RxJava
-    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
-    //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
     // eventbus
     implementation 'org.greenrobot:eventbus:3.3.1'
     //CocosGame
     implementation project(':lib_service')
     implementation project(':libcocos')
-    //    implementation project(path: ':nativelib')
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
 
 }
