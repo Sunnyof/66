@@ -12,7 +12,7 @@ buildscript {
 //        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
 //        classpath 'org.ow2.asm:asm:9.5'
 //        classpath 'org.ow2.asm:asm-tree:9.5'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0'
 //        classpath "com.sun.code:com.gavin.plugin:1.0.2"
 //        classpath 'com.android.tools.build:gradle:7.0.2'
     }
@@ -20,4 +20,5 @@ buildscript {
 plugins {
     id 'com.android.application' version '7.0.2' apply false
     id 'com.android.library' version '7.0.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
 }

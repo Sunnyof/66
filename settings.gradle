@@ -22,11 +22,8 @@ dependencyResolutionManagement {
         mavenLocal()
     }
 }
-rootProject.name = "Cá Béo 66"
+rootProject.name = "Săn tìm kho báu đại dương"
 include ':libcocos'
 include ':lib_service'
 project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
-include ':library'
-//include ':nativelib'
-//include ':plugin_library'

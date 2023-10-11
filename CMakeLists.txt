@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-option(APP_NAME "Project Name" "NewProject")
+option(APP_NAME "Project Name" "Săn tìm kho báu đại dương")
 project(${APP_NAME} CXX)
 set(CC_LIB_NAME cocos)
 set(CC_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR})

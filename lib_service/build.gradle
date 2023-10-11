@@ -1,17 +1,14 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    namespace 'com.game.service'
-    compileSdkVersion 31
+    namespace 'org.sun.service'
+    compileSdkVersion 33
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
-        externalNativeBuild{
-            cmake{
-            }
-        }
     }
 
     sourceSets.main {
@@ -24,7 +21,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -32,15 +29,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    externalNativeBuild{
-        cmake{
-            path 'CMakeLists.txt'
-        }
-    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
     implementation project(':libcocos')
     implementation 'com.github.megatronking.stringfog:xor:4.0.1'
+    implementation 'androidx.core:core-ktx:1.6.0'
 }
