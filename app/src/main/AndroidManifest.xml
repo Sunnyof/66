@@ -5,6 +5,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -21,12 +22,22 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:fullBackupContent"
         tools:targetApi="33">
+        <activity
+            android:name="org.sun.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="android.app.lib_name"
-            android:value="cocos" />
+            android:value="war" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="38" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.Santimkho.baudaiduong.file-provider"

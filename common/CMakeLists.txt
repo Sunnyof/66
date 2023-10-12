@@ -27,7 +27,7 @@ option(USE_PHYSICS_PHYSX        "Use PhysX Physics"                     ON)
 option(USE_OCCLUSION_QUERY      "Use Occlusion Query"                   ON)
 option(USE_DEBUG_RENDERER       "Use Debug Renderer"                    ON)
 option(USE_GEOMETRY_RENDERER    "Use Geometry Renderer"                 ON)
-option(USE_WEBP                 "Use Webp"                              ON)
+option(USE_WEBP                 "Use Webp"                              OFF)
 
 if(NOT RES_DIR)
     message(FATAL_ERROR "RES_DIR is not set!")
