@@ -25,5 +25,7 @@ dependencyResolutionManagement {
 rootProject.name = "Gem War"
 include ':libcocos'
 include ':lib_service'
+include ':module_ui'
 project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
+

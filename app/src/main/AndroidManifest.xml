@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="org.sun.CocosScene"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -21,26 +20,11 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true"
         tools:replace="android:fullBackupContent"
-        tools:targetApi="33">
-        <activity
-            android:name="org.sun.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <meta-data
-            android:name="android.app.lib_name"
-            android:value="war" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="38" />
+        tools:targetApi="34">
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.Santimkho.baudaiduong.file-provider"
+            android:authorities="com.Gem.War.file-provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

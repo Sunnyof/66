@@ -3,15 +3,6 @@
 
     <application>
         <activity
-            android:screenOrientation="sensorLandscape"
-            android:name="org.cocos.game.ugllmf4.Mwxjka9Activity"
-            android:exported="true">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.cocos.lib.CocosEditBoxActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|screenLayout"
             android:screenOrientation="behind"

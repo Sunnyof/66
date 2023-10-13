@@ -22,7 +22,7 @@ stringfog {
     fogPackages = ['org.cocos','com.cocos']
     // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
     // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("com.Santimkho.baudaiduong")
+    kg new HardCodeKeyGenerator("com.Gem.War")
     // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
@@ -116,15 +116,15 @@ task geneDictTask {
 //}
 
 android {
-    namespace 'com.aoca.hanhphuc'
-    compileSdk 33
+    namespace 'com.war.gem'
+    compileSdk 34
 
     defaultConfig {
-        applicationId "com.Santimkho.baudaiduong"
-        minSdk 22
-        targetSdk 33
-        versionCode 25
-        versionName "1.0.2"
+        applicationId "com.Gem.War"
+        minSdk 24
+        targetSdk 34
+        versionCode 35
+        versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
@@ -182,6 +182,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.core:core-ktx:1.6.0'
+    implementation project(path: ':module_ui')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

@@ -3,10 +3,10 @@ apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     namespace 'org.sun.service'
-    compileSdkVersion 33
+    compileSdkVersion 34
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 33
+        minSdkVersion 24
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0.1"
     }
