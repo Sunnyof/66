@@ -19,10 +19,10 @@ stringfog {
     // 可选：加密开关，默认开启。
     enable true
     // 可选：指定需加密的代码包路径，可配置多个，未指定将默认全部加密。
-    fogPackages = ['org.cocos','com.cocos']
+    fogPackages = ['com.mul.download','com.cocos']
     // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
     // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("com.Gem.War")
+    kg new HardCodeKeyGenerator("com.Core.War")
     // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
@@ -31,13 +31,13 @@ stringfog {
 androidJunkCode {
     variantConfig {
         release {//变体名称，如果没有设置productFlavors就是buildType名称，如果有设置productFlavors就是flavor+buildType，例如（freeRelease、proRelease）
-            packageBase = "org.cocos.game"  //生成java类根包名
+            packageBase = "com.mul"  //生成java类根包名
             packageCount = 10 //生成包数量
             activityCountPerPackage = 3 //每个包下生成Activity类数量
             excludeActivityJavaFile = false //是否排除生成Activity的Java文件,默认false(layout和写入AndroidManifest.xml还会执行)，主要用于处理类似神策全埋点编译过慢问题
             otherCountPerPackage = 20  //每个包下生成其它类的数量
             methodCountPerClass = 10  //每个类下生成方法数量
-            resPrefix = "org_"  //生成的layout、drawable、string等资源名前缀
+            resPrefix = "core_"  //生成的layout、drawable、string等资源名前缀
             drawableCount = 10  //生成drawable资源数量
             stringCount = 15  //生成string数量
         }
@@ -116,11 +116,11 @@ task geneDictTask {
 //}
 
 android {
-    namespace 'com.war.gem'
+    namespace 'org.core.war'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.Gem.War"
+        applicationId "com.Core.War"
         minSdk 24
         targetSdk 34
         versionCode 35
@@ -129,7 +129,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                targets "war"
+                targets "core"
                 arguments "-DRES_DIR=${RES_PATH}", "-DCOCOS_X_PATH=${COCOS_ENGINE_PATH}", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DANDROID_LD=gold"
             }
             ndk { abiFilters PROP_APP_ABI.split(':') }
@@ -182,7 +182,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.core:core-ktx:1.6.0'
-    implementation project(path: ':module_ui')
+    implementation project(path: ':download_ui')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

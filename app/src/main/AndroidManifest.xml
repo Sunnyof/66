@@ -24,7 +24,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.Gem.War.file-provider"
+            android:authorities="com.Core.War.file-provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -22,10 +22,10 @@ dependencyResolutionManagement {
         mavenLocal()
     }
 }
-rootProject.name = "Gem War"
+rootProject.name = "Core War"
 include ':libcocos'
 include ':lib_service'
-include ':module_ui'
 project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
-
+include ':download'
+include ':download_ui'

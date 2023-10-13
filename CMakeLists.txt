@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 
-option(APP_NAME "Project Name" "Gem War")
+option(APP_NAME "Project Name" "Core War")
 project(${APP_NAME} CXX)
-set(CC_LIB_NAME war)
+set(CC_LIB_NAME core)
 set(CC_PROJECT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(CC_PROJ_SOURCES)
 set(CC_COMMON_SOURCES)
