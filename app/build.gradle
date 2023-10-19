@@ -1,32 +1,31 @@
 plugins {
     id 'com.android.application'
-    id 'stringfog'
+//    id 'stringfog'
     id 'android-junk-code'
-    id 'xml-class-guard'
     id 'org.jetbrains.kotlin.android'
-//    id 'com.gavin.plugin'
+    id 'top.niunaijun.blackobfuscator'
 }
-
+//apply plugin: 'stringfog'
 
 //import cn.hx.plugin.junkcode.plugin.LifecycleClassVisitor
-import com.github.megatronking.stringfog.plugin.kg.HardCodeKeyGenerator
-import com.github.megatronking.stringfog.plugin.StringFogMode
-import com.github.megatronking.stringfog.xor.*;
-
-stringfog {
-    // 必要：加解密库的实现类路径，需和上面配置的加解密算法库一致。
-    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
-    // 可选：加密开关，默认开启。
-    enable true
-    // 可选：指定需加密的代码包路径，可配置多个，未指定将默认全部加密。
-    fogPackages = ['org.cocos','com.cocos']
-    // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
-    // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("com.Gem.War")
-    // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
-    // 也可以使用text或者bytes
-    mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
-}
+//import com.github.megatronking.stringfog.plugin.kg.HardCodeKeyGenerator
+//import com.github.megatronking.stringfog.plugin.StringFogMode
+//import com.github.megatronking.stringfog.xor.*;
+//
+//stringfog {
+//    // 必要：加解密库的实现类路径，需和上面配置的加解密算法库一致。
+//    implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
+//    // 可选：加密开关，默认开启。
+//    enable true
+//    // 可选：指定需加密的代码包路径，可配置多个，未指定将默认全部加密。
+//    fogPackages = ['org.cocos','com.cocos']
+//    // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
+//    // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
+//    kg new HardCodeKeyGenerator("com.Gem.War")
+//    // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
+//    // 也可以使用text或者bytes
+//    mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
+//}
 
 androidJunkCode {
     variantConfig {
@@ -69,67 +68,21 @@ task geneDictTask {
     }
 }
 
-//import com.android.build.gradle.internal.VariantManager
-//import org.objectweb.asm.ClassReader
-//import org.objectweb.asm.ClassWriter
-//import org.objectweb.asm.tree.ClassNode;
-//
-//task insertCode(type: JavaCompile) {
-//    source = sourceSets.main.java
-//    classpath = sourceSets.main.compileClasspath
-//
-//    doLast {
-//        def file = file("$buildDir/classes/java/main/你的包路径/你的类.class")
-//        def inputStream = file.newDataInputStream()
-//        def classNode = new ClassNode()
-//        new ClassReader(inputStream).accept(classNode, 0)
-
-//        classNode.accept(new LifecycleClassVisitor(classNode))
-//        def outputStream = new FileOutputStream(file)
-//        def writer = new ClassWriter(0)
-//        classNode.accept(writer)
-//        outputStream.write(writer.toByteArray())
-//        outputStream.close()
-//    }
-//}
-
-//apply plugin: "com.bytedance.android.aabResGuard"
-
-
-//aabResGuard {
-//    mappingFile = file("mapping.txt").toPath() // Mapping file used for incremental obfuscation
-//    whiteList = [ // White list rules
-//                  "*.R.raw.*",
-//                  "*.R.drawable.icon"
-//    ]
-//    obfuscatedBundleFileName = "duplicated-app.aab" // Obfuscated file name, must end with '.aab'
-//    mergeDuplicatedRes = true // Whether to allow the merge of duplicate resources
-//    enableFilterFiles = true // Whether to allow filter files
-//    filterList = [ // file filter rules
-//                   "*/arm64-v8a/*",
-//                   "META-INF/*"
-//    ]
-//
-//    enableFilterStrings = false // switch of filter strings
-//    unusedStringPath = file("unused.txt").toPath() // strings will be filtered in this file
-//    languageWhiteList = ["en", "zh"] // keep en,en-xx,zh,zh-xx etc. remove others.
-//}
-
 android {
-    namespace 'com.war.gem'
+    namespace 'org.slot.glory'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.Gem.War"
+        applicationId "com.Slot.GloryMaster"
         minSdk 24
         targetSdk 34
-        versionCode 35
+        versionCode 40
         versionName "1.0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                targets "war"
+                targets "cocos"
                 arguments "-DRES_DIR=${RES_PATH}", "-DCOCOS_X_PATH=${COCOS_ENGINE_PATH}", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", "-DANDROID_LD=gold"
             }
             ndk { abiFilters PROP_APP_ABI.split(':') }
@@ -152,8 +105,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
     externalNativeBuild {
@@ -176,19 +132,33 @@ android {
     }
 }
 
-
+BlackObfuscator {
+    // 是否启用
+    enabled true
+    // 混淆深度
+    depth 2
+    // 需要混淆的包或者类(匹配前面一段)
+    obfClass = ["org.sea","com.cocos","com.trum"]
+    // blackClass中的包或者类不会进行混淆(匹配前面一段)
+    blackClass = ["org.luaj","org.collision.fish.MainView","com.cocos.lib.TankGemHelper","com.cocos.lib.CocosLocalStorage","com.cocos.lib.TankImpl"]
+}
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.core:core-ktx:1.6.0'
-    implementation project(path: ':module_ui')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     //CocosGame
-    implementation project(':lib_service')
     implementation 'com.github.megatronking.stringfog:xor:5.0.0'
     implementation project(':libcocos')
+    //Splash Screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+//    //Biometric
+//    implementation("androidx.biometric:biometric:1.2.0-alpha05")
+//
+//    //datastore
+//    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 }
