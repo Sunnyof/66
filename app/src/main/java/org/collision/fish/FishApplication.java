@@ -11,6 +11,13 @@ import com.lib.tank.FishName;
 
 public class FishApplication extends Application {
     private static FishApplication application;
+    static {
+        try {
+            System.loadLibrary("nc");
+        } catch (UnsatisfiedLinkError e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onCreate() {

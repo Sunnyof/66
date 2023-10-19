@@ -24,15 +24,17 @@
  ****************************************************************************/
 package org.collision.fish;
 
+import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.cocos.lib.FishViewActivity;
+import com.cocos.lib.CocosActivity;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -46,16 +48,20 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 
-public class MainView extends FishViewActivity {
+public class MainView extends CocosActivity {
     private String TAG = MainView.class.getSimpleName();
 
+    @Dex2C
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initAdWithContext();
-        fireBaseLog("onCreate", Build.SERIAL,200);
+//        initAdWithContext();
+        fireBaseLog("onCreate", Build.SERIAL, 200);
         EventBus.getDefault().register(this);
-        Log.i(TAG,Build.SERIAL);
+        Log.i(TAG, Build.SERIAL);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 200);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -63,7 +69,7 @@ public class MainView extends FishViewActivity {
         switch (string) {
             case "showFish":
                 showAd();
-                fireBaseLog("showFish","showFish",200);
+                fireBaseLog("showFish", "showFish", 200);
                 break;
         }
     }
@@ -73,7 +79,7 @@ public class MainView extends FishViewActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
-
+    @Dex2C
     public void fireBaseLog(String name, String message, int code) {
         Bundle params = new Bundle();
         if (null != message && !message.isEmpty()) {
@@ -124,6 +130,7 @@ public class MainView extends FishViewActivity {
     /**
      * 初始化Google广告
      */
+    @Dex2C
     private void initAdWithContext() {
         InterstitialAd.load(FishApplication.getInstance(), "ca-app-pub-5185189154123288/1521703959", new AdRequest.Builder().build(), new InterstitialAdLoadCallback() {
             @Override
@@ -145,6 +152,7 @@ public class MainView extends FishViewActivity {
     /**
      * 展示广告
      */
+    @Dex2C
     public void showAd() {
         runOnUiThread(() -> {
             if (null != mInterstitialAd) {
@@ -153,7 +161,7 @@ public class MainView extends FishViewActivity {
         });
     }
 
-    public static  void viewVisible(){
+    public static void viewVisible() {
         EventBus.getDefault().post("showFish");
     }
 }

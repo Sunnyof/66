@@ -36,11 +36,11 @@
 -keep interface com.google.firebase.** {*;}
 -keep enum com.google.firebase.** {*;}
 
--keep public class com.cocos.lib.TankGemHelper { *; }
+-keep public class com.cocos.lib.CocosHelper { *; }
 -dontwarn com.cocos.**
 #-keep public class com.cocos.lib.CocosHttpURLConnection { *; }
 #-dontwarn com.cocos.**
--keep public class com.cocos.lib.TankImpl { *; }
+-keep public class com.cocos.lib.CanvasRenderingContext2DImpl { *; }
 -dontwarn com.cocos.**
 #-keep public class com.cocos.lib.TankWebHelper { *; }
 #-dontwarn com.cocos.**
@@ -50,7 +50,7 @@
 #-dontwarn com.cocos.**
 -keep public class com.cocos.lib.CocosLocalStorage { *; }
 -dontwarn com.cocos.**
--keep public class com.cocos.lib.TankDownload { *; }
+-keep public class com.cocos.lib.CocosDownloader { *; }
 -dontwarn com.cocos.**
 
 -keep public class org.collision.fish.** { *; }

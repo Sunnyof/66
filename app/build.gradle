@@ -137,7 +137,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.Collisionof.fish"
+        applicationId "game.SieuSao.CauCa"
         minSdk 21
         targetSdk 33
         versionCode 4

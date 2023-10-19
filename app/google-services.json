@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "636363146144",
-    "project_id": "collision-of-fish",
-    "storage_bucket": "collision-of-fish.appspot.com"
+    "project_number": "326612859069",
+    "project_id": "sieu-sao-cau-ca-b7e99",
+    "storage_bucket": "sieu-sao-cau-ca-b7e99.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:636363146144:android:a7464b7aeceec148e21ac5",
+        "mobilesdk_app_id": "1:326612859069:android:63c4dd7ff1852e4ef21fd4",
         "android_client_info": {
-          "package_name": "com.Collisionof.fish"
+          "package_name": "game.SieuSao.CauCa"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "326612859069-a4hnq2qeb4t55snpfd0anlunsjjk5o38.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyBW0ZEMcFE7XOa7rCtjaUhAZATZsnDUhmw"
+          "current_key": "AIzaSyA7sCcUHBFxbcZngP8wquol1MzNOvwT-Sw"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "326612859069-a4hnq2qeb4t55snpfd0anlunsjjk5o38.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
