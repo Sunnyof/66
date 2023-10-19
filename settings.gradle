@@ -12,7 +12,6 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         jcenter()
         maven { url 'https://raw.githubusercontent.com/martinloren/AabResGuard/mvn-repo' }
@@ -25,9 +24,11 @@ dependencyResolutionManagement {
     }
 }
 //Gem Explosion Tank
-rootProject.name = "Collision of fish"
-include ':fish2game'
-include ':fish'
-project(':fish2game').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
-include ':app'
-include ':data'
+rootProject.name = "Colorful interconnects"
+include ':colorful'
+project(':colorful').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
+include ':common_ui'
+project(':common_ui').projectDir = new File("./","ui")
+
+include ':launcher'
+
