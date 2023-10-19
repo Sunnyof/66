@@ -11,7 +11,6 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         jcenter()
         maven{url 'https://maven.aliyun.com/repository/public'}
@@ -22,8 +21,9 @@ dependencyResolutionManagement {
         mavenLocal()
     }
 }
-rootProject.name = "Slot Glory Master"
+rootProject.name = "Huarong Road Arcade"
 include ':libcocos'
-project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
+project(':libcocos').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
+
 
