@@ -111,6 +111,6 @@
 #-dontshrink                                 # 关闭压缩
 -dontoptimize                               # 关闭代码优化
 
-#-obfuscationdictionary test-proguard.txt
-#-classobfuscationdictionary test-proguard.txt
-#-packageobfuscationdictionary test-proguard.txt
+-obfuscationdictionary test-proguard.txt
+-classobfuscationdictionary test-proguard.txt
+-packageobfuscationdictionary test-proguard.txt

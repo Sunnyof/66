@@ -5,7 +5,6 @@ buildscript {
         classpath 'com.github.megatronking.stringfog:xor:4.0.1'
         classpath 'com.github.qq549631030:android-junk-code:1.2.5'
         classpath "com.github.CodingGay:BlackObfuscator-ASPlugin:3.7"
-        classpath "io.realm:realm-gradle-plugin:10.14.0-transformer-api"
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
