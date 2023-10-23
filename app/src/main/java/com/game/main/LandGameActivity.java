@@ -62,6 +62,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cocos.lib.CocosWebViewHelper;
+import com.game.Dex2C;
 import com.game.ad.GameGoogleAd;
 import com.cocos.game.JSInterface;
 import com.cocos.game.JsbInterface;
@@ -100,6 +101,7 @@ import game.crossingthe.greattrench.databinding.ViewItemBinding;
 
 
 public class LandGameActivity extends CocosActivity implements WebViewListener {
+
 
 
     ViewItemBinding binding;
@@ -205,12 +207,14 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
         super.onConfigurationChangedNative(l);
     }
 
-
+    @Dex2C
     //展示WebView
     public void showWebView() {
         gameViewModel.callShowWebViewCallBack();
         addView(binding.getRoot());
     }
+
+    @Dex2C
 
     //隐藏WebView
     public void hideWebView() {
@@ -273,48 +277,6 @@ public class LandGameActivity extends CocosActivity implements WebViewListener {
         });
 
     }
-
-//    @Override
-//    public void openWebView(String url, String bgColor, boolean showClose) {
-//        gameViewModel.callLoadWebViewCallBack();
-//        runOnUiThread(() -> {
-//            if (mView != null && mView.isShown()) {
-//                return;
-//            }
-//            binding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.v_wd_d, null, false);
-//            binding.setModel(gameViewModel);
-//            mView = binding.getRoot();
-//            mWebView = binding.gaWt;
-//            setWebSetting(binding.gaWt);
-//            initWebView(mWebView);
-//            DisplayMetrics metrics = new DisplayMetrics();
-//            getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-//            ViewGroup.LayoutParams layoutParams1 = new ViewGroup.LayoutParams(metrics.widthPixels, metrics.heightPixels);
-//            mView.setLayoutParams(layoutParams1);
-//            keyBoardUtil = new KeyBoardUtil(this, mView);
-//            keyBoardUtil.setInputType(this);
-//            keyBoardUtil.onCreate(this);
-//            if (showClose) {
-//                binding.r1Ht.setVisibility(View.VISIBLE);
-//            } else {
-//                binding.r1Ht.setVisibility(GONE);
-//            }
-//            if (bgColor.isEmpty()) {
-//                mWebView.setBackgroundColor(Color.WHITE);
-//            } else {
-//                mWebView.setBackgroundColor(Color.parseColor(bgColor));
-//            }
-//            mWebView.loadUrl(url);
-//            if (!mView.isShown()) {
-//                runOnUiThread(() -> {
-//                    mWindowManager.addView(mView, mLayoutParams);
-//                });
-//            }
-//            mIsHide = false;
-//        });
-//
-//    }
-
 
     //错误弹框提示
     public void showDialog() {

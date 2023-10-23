@@ -19,8 +19,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
+@Dex2C
 public class BaseApplication extends Application {
-
     private static BaseApplication application;
 
     @Override

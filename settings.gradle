@@ -26,3 +26,6 @@ rootProject.name = "Crossing The Great Trench"
 include ':libcocos2dx'
 project(':libcocos2dx').projectDir  = new File(COCOS_ENGINE_PATH,'cocos/platform/android/libcocos2dx')
 include ':app'
+include ':modle-base'
+
+//310	610142	Punctuation master		com.Punctuation.master		game.Punctuation.master
