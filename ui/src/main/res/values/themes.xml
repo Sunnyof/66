@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="Theme.SplashScreen.Demo" parent="Theme.SplashScreen">
@@ -21,7 +22,7 @@
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/white</item>
         <!-- icon动画在关闭之前显示的时长：最长时间为1000毫秒-->
-        <item name="windowSplashScreenAnimationDuration">4000</item>
+        <item name="windowSplashScreenAnimationDuration">5000</item>
         <!-- Splash退出后的主题-->
         <item name="postSplashScreenTheme">@style/Theme.CollisionOfFish</item>
     </style>
