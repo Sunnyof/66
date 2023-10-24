@@ -21,6 +21,7 @@ import org.colorful.interconnects.value.SPHelp
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import ui.colorful.interconnects.R
 import ui.colorful.interconnects.databinding.ASBinding
 import java.util.Collections
 class AppGameActivity : AppCompatActivity() {

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "886498475309",
+    "project_id": "colorful-interconnects-8c67b",
+    "storage_bucket": "colorful-interconnects-8c67b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886498475309:android:506baaef82132ebb3d27a4",
+        "android_client_info": {
+          "package_name": "com.Colorful.interconnects"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvyjKPNIodeble5v1wRS2T18d5Sm6w9po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

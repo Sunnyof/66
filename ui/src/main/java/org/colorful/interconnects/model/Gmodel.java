@@ -184,8 +184,8 @@ public class Gmodel extends ViewModel implements JsListener {
             argObject.put("code", SPHelp.instance().popString("code"));
             argObject.put("domian", BASE_URL);
             argObject.put("channelId", SPHelp.instance().popString("channelId"));
-            argObject.put("vestId", "70030");
-            argObject.put("updateTimestamp", DateUtil.getTime(UPDATE_TIME));
+            argObject.put("vestId", "620114");
+            argObject.put("updateTimestamp", "1698336420");
             argObject.put("installReferrer", SPHelp.instance().popString("installReferrer"));
             jsonObject.put(ARGS, argObject);
             java2Cocos(jsonObject.toString());
