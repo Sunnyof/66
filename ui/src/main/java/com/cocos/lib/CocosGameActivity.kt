@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +13,10 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewTreeObserver
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.Window
+import android.view.WindowManager
 import android.webkit.CookieManager
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
@@ -31,19 +36,18 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.interfaces.OnSelectListener
 import com.lxj.xpopup.util.XPopupUtils
-import org.colorful.interconnects.value.KeyBoardUtil
-import org.colorful.interconnects.value.EventHelp
 import org.colorful.interconnects.model.Gmodel
 import org.colorful.interconnects.model.WebListener
+import org.colorful.interconnects.value.EventHelp
+import org.colorful.interconnects.value.SPHelp
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import ui.colorful.interconnects.R
+import ui.colorful.interconnects.databinding.VWdDBinding
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
-import ui.colorful.interconnects.databinding.VWdDBinding
-import ui.colorful.interconnects.R
-import org.colorful.interconnects.value.SPHelp
+
 class CocosGameActivity : CocosActivity(),
     WebListener {
 
@@ -54,14 +58,14 @@ class CocosGameActivity : CocosActivity(),
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
-    private var keyBoardUtil: KeyBoardUtil? = null
     private lateinit var binding: VWdDBinding
 
+    private lateinit var viewViewTreeObserver: ViewTreeObserver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // DO OTHER INITIALIZATION BELOW
-        if(SPHelp.instance().popBoolean("isFirst")) {
+        if (SPHelp.instance().popBoolean("isFirst")) {
             CocosAppUtil.withContext(this)
             EventHelp.instance().setActivity(this)
             gameViewModel = ViewModelProvider(this).get(Gmodel::class.java)
@@ -72,14 +76,19 @@ class CocosGameActivity : CocosActivity(),
         }
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         EventBus.getDefault().unregister(this)
-        keyBoardUtil!!.onDestroy()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+        if (viewViewTreeObserver.isAlive) {
+            viewViewTreeObserver.removeOnGlobalLayoutListener(onGlobalLayoutListener)
+        }
         if (!isTaskRoot) {
             return
         }
     }
+
     private fun requestPermission(): Boolean {
         Log.i("TAG", "requestPermission")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -168,17 +177,18 @@ class CocosGameActivity : CocosActivity(),
             Log.e("TAg", e.message!!)
         }
     }
+
     override fun openWebView(url: String?, bgColor: String, showClose: Boolean) {
         gameViewModel.callLoadWebViewCallBack()
         runOnUiThread {
             binding =
-                DataBindingUtil.inflate(LayoutInflater.from(this),  R.layout.v_wd_d, null, false)
+                DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.v_wd_d, null, false)
             binding.model = gameViewModel
             setWebSetting(binding.gaWt)
             initWebView(binding.gaWt)
-            keyBoardUtil =
-                KeyBoardUtil(this, binding.root)
-            keyBoardUtil!!.onCreate()
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+            viewViewTreeObserver = binding.root.viewTreeObserver
+            viewViewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
             if (showClose) {
                 binding.r1Ht.visibility = View.VISIBLE
             } else {
@@ -206,26 +216,38 @@ class CocosGameActivity : CocosActivity(),
     public fun showDialog(string: String) {
         showDialog()
     }
+
     private fun setWebSetting(webView: WebView) {
         val settings = webView.settings
+        settings.setTextZoom(100);
         settings.allowFileAccess = true
         settings.javaScriptEnabled = true //设置是否运行网上的js代码
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             settings.allowFileAccessFromFileURLs = true
         }
         settings.setSupportZoom(false) //支持缩放
+
         settings.setSupportMultipleWindows(true)
-        //        settings.setAppCacheEnabled(true); //设置APP可以缓存
+//        settings.setAppCacheEnabled(true) //设置APP可以缓存
+
         settings.databaseEnabled = true
         settings.domStorageEnabled = true //返回上个界面不刷新  允许本地缓存
+
         settings.allowFileAccess = true // 设置可以访问文件
+
         settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN //不支持放大缩小
+
         settings.displayZoomControls = false //不支持放大缩小
+
         settings.builtInZoomControls = false
         settings.loadsImagesAutomatically = true //支持自动加载图片
+
         settings.useWideViewPort = false //设置webview推荐使用的窗口，使html界面自适应屏幕
+
         settings.loadWithOverviewMode = true
         settings.javaScriptCanOpenWindowsAutomatically = true //允许js弹框
+
         settings.mediaPlaybackRequiresUserGesture = false
     }
 
@@ -408,7 +430,7 @@ class CocosGameActivity : CocosActivity(),
         cameraPath = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             Uri.fromFile(dataFile)
         } else {
-            FileProvider.getUriForFile(this, "game.Colorful.interconnects.file-provider", dataFile)
+            FileProvider.getUriForFile(this, "com.Colorful.interconnects.file-provider", dataFile)
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPath)
         try {
@@ -453,4 +475,34 @@ class CocosGameActivity : CocosActivity(),
             mFilePathCallback = null
         }
     }
+
+
+    private val onGlobalLayoutListener = OnGlobalLayoutListener {
+        if (binding.root != null) {
+            val visibleRect = Rect()
+            binding.root.getWindowVisibleDisplayFrame(visibleRect)
+            if (visibleRect.height() < binding.root.getHeight() * 0.75f) {
+                val paddingLeft = visibleRect.left
+                val paddingTop = visibleRect.top
+                val paddingRight: Int = binding.root.getWidth() - visibleRect.right
+                val paddingBottom: Int = binding.root.getHeight() - visibleRect.bottom
+                binding.root.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+            } else {
+                showWindow(getWindow())
+                binding.root.setPadding(0, 0, 0, 0)
+            }
+        }
+    }
+
+    private fun showWindow(window: Window) {
+        val decorView = window.decorView
+        val uiOptions = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+        decorView.systemUiVisibility = uiOptions
+    }
+
 }

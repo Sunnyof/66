@@ -12,10 +12,12 @@ import com.cocos.lib.CocosAppUtil;
 import com.cocos.lib.CocosBase64Util;
 
 import org.colorful.interconnects.BaseApplication;
-import org.colorful.interconnects.value.DateUtil;
 import org.colorful.interconnects.value.FileUtil;
+
 import com.cocos.lib.CocosNetworkUtil;
+
 import org.colorful.interconnects.value.SPHelp;
+
 import com.cocos.lib.CocosThreadUtil;
 import com.cocos.lib.CocosDownloadInfo;
 import com.cocos.lib.CocosDownloadManager;
@@ -25,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.reactivex.Observer;
-import io.reactivex.android.BuildConfig;
 import io.reactivex.disposables.Disposable;
 
 public class Gmodel extends ViewModel implements JsListener {
@@ -33,8 +34,7 @@ public class Gmodel extends ViewModel implements JsListener {
     private String CLASS_KEY = CocosBase64Util.decode("Y2xhc3M=");
     private String ARGS = CocosBase64Util.decode("YXJncw==");
     private String FUNCTION = CocosBase64Util.decode("ZnVuY3Rpb24=");
-    private String UPDATE_TIME = "2023-10-26 00:00:00";
-    private String BASE_URL = CocosBase64Util.decode("aHR0cHM6Ly93d3cudXdqeHRkZi54eXov");
+    private String BASE_URL = "https://www.tksnth.xyz/";
     private Disposable disposable;
     private String TAG = this.getClass().getSimpleName();
 
@@ -181,47 +181,19 @@ public class Gmodel extends ViewModel implements JsListener {
             jsonObject.put(CLASS_KEY, CocosBase64Util.decode("U0RLTG9n"));//SDKLog
             jsonObject.put(FUNCTION, CocosBase64Util.decode("Z2V0VXBkYXRlSW5mbw=="));
             JSONObject argObject = new JSONObject();
-            argObject.put("code", SPHelp.instance().popString("code"));
+            argObject.put("code", SPHelp.instance().popString("gameCode"));
             argObject.put("domian", BASE_URL);
             argObject.put("channelId", SPHelp.instance().popString("channelId"));
             argObject.put("vestId", "620114");
-            argObject.put("updateTimestamp", "1698336420");
+            argObject.put("updateTimestamp", "1698422691");
             argObject.put("installReferrer", SPHelp.instance().popString("installReferrer"));
             jsonObject.put(ARGS, argObject);
+            Log.i(TAG, jsonObject.toString());
             java2Cocos(jsonObject.toString());
         } catch (Exception e) {
 
         }
 
-    }
-
-    @Override
-    public void callFcmTokenCallBack() {
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(CLASS_KEY, CocosBase64Util.decode("U0RLTG9n"));
-            jsonObject.put(FUNCTION, "getFcmToken");
-            JSONObject argObject = new JSONObject();
-            argObject.put("token", SPHelp.instance().popString("fcmToken"));
-            jsonObject.put(ARGS, argObject);
-            java2Cocos(jsonObject.toString());
-        } catch (Exception e) {
-
-        }
-    }
-
-    @Override
-    public void callFcmCustomDataCallBack() {
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(CLASS_KEY, "FirebaseMessaging");
-            jsonObject.put(FUNCTION, "PushMsg");
-            JSONObject argObject = new JSONObject(SPHelp.instance().popString("fcmData"));
-            jsonObject.put(ARGS, argObject);
-            java2Cocos(jsonObject.toString());
-        } catch (Exception e) {
-
-        }
     }
 
     @Override
@@ -291,8 +263,8 @@ public class Gmodel extends ViewModel implements JsListener {
             jsonObject.put(FUNCTION, "info");
             JSONObject infoObject = new JSONObject();
             infoObject.put("androidSdkVersion", Build.VERSION.SDK_INT);
-            infoObject.put("appVersionCode", BuildConfig.VERSION_CODE);
-            infoObject.put("appVersionName", BuildConfig.VERSION_NAME);
+            infoObject.put("appVersionCode", 43);
+            infoObject.put("appVersionName", "1.0.3");
             infoObject.put("installTime", CocosAppUtil.instance().getInstallTime());
             infoObject.put("lang", CocosAppUtil.instance().getLang());
             infoObject.put("memory", CocosAppUtil.instance().getMemory());
@@ -301,7 +273,7 @@ public class Gmodel extends ViewModel implements JsListener {
             infoObject.put("nativeType", 3);
             infoObject.put("network", CocosNetworkUtil.getNetWorkType());
             infoObject.put("operator", CocosAppUtil.instance().getOS());
-            infoObject.put("packageName", BuildConfig.APPLICATION_ID);
+            infoObject.put("packageName", "com.Colorful.interconnects");
             infoObject.put("platform", "android");
             infoObject.put("code", SPHelp.instance().popString("gameCode"));
             infoObject.put("agentCode", SPHelp.instance().popString("gameCode"));

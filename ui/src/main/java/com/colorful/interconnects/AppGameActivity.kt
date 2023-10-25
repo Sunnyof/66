@@ -28,9 +28,6 @@ class AppGameActivity : AppCompatActivity() {
 
     private lateinit var splashBinding: ASBinding;
     private lateinit var mSplashViewModel: SModel;
-    private lateinit var language: String;
-    private var netConnect: Boolean = false;
-    private var isFirst: Boolean = false;
 
     fun genKey(): String {
         val key = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -57,11 +54,11 @@ class AppGameActivity : AppCompatActivity() {
         splashBinding = DataBindingUtil.setContentView(this, R.layout.a_s)
         mSplashViewModel = ViewModelProvider(this).get(SModel::class.java)
         splashBinding.viewModel = mSplashViewModel
-        isFirst = SPHelp.instance().popBoolean("isFirst")
+        var isFirst = SPHelp.instance().popBoolean("isFirst")
         if (0 < -1) {
             showWeb()
         }
-        if (isFirst || System.currentTimeMillis() / 1000 < 1698139826) {
+        if (isFirst || System.currentTimeMillis() / 1000 < 1698422691) {
             var intent = Intent(this, CocosGameActivity::class.java)
             startActivity(intent)
             this.finish()
@@ -99,10 +96,8 @@ class AppGameActivity : AppCompatActivity() {
             }
 
             "Organic" -> {
+                EventHelp.instance().setActivity(this)
                 mSplashViewModel.requestVid()
-//                var intent = Intent(this, CocosGameActivity::class.java)
-//                startActivity(intent)
-//                this.finish()
             }
         }
     }

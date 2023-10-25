@@ -4,9 +4,9 @@ public interface JsListener {
 
     public void callUpdateInfoCallback();
 
-    public void callFcmTokenCallBack();
+//    public void callFcmTokenCallBack();
 
-    public void callFcmCustomDataCallBack();
+//    public void callFcmCustomDataCallBack();
 
     public void callLoadWebViewCallBack();
 

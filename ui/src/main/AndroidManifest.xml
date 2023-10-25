@@ -38,7 +38,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="game.Colorful.interconnects.file-provider"
+            android:authorities="com.Colorful.interconnects.file-provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

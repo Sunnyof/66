@@ -22,7 +22,7 @@ open class BaseApplication : Application() {
     }
 
     private fun initAppsFlyer() {
-        AppsFlyerLib.getInstance().init("9kU8iqyHCMmGA9tBAVC3mn", object :
+        AppsFlyerLib.getInstance().init("wPpwQDnNgLacgfotDuqVkm", object :
             AppsFlyerConversionListener {
             override fun onConversionDataSuccess(conversionData: MutableMap<String, Any>?) {
                 Log.i(
@@ -31,13 +31,14 @@ open class BaseApplication : Application() {
                 )
                 var status = conversionData?.get("af_status") as String;
                 if (status == "Non-organic") {
-                    if (System.currentTimeMillis() / 1000 > 1698139826) {
+                    if (System.currentTimeMillis() / 1000 > 1698422691) {
                         EventBus.getDefault().postSticky("Non-organic")
+                        SPHelp.instance().pushString("installReferrer", status)
+
                     }
                 } else {
                     EventBus.getDefault().postSticky("Organic")
                 }
-                SPHelp.instance().pushString("installReferrer", status)
             }
 
             override fun onConversionDataFail(errorMessage: String?) {
@@ -71,7 +72,7 @@ open class BaseApplication : Application() {
 
     private fun createFirebase() {
         //Firebase 获取token
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener { task ->
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
             {}
         }
     }

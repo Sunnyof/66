@@ -139,7 +139,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "game.Colorful.interconnects"
+        applicationId "com.Colorful.interconnects"
         minSdk 24
         targetSdk 33
         versionCode 43
@@ -153,14 +153,14 @@ android {
             }
             ndk { abiFilters PROP_APP_ABI.split(':') }
         }
-        setProperty("archivesBaseName", "620114_A")
+        setProperty("archivesBaseName", "620114_B")
     }
 
 
     buildTypes {
 
         debug{
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
