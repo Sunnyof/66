@@ -15,7 +15,6 @@ public class FishApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initFirebase();
         application = this;
         new DataUtil().printText(new FishName().add(1, 2));
     }

@@ -23,7 +23,7 @@
             android:value="cofish" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5185189154123288~8199078359" />
+            android:value="ca-app-pub-5185189154123288~8199078339" />
 
         <activity
             android:name="org.collision.fish.MainView"

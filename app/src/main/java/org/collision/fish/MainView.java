@@ -32,7 +32,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.cocos.lib.FishViewActivity;
+import com.cocos.lib.CocosActivity;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
@@ -46,7 +46,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 
-public class MainView extends FishViewActivity {
+public class MainView extends CocosActivity {
     private String TAG = MainView.class.getSimpleName();
 
     @Override
@@ -125,7 +125,7 @@ public class MainView extends FishViewActivity {
      * 初始化Google广告
      */
     private void initAdWithContext() {
-        InterstitialAd.load(FishApplication.getInstance(), "ca-app-pub-5185189154123288/1521703959", new AdRequest.Builder().build(), new InterstitialAdLoadCallback() {
+        InterstitialAd.load(FishApplication.getInstance(), "ca-app-pub-3940256099942544/1033173712", new AdRequest.Builder().build(), new InterstitialAdLoadCallback() {
             @Override
             public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                 super.onAdFailedToLoad(loadAdError);
