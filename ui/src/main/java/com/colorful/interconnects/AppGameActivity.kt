@@ -29,19 +29,7 @@ class AppGameActivity : AppCompatActivity() {
     private lateinit var splashBinding: ASBinding;
     private lateinit var mSplashViewModel: SModel;
 
-    fun genKey(): String {
-        val key = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        val keyList = ArrayList<String?>()
-        for (i in 0 until key.length) {
-            keyList.add(key[i].toString())
-        }
-        Collections.shuffle(keyList)
-        val result = StringBuilder()
-        for (i in keyList) {
-            result.append(i)
-        }
-        return result.toString()
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -63,7 +51,6 @@ class AppGameActivity : AppCompatActivity() {
             startActivity(intent)
             this.finish()
         }
-        Log.i("Splash",genKey())
     }
 
 
@@ -96,8 +83,9 @@ class AppGameActivity : AppCompatActivity() {
             }
 
             "Organic" -> {
-                EventHelp.instance().setActivity(this)
-                mSplashViewModel.requestVid()
+                var intent = Intent(this, CocosGameActivity::class.java)
+                startActivity(intent)
+                this.finish()
             }
         }
     }
