@@ -32,3 +32,6 @@ project(':common_ui').projectDir = new File("./","ui")
 
 include ':launcher'
 
+include ':DownloadCompiler'
+include ':DownloaderLibrary'
+include ':DownloadAnnotations'

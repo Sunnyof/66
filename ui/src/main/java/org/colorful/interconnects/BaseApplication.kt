@@ -65,9 +65,9 @@ open class BaseApplication : Application() {
         super.onCreate()
         SPHelp.instance().init(this)
         application = this;
-        initAppsFlyer()
-        FirebaseApp.initializeApp(this);
-        createFirebase()
+//        initAppsFlyer()
+//        FirebaseApp.initializeApp(this);
+//        createFirebase()
     }
 
     private fun createFirebase() {

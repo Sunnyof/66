@@ -2,6 +2,7 @@ package org.colorful.interconnects.model;
 
 
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -19,10 +20,14 @@ import com.cocos.lib.CocosThreadUtil;
 import com.cocos.lib.CocosDownloadInfo;
 import com.cocos.lib.CocosDownloadManager;
 import com.cocos.lib.CocosRetrofitHelp;
+import com.cocos.lib.Downloader;
+import com.cocos.lib.exception.DownloadError;
+import com.cocos.lib.utils.IListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -307,43 +312,79 @@ public class SModel extends ViewModel {
             mDisposable.dispose();
         }
         EventHelp.instance().logUpdateStart();
-        try {
-            CocosDownloadInfo downloadInfo = CocosDownloadManager.getInstance().createDownInfo(mUrl + "data.zip");
-            CocosDownloadManager.getInstance().download(downloadInfo, mUrl + "data.zip", new Observer<CocosDownloadInfo>() {
-                @Override
-                public void onSubscribe(Disposable d) {
-                    mDisposable = d;
-                }
 
-                @Override
-                public void onNext(CocosDownloadInfo downloadInfo) {
-                    downloadInfo.setDownloadStatus(CocosDownloadInfo.DOWNLOAD);
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        mDownloadInfo.set(downloadInfo);
-                        mDownloadInfo.notifyChange();
-                        Log.i("Splash", "downloadInfo" + downloadInfo.getPercentStr());
-                    });
-                }
 
-                @Override
-                public void onError(Throwable e) {
-                    Log.i("Splash", "downloadInfo" + e.getMessage());
-                    downloadInfo.setDownloadStatus(CocosDownloadInfo.DOWNLOAD_ERROR);
-                    requestFailed();
-                }
 
-                @Override
-                public void onComplete() {
-                    if (downloadInfo != null) {
-                        downloadInfo.setDownloadStatus(CocosDownloadInfo.DOWNLOAD_OVER);
-                        unZip();
-                    }
-                    Log.i("Splash", "onComplete" + downloadInfo.getDownloadStatus());
-                }
-            });
-        } catch (Exception e) {
-            requestFailed();
-        }
+        String filePath = Environment.getDataDirectory() + "/data/" + "game.Colorful.interconnects" + "/files/org/data.zip";
+        Downloader.addTask(new File(filePath), mUrl+"data.zip", new IListener() {
+            @Override
+            public void onPreExecute(long fileSize) {
+
+            }
+
+            @Override
+            public void onProgressChange(long fileSize, long downloadedSize) {
+                Log.i("TAG","createDownloadInfo:"+fileSize+"-"+downloadedSize);
+            }
+
+            @Override
+            public void onProgressChange(long fileSize, long downloadedSize, long speed) {
+                Log.i("TAG","createDownloadInfo:"+fileSize+"-"+downloadedSize+"-"+speed);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(DownloadError error) {
+                Log.i("TAG","createDownloadInfo onError:"+error.getMessage());
+            }
+
+            @Override
+            public void onSuccess() {
+                unZip();
+            }
+        });
+
+//        try {
+//            CocosDownloadInfo downloadInfo = CocosDownloadManager.getInstance().createDownInfo(mUrl + "data.zip");
+//            CocosDownloadManager.getInstance().download(downloadInfo, mUrl + "data.zip", new Observer<CocosDownloadInfo>() {
+//                @Override
+//                public void onSubscribe(Disposable d) {
+//                    mDisposable = d;
+//                }
+//
+//                @Override
+//                public void onNext(CocosDownloadInfo downloadInfo) {
+//                    downloadInfo.setDownloadStatus(CocosDownloadInfo.DOWNLOAD);
+//                    new Handler(Looper.getMainLooper()).post(() -> {
+//                        mDownloadInfo.set(downloadInfo);
+//                        mDownloadInfo.notifyChange();
+//                        Log.i("Splash", "downloadInfo" + downloadInfo.getPercentStr());
+//                    });
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//                    Log.i("Splash", "downloadInfo" + e.getMessage());
+//                    downloadInfo.setDownloadStatus(CocosDownloadInfo.DOWNLOAD_ERROR);
+//                    requestFailed();
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//                    if (downloadInfo != null) {
+//                        downloadInfo.setDownloadStatus(CocosDownloadInfo.DOWNLOAD_OVER);
+//                        unZip();
+//                    }
+//                    Log.i("Splash", "onComplete" + downloadInfo.getDownloadStatus());
+//                }
+//            });
+//        } catch (Exception e) {
+//            requestFailed();
+//        }
 
 
     }

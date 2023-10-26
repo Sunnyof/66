@@ -6,8 +6,6 @@ plugins {
     id 'xml-class-guard'
     id 'top.niunaijun.blackobfuscator'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
-//    id 'com.bytedance.android.aabResGuard'
 }
 //aabResGuard {
 //    mappingFile = file("mapping.txt").toPath() // 用于增量混淆的 mapping 文件
@@ -41,7 +39,7 @@ stringfog {
     fogPackages = ['com.colorful','com.cocos']
     // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
     // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
-    kg new HardCodeKeyGenerator("com.Colorful.interconnects")
+    kg new HardCodeKeyGenerator("game.Colorful.interconnects")
     // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
     // 也可以使用text或者bytes
     mode com.github.megatronking.stringfog.plugin.StringFogMode.bytes
@@ -137,9 +135,13 @@ task geneDictTask {
 android {
     namespace 'org.colorful.interconnects'
     compileSdk 33
-
+    configurations {
+        all {
+            exclude group: 'com.google.guava', module: 'listenablefuture'
+        }
+    }
     defaultConfig {
-        applicationId "com.Colorful.interconnects"
+        applicationId "game.Colorful.interconnects"
         minSdk 24
         targetSdk 33
         versionCode 43

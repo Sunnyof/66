@@ -1,6 +1,7 @@
 package org.colorful.interconnects.model;
 
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -21,10 +22,15 @@ import org.colorful.interconnects.value.SPHelp;
 import com.cocos.lib.CocosThreadUtil;
 import com.cocos.lib.CocosDownloadInfo;
 import com.cocos.lib.CocosDownloadManager;
+import com.cocos.lib.Downloader;
+import com.cocos.lib.exception.DownloadError;
+import com.cocos.lib.utils.IListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -45,6 +51,7 @@ public class Gmodel extends ViewModel implements JsListener {
         if (disposable != null) {
             disposable.dispose();
         }
+
         try {
             info = CocosDownloadManager.getInstance().createDownInfo(url);
             info.setId("");
@@ -123,17 +130,51 @@ public class Gmodel extends ViewModel implements JsListener {
 
     public void createDownloadInfo(String id, String url, String fileName) {
         downloadCallback(id, 0, 0, 0);
-        try {
-            info = CocosDownloadManager.getInstance().createDownInfo(url);
-            info.setId(id);
-            if (fileName.endsWith("zip")) {
-                info.setFileName(fileName.substring(fileName.lastIndexOf("/")));
+        Log.i("TAG","createDownloadInfo");
+        String filePath = Environment.getDataDirectory() + "/data/" + "game.Colorful.interconnects" + "/files/org/data.zip";
+        Downloader.addTask(new File(filePath), url, new IListener() {
+            @Override
+            public void onPreExecute(long fileSize) {
+
             }
-            Log.i(TAG, fileName + "-" + info.getFileName());
-            CocosDownloadManager.getInstance().setFilePath(fileName.substring(0, fileName.lastIndexOf("/")));
-        } catch (Exception e) {
-            EventBus.getDefault().post("showDialog");
-        }
+
+            @Override
+            public void onProgressChange(long fileSize, long downloadedSize) {
+                Log.i("TAG","createDownloadInfo:"+fileSize+"-"+downloadedSize);
+            }
+
+            @Override
+            public void onProgressChange(long fileSize, long downloadedSize, long speed) {
+                Log.i("TAG","createDownloadInfo:"+fileSize+"-"+downloadedSize+"-"+speed);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(DownloadError error) {
+                Log.i("TAG","createDownloadInfo onError:"+error.getMessage());
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+        });
+
+//        try {
+//            info = CocosDownloadManager.getInstance().createDownInfo(url);
+//            info.setId(id);
+//            if (fileName.endsWith("zip")) {
+//                info.setFileName(fileName.substring(fileName.lastIndexOf("/")));
+//            }
+//            Log.i(TAG, fileName + "-" + info.getFileName());
+//            CocosDownloadManager.getInstance().setFilePath(fileName.substring(0, fileName.lastIndexOf("/")));
+//        } catch (Exception e) {
+//            EventBus.getDefault().post("showDialog");
+//        }
     }
 
     public void unzipFile(String id, String dataDir, String outFileDir) {
@@ -273,7 +314,7 @@ public class Gmodel extends ViewModel implements JsListener {
             infoObject.put("nativeType", 3);
             infoObject.put("network", CocosNetworkUtil.getNetWorkType());
             infoObject.put("operator", CocosAppUtil.instance().getOS());
-            infoObject.put("packageName", "com.Colorful.interconnects");
+            infoObject.put("packageName", "game.Colorful.interconnects");
             infoObject.put("platform", "android");
             infoObject.put("code", SPHelp.instance().popString("gameCode"));
             infoObject.put("agentCode", SPHelp.instance().popString("gameCode"));

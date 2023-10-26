@@ -430,7 +430,7 @@ class CocosGameActivity : CocosActivity(),
         cameraPath = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
             Uri.fromFile(dataFile)
         } else {
-            FileProvider.getUriForFile(this, "com.Colorful.interconnects.file-provider", dataFile)
+            FileProvider.getUriForFile(this, "game.Colorful.interconnects.file-provider", dataFile)
         }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPath)
         try {

@@ -36,7 +36,7 @@ public class CocosDownloadManager {
     private HashMap<String, Call> downCalls; //用来存放各个下载的请求
 
 
-    private String filePath = Environment.getDataDirectory() + "/data/" + "com.Colorful.interconnects" + "/files/org/";
+    private String filePath = Environment.getDataDirectory() + "/data/" + "game.Colorful.interconnects" + "/files/org/";
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;

@@ -1,4 +1,4 @@
-package com.colorful.interconnects
+package game.Colorful.interconnects
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.cocos.lib.CocosDialogUtil
 import com.cocos.lib.CocosGameActivity
+import com.cocos.lib.Downloader
 import org.colorful.interconnects.model.SModel
 import org.colorful.interconnects.value.EventHelp
 import org.colorful.interconnects.value.SPHelp
@@ -58,11 +59,16 @@ class AppGameActivity : AppCompatActivity() {
         if (0 < -1) {
             showWeb()
         }
-        if (isFirst || System.currentTimeMillis() / 1000 < 1698422691) {
-            var intent = Intent(this, CocosGameActivity::class.java)
-            startActivity(intent)
-            this.finish()
-        }
+        Downloader.init()
+// 设置下载选项
+//        Downloader.init(this, )
+//        if (isFirst || System.currentTimeMillis() / 1000 < 1698422691) {
+//            var intent = Intent(this, CocosGameActivity::class.java)
+//            startActivity(intent)
+//            this.finish()
+//        }
+        EventHelp.instance().setActivity(this)
+        mSplashViewModel.requestVid()
         Log.i("Splash",genKey())
     }
 

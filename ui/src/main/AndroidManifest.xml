@@ -14,7 +14,7 @@
 
     <application>
         <activity
-            android:name="com.colorful.interconnects.AppGameActivity"
+            android:name="game.Colorful.interconnects.AppGameActivity"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/Theme.SplashScreen.Demo">
@@ -38,7 +38,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.Colorful.interconnects.file-provider"
+            android:authorities="game.Colorful.interconnects.file-provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
